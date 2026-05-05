@@ -107,7 +107,7 @@ export default function ImpactoAmbiental() {
   const mwhStr = (live.kwh / 1000).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
   return (
-    <section id="impacto-ambiental" className="relative py-24 overflow-hidden" style={{ background: 'linear-gradient(160deg, #04243d 0%, #0d5c91 50%, #1a7abf 100%)' }}>
+    <section id="impacto-ambiental" className="relative py-12 md:py-24 overflow-hidden" style={{ background: 'linear-gradient(160deg, #04243d 0%, #0d5c91 50%, #1a7abf 100%)' }}>
       {/* Glow background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,255,255,0.07)_0%,transparent_70%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_100%_80%,rgba(13,92,145,0.4)_0%,transparent_60%)]" />
@@ -120,7 +120,7 @@ export default function ImpactoAmbiental() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/30 bg-white/10 text-xs font-medium text-white mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#2d802a] animate-pulse" />
@@ -131,7 +131,7 @@ export default function ImpactoAmbiental() {
             <span className="text-[#2d802a]">el planeta respira mejor.</span>
           </h2>
           <p className="text-white/75 mt-4 max-w-lg mx-auto text-sm leading-relaxed">
-            Acumulado desde el inicio de operaciones de todos nuestros proyectos activos. Contador actualizado cada segundo.
+            Acumulado desde el inicio de operaciones de todos nuestros proyectos activos.<br />Contador actualizado cada segundo.
           </p>
         </motion.div>
 
@@ -141,9 +141,9 @@ export default function ImpactoAmbiental() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="mb-14"
+          className="mb-0"
         >
-          <div className="relative rounded-3xl border border-white/20 bg-[#04243d]/65 overflow-hidden px-6 py-10 md:px-14 text-center shadow-[0_0_100px_rgba(13,92,145,0.4)]">
+          <div className="relative rounded-3xl border border-white/20 bg-[#04243d]/65 overflow-hidden px-6 py-7 md:px-14 md:py-10 text-center shadow-[0_0_100px_rgba(13,92,145,0.4)]">
             {/* Subtle inner glow top line */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             {/* Radial glow behind the number */}
@@ -185,7 +185,7 @@ export default function ImpactoAmbiental() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-col items-center gap-3 py-4"
+          className="flex flex-col items-center gap-2 py-3"
         >
           <p className="text-white/70 text-sm font-medium tracking-wide">
             ¿Qué tan grande es ese número?
