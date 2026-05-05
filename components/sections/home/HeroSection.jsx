@@ -27,14 +27,14 @@ const item = {
 }
 
 const VERTICALS = [
-  { label: 'Agua', color: 'blue' },
-  { label: 'Gas térmico', color: 'orange' },
-  { label: 'Electricidad', color: 'green' },
+  { label: 'Agua', color: 'blue', href: '/ustedes#agua' },
+  { label: 'Gas térmico', color: 'orange', href: '/ustedes#gas' },
+  { label: 'Electricidad', color: 'green', href: '/ustedes#electricidad' },
 ]
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden isolate bg-white pt-32 pb-16">
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden isolate bg-white pt-20 pb-10 md:pt-32 md:pb-16">
       {/* Background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(34,197,94,0.04)_0%,transparent_70%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_80%_at_-5%_60%,rgba(59,130,246,0.03)_0%,transparent_60%)]" />
@@ -76,38 +76,41 @@ export default function HeroSection() {
             {/* Vertical chips */}
             <motion.div variants={item} className="flex flex-wrap gap-2 mb-8">
               {VERTICALS.map((v) => (
-                <span key={v.label} className={`badge-${v.color} px-3 py-1.5 rounded-full text-xs font-medium`}>
+                <Link
+                  key={v.label}
+                  href={v.href}
+                  className={`badge-${v.color} px-3 py-1.5 rounded-full text-xs font-medium transition-opacity duration-150 hover:opacity-75`}
+                >
                   {v.label}
-                </span>
+                </Link>
               ))}
             </motion.div>
 
-            {/* CTAs */}
-            <motion.div variants={item} className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href="/contacto"
-                className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-telos-green text-black font-bold text-sm hover:bg-telos-green-light transition-all duration-200 shadow-green-glow hover:shadow-[0_0_40px_rgba(34,197,94,0.35)]"
-              >
-                Solicitar diagnóstico gratuito
-              </Link>
-            </motion.div>
-
-            {/* Micro trust */}
-            <motion.p variants={item} className="mt-4 text-xs text-slate-500">
-              Sin spam. Sin compromisos.
-              <br />
-              Solo datos reales sobre tu operación.
-            </motion.p>
           </motion.div>
 
-          {/* Right — CO2 Counter + Energy Flow Visual */}
+          {/* Right — CO2 Counter + CTA + Energy Flow Visual */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.35, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col gap-6 items-stretch justify-start"
+            className="flex flex-col gap-4 items-stretch justify-start"
           >
             <CO2Counter />
+
+            {/* CTA debajo del contador */}
+            <Link
+              href="/contacto"
+              className="inline-flex items-center justify-center w-full px-6 py-3.5 rounded-xl bg-telos-green text-black font-bold text-sm hover:bg-telos-green-light transition-all duration-200 shadow-green-glow hover:shadow-[0_0_40px_rgba(34,197,94,0.35)]"
+            >
+              Solicitar diagnóstico gratuito
+            </Link>
+
+            {/* Micro trust */}
+            <div className="flex flex-col gap-0.5 text-xs text-slate-500 text-center">
+              <span>Conoce los datos reales de tu operación.</span>
+              <span>Sin compromiso. Sin humo... literalmente.</span>
+            </div>
+
             <div className="flex justify-center">
               <EnergyFlowVisual className="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[400px]" />
             </div>
