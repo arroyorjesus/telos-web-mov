@@ -90,12 +90,6 @@ export default function HeroSection() {
               >
                 Solicitar diagnóstico gratuito
               </Link>
-              <Link
-                href="/nosotros#impacto-ambiental"
-                className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 font-medium text-sm hover:bg-slate-200 hover:border-slate-300 transition-all duration-200"
-              >
-                Impacto Ambiental en Tiempo Real →
-              </Link>
             </motion.div>
 
             {/* Micro trust */}
@@ -104,19 +98,19 @@ export default function HeroSection() {
               <br />
               Solo datos reales sobre tu operación.
             </motion.p>
-
-            {/* CO2 Counter */}
-            <CO2Counter />
           </motion.div>
 
-          {/* Right — Energy Flow Visual */}
+          {/* Right — CO2 Counter + Energy Flow Visual */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-center justify-center"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.35, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col gap-6 items-stretch justify-start"
           >
-            <EnergyFlowVisual className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[480px]" />
+            <CO2Counter />
+            <div className="flex justify-center">
+              <EnergyFlowVisual className="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[400px]" />
+            </div>
           </motion.div>
         </div>
 
