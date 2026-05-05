@@ -179,6 +179,29 @@ export default function ImpactoAmbiental() {
           </div>
         </motion.div>
 
+        {/* ── Scroll nudge ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex flex-col items-center gap-3 py-4"
+        >
+          <p className="text-white/70 text-sm font-medium tracking-wide">
+            ¿Qué tan grande es ese número?
+          </p>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
+            className="flex flex-col items-center gap-1"
+          >
+            <div className="w-px h-5 bg-gradient-to-b from-white/40 to-transparent" />
+            <svg className="w-4 h-4 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </motion.div>
+        </motion.div>
+
         {/* ── Equivalences grid ── */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {EQ.map((eq, i) => {
