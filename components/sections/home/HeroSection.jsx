@@ -108,7 +108,8 @@ export default function HeroSection() {
             {/* Micro trust */}
             <div className="flex flex-col gap-0.5 text-xs text-slate-500 text-center">
               <span>Conoce los datos reales de tu operación.</span>
-              <span>Sin compromiso. Sin humo... literalmente.</span>
+              <span>Sin compromiso.</span>
+              <span>Sin humo... literalmente.</span>
             </div>
 
             <div className="flex justify-center">
