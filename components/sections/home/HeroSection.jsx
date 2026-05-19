@@ -55,12 +55,18 @@ export default function HeroSection() {
   }, [])
 
   useEffect(() => {
-    const els = document.querySelectorAll('#hero .reveal, #hero .reveal-card, #hero .reveal-heading')
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target) } })
-    }, { threshold: 0.06, rootMargin: '0px 0px -28px 0px' })
-    els.forEach((el) => obs.observe(el))
-    return () => obs.disconnect()
+    // Immediately reveal elements already in the viewport on mount
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.querySelectorAll('#hero .reveal, #hero .reveal-card, #hero .reveal-heading').forEach((el) => {
+          const rect = el.getBoundingClientRect()
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add('in')
+          }
+        })
+      })
+    })
+    return () => cancelAnimationFrame(id)
   }, [])
 
   const co2Str = co2.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })

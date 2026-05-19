@@ -9,45 +9,46 @@ export default function RevealObserver() {
   useEffect(() => {
     if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return
 
-    // Wait for hydration to complete by checking if interactive elements are ready
-    const startObserving = () => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('in')
-              observer.unobserve(entry.target)
-            }
-          })
-        },
-        { threshold: 0.06, rootMargin: '0px 0px -28px 0px' }
-      )
+    const selector = '.reveal:not(.in), .reveal-card:not(.in), .reveal-heading:not(.in)'
 
-      const selector = '.reveal:not(.in), .reveal-card:not(.in), .reveal-heading:not(.in)'
-      const observeAll = () => {
-        document.querySelectorAll(selector).forEach((el) => observer.observe(el))
-      }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.05, rootMargin: '0px 0px 0px 0px' }
+    )
 
-      observeAll()
-
-      const mutation = new MutationObserver(() => observeAll())
-      mutation.observe(document.body, { childList: true, subtree: true })
-
-      return () => {
-        observer.disconnect()
-        mutation.disconnect()
-      }
+    const observeAll = () => {
+      document.querySelectorAll(selector).forEach((el) => {
+        const rect = el.getBoundingClientRect()
+        // Already in viewport — add 'in' immediately without waiting for observer
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('in')
+        } else {
+          observer.observe(el)
+        }
+      })
     }
 
-    // Use multiple RAF to ensure we're well after hydration
-    let rafId1 = requestAnimationFrame(() => {
-      let rafId2 = requestAnimationFrame(() => {
-        startObserving()
+    // Two RAF cycles to ensure layout is painted before measuring
+    let mutation = null
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        observeAll()
+        mutation = new MutationObserver(observeAll)
+        mutation.observe(document.body, { childList: true, subtree: true })
       })
     })
 
     return () => {
-      cancelAnimationFrame(rafId1)
+      cancelAnimationFrame(id)
+      observer.disconnect()
+      mutation?.disconnect()
     }
   }, [pathname])
 
