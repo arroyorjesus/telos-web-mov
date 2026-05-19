@@ -1,22 +1,10 @@
-import { Inter, Exo_2 } from 'next/font/google'
 import './globals.css'
 import { SITE } from '@/data/site'
 import { SCHEMA_ORGANIZATION } from '@/lib/seo'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-const exo2 = Exo_2({
-  subsets: ['latin'],
-  variable: '--font-exo2',
-  weight: ['700', '800', '900'],
-  display: 'swap',
-})
+import GlossaryPanel from '@/components/ui/GlossaryPanel'
+import RevealObserver from '@/components/ui/RevealObserver'
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -46,21 +34,14 @@ export const metadata = {
     title: 'TELOS | Eficiencia energética integral para empresas en México',
     description:
       'Eficiencia energética en agua, gas y electricidad para hoteles, industrias y corporativos. Diagnóstico gratuito.',
-    images: [
-      {
-        url: `${SITE.url}/og-image.png`,
-        width: 1200,
-        height: 630,
-        alt: 'TELOS — Eficiencia energética integral',
-      },
-    ],
+    images: [{ url: `${SITE.url}/opengraph-image`, width: 1200, height: 630, alt: 'TELOS — Eficiencia energética integral' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'TELOS | Eficiencia energética integral',
     description:
       'Eficiencia energética en agua, gas y electricidad para empresas en México.',
-    images: [`${SITE.url}/og-image.png`],
+    images: [`${SITE.url}/opengraph-image`],
   },
   robots: {
     index: true,
@@ -78,28 +59,29 @@ export const metadata = {
   },
   icons: {
     icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
       { url: '/favicon.png', type: 'image/png' },
     ],
-    shortcut: '/favicon.png',
+    shortcut: '/favicon.svg',
     apple: '/favicon.png',
   },
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" className={`${inter.variable} ${exo2.variable}`}>
+    <html lang="es">
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(SCHEMA_ORGANIZATION),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA_ORGANIZATION) }}
         />
       </head>
-      <body className="antialiased">
+      <body>
+        <RevealObserver />
         <Navbar />
-        <main>{children}</main>
+        <main id="contenido-principal">{children}</main>
         <Footer />
+        <GlossaryPanel />
       </body>
     </html>
   )

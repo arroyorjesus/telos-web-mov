@@ -1,9 +1,10 @@
 import HeroSection from '@/components/sections/home/HeroSection'
-import ForWhomSection from '@/components/sections/home/ForWhomSection'
 import ProblemSection from '@/components/sections/home/ProblemSection'
+import DatosSection from '@/components/sections/home/DatosSection'
 import SolucionesSection from '@/components/sections/home/SolucionesSection'
+import ImpactoAmbientalHome from '@/components/sections/home/ImpactoAmbientalHome'
 import HowWeWorkSection from '@/components/sections/home/HowWeWorkSection'
-import CalculatorTeaser from '@/components/sections/home/CalculatorTeaser'
+import ResultsSection from '@/components/sections/home/ResultsSection'
 import HomeCTA from '@/components/sections/home/HomeCTA'
 
 export const metadata = {
@@ -16,11 +17,14 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <ForWhomSection />
-      <ProblemSection />
-      <SolucionesSection />
-      <HowWeWorkSection />
-      <CalculatorTeaser />
+      <div className="gradient-zone">
+        <ProblemSection />
+        <DatosSection />
+        <SolucionesSection />
+        <ImpactoAmbientalHome />
+        <HowWeWorkSection />
+        <ResultsSection />
+      </div>
       <HomeCTA />
     </>
   )

@@ -3,7 +3,7 @@ export const SITE = {
   tagline: 'Eficiencia energética integral para empresas en México',
   description:
     'Diseñamos e implementamos proyectos de eficiencia energética en electricidad, gas térmico y agua para hoteles, industrias y empresas con alto consumo. Diagnóstico técnico, ejecución llave en mano y resultados medibles.',
-  url: 'https://telos.com.mx',
+  url: 'https://www.telos.com.mx',
   email: 'contacto@telos.com.mx',
   emailAlt: 'contacto@telos.com.mx',
   phone: '+52 (55) 4451 7101',
