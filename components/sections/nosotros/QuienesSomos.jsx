@@ -61,22 +61,17 @@ export default function QuienesSomos() {
             viewport={{ once: true, margin: '-80px' }}
           >
             {/* Eyebrow */}
-            <motion.div variants={item} className="mb-7 flex items-center gap-3">
-              <span className="font-mono text-xs font-bold tracking-[0.22em] text-[#2b8fd4]">02</span>
-              <span className="h-px w-9 bg-white/15" />
-              <span className="font-mono text-[0.7rem] font-medium tracking-[0.22em] text-white/45 uppercase">
-                Quiénes somos
-              </span>
+            <motion.div variants={item} className="v2-eyebrow">
+              <span className="v2-eyebrow-num">02</span>
+              <span className="v2-eyebrow-line" />
+              <span className="v2-eyebrow-label">Quiénes somos</span>
             </motion.div>
 
             {/* Headline */}
-            <motion.h2
-              variants={item}
-              className="font-grotesk font-extrabold text-white text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.08] tracking-[-0.03em] mb-8"
-            >
+            <motion.h2 variants={item} className="v2-h2 mb-8">
               Una firma de ingeniería
               <br />
-              <span className="text-[#2b8fd4]">con visión de largo plazo.</span>
+              <span className="accent">con visión de largo plazo.</span>
             </motion.h2>
 
             {/* Blockquote */}

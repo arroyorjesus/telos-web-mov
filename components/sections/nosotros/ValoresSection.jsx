@@ -99,14 +99,12 @@ export default function ValoresSection() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12 lg:mb-14"
         >
-          <div className="mb-6 flex items-center gap-3">
-            <span className="font-mono text-xs font-bold tracking-[0.22em] text-[#2b8fd4]">05</span>
-            <span className="h-px w-9 bg-white/15" />
-            <span className="font-mono text-[0.7rem] font-medium tracking-[0.22em] text-white/45 uppercase">
-              Valores
-            </span>
+          <div className="v2-eyebrow">
+            <span className="v2-eyebrow-num">05</span>
+            <span className="v2-eyebrow-line" />
+            <span className="v2-eyebrow-label">Valores</span>
           </div>
-          <h2 className="font-grotesk font-extrabold text-white text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.08] tracking-[-0.03em]">
+          <h2 className="v2-h2">
             Lo que nos define.
           </h2>
         </motion.div>

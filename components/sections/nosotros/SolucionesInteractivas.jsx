@@ -104,19 +104,17 @@ export default function SolucionesInteractivas() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12 lg:mb-16 max-w-2xl"
         >
-          <div className="mb-6 flex items-center gap-3">
-            <span className="font-mono text-xs font-bold tracking-[0.22em] text-[#2b8fd4]">03</span>
-            <span className="h-px w-9 bg-white/15" />
-            <span className="font-mono text-[0.7rem] font-medium tracking-[0.22em] text-white/45 uppercase">
-              Capacidades técnicas
-            </span>
+          <div className="v2-eyebrow">
+            <span className="v2-eyebrow-num">03</span>
+            <span className="v2-eyebrow-line" />
+            <span className="v2-eyebrow-label">Capacidades técnicas</span>
           </div>
-          <h2 className="font-grotesk font-extrabold text-white text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.08] tracking-[-0.03em] mb-4">
+          <h2 className="v2-h2 mb-4">
             Tres verticales.
             <br />
-            <span className="text-[#2b8fd4]">Una estrategia integral.</span>
+            <span className="accent">Una estrategia integral.</span>
           </h2>
-          <p className="text-white/50 text-base leading-relaxed">
+          <p className="v2-body">
             Cada solución es diagnóstica, no de catálogo. Sin auditoría, no hay propuesta.
           </p>
         </motion.div>

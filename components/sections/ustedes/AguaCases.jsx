@@ -89,17 +89,15 @@ export default function AguaCases() {
           className="mb-10 lg:mb-12 grid lg:grid-cols-[1fr_380px] gap-8 items-end"
         >
           <div>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="font-mono text-xs font-bold tracking-[0.22em]" style={{ color: ACCENT }}>03</span>
-              <span className="h-px w-9 bg-white/15" />
-              <span className="font-mono text-[0.7rem] font-medium tracking-[0.22em] text-white/45 uppercase">
-                Agua · Eficiencia hídrica
-              </span>
+            <div className="v2-eyebrow">
+              <span className="v2-eyebrow-num" style={{ color: ACCENT }}>03</span>
+              <span className="v2-eyebrow-line" />
+              <span className="v2-eyebrow-label">Agua · Eficiencia hídrica</span>
             </div>
-            <h2 className="font-grotesk font-extrabold text-white text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.08] tracking-[-0.03em]">
+            <h2 className="v2-h2">
               Independencia hídrica.
               <br />
-              <span style={{ color: ACCENT }}>Cero paros por desabasto.</span>
+              <span className="accent">Cero paros por desabasto.</span>
             </h2>
           </div>
           <p className="text-white/45 text-sm leading-relaxed">

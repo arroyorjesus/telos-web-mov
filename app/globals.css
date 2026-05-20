@@ -12,6 +12,7 @@
   --navy-mid:     #0a3a5c;
   --blue:         #0d5c91;
   --blue-hover:   #0e6fad;
+  --blue-light:   #2b8fd4;   /* accent for dark-navy contexts */
   --green:        #2d802a;
   --green-dim:    #1f5c1d;
   --orange:       #f97316;
@@ -1038,4 +1039,229 @@ img { display: block; max-width: 100%; }
 @media (max-width: 480px) {
   .final-cta-section { padding-left: 1.25rem; padding-right: 1.25rem; }
   .results-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   V2 DARK-SECTION DESIGN SYSTEM
+   Shared across Nosotros · Ustedes · Ellos · Contacto
+   These classes normalize the inner-page experience so every
+   page feels designed under the same creative direction as Inicio.
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Section wrapper ─────────────────────────────────────────── */
+.v2-section {
+  position: relative;
+  background: var(--navy-deep);
+  padding: 5rem 2.5rem;
+  overflow: hidden;
+}
+@media (min-width: 768px)  { .v2-section { padding: 7rem 2.5rem; } }
+@media (max-width: 480px)  { .v2-section { padding: 3.5rem 1.25rem; } }
+
+.v2-inner { max-width: 80rem; margin: 0 auto; }
+
+/* Hairline gradient separator used at section tops */
+.v2-sep-top {
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.10), transparent);
+  pointer-events: none;
+}
+
+/* ── Eyebrow line: "01 — LABEL" ──────────────────────────────── */
+.v2-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.625rem;
+}
+.v2-eyebrow-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--blue-light);
+}
+.v2-eyebrow-line {
+  height: 1px;
+  width: 2.25rem;
+  background: rgba(255,255,255,0.15);
+}
+.v2-eyebrow-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ── Hero heading (dark) ─────────────────────────────────────── */
+.v2-h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.625rem, 5.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin-bottom: 1.75rem;
+}
+.v2-h1 .accent { color: var(--blue-light); }
+
+/* ── Section h2 (dark) ───────────────────────────────────────── */
+.v2-h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+}
+.v2-h2 .accent         { color: var(--blue-light); }
+.v2-h2 .accent-green   { color: #4ade80; }
+.v2-h2 .accent-orange  { color: var(--orange); }
+
+/* ── Body text (dark context) ────────────────────────────────── */
+.v2-body {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.72;
+  color: rgba(255,255,255,0.50);
+}
+.v2-body-sm {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.62;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ── Mono label (dark context) ───────────────────────────────── */
+.v2-mono-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: rgba(255,255,255,0.32);
+}
+
+/* ── Glass card surface ──────────────────────────────────────── */
+.v2-glass-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 1.25rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: background 0.28s ease, border-color 0.28s ease;
+}
+.v2-glass-card:hover { background: rgba(255,255,255,0.07); }
+
+/* Inset dark panel (used inside glass cards) */
+.v2-glass-inner {
+  background: rgba(2,24,41,0.65);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0.875rem;
+}
+
+/* ── Tag pill (dark context) ─────────────────────────────────── */
+.v2-tag {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.35);
+  display: inline-block;
+}
+
+/* ── Animated status badge ───────────────────────────────────── */
+.v2-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3125rem 0.875rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.50);
+}
+.v2-status-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue-light);
+  animation: impactPulse 2.2s ease-in-out infinite;
+}
+
+/* ── Blueprint grid overlay (hero backgrounds) ───────────────── */
+.v2-blueprint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── CTA section — blue accent variant (for non-home CTAs) ───── */
+/* Extends .final-cta-section with blue accent instead of green   */
+.final-cta-section.cta-blue::before {
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(13,92,145,0.12) 0%, transparent 65%);
+}
+.final-cta-section.cta-blue .final-cta-badge {
+  border-color: rgba(43,143,212,0.30);
+  background: rgba(43,143,212,0.08);
+  color: var(--blue-light);
+}
+.final-cta-section.cta-blue .final-cta-badge-dot {
+  background: var(--blue-light);
+}
+.final-cta-section.cta-blue .final-cta-h2 em { color: var(--blue-light); }
+.final-cta-section.cta-blue .final-cta-primary {
+  background: var(--blue);
+  color: #ffffff;
+}
+@media (hover: hover) and (pointer: fine) {
+  .final-cta-section.cta-blue .final-cta-primary:hover {
+    background: var(--blue-hover);
+    box-shadow: 0 8px 24px rgba(13,92,145,0.35);
+  }
+}
+
+/* ── Spec grid (hero metrics bar) ────────────────────────────── */
+.v2-spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.10); /* gap color */
+  gap: 1px;
+}
+@media (min-width: 1024px) { .v2-spec-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.v2-spec-cell {
+  background: var(--navy-deep);
+  padding: 1.375rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+.v2-spec-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1.625rem, 2.8vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  tabular-nums: inherit;
+}
+.v2-spec-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.42);
+  line-height: 1.4;
 }

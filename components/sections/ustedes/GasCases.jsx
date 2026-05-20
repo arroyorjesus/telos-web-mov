@@ -174,17 +174,15 @@ export default function GasCases() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mb-10 lg:mb-12"
         >
-          <div className="mb-5 flex items-center gap-3">
-            <span className="font-mono text-xs font-bold tracking-[0.22em]" style={{ color: ACCENT }}>04</span>
-            <span className="h-px w-9 bg-white/15" />
-            <span className="font-mono text-[0.7rem] font-medium tracking-[0.22em] text-white/45 uppercase">
-              Gas térmico · Calderas de condensación
-            </span>
+          <div className="v2-eyebrow">
+            <span className="v2-eyebrow-num" style={{ color: ACCENT }}>04</span>
+            <span className="v2-eyebrow-line" />
+            <span className="v2-eyebrow-label">Gas térmico · Calderas de condensación</span>
           </div>
-          <h2 className="font-grotesk font-extrabold text-white text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.08] tracking-[-0.03em] mb-3">
+          <h2 className="v2-h2 mb-3">
             Reducción drástica de gas.
             <br />
-            <span style={{ color: ACCENT }}>Emisiones CO₂ al mínimo.</span>
+            <span className="accent-orange">Emisiones CO₂ al mínimo.</span>
           </h2>
           <p className="text-white/45 text-sm leading-relaxed max-w-[52ch]">
             Calderas de condensación, heat pumps y recuperadores de calor. De 30% a 99% de ahorro según proyecto.

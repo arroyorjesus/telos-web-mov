@@ -45,17 +45,15 @@ export default function Certificaciones() {
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="mb-6 flex items-center gap-3">
-              <span className="font-mono text-xs font-bold tracking-[0.22em] text-[#2b8fd4]">04</span>
-              <span className="h-px w-9 bg-white/15" />
-              <span className="font-mono text-[0.7rem] font-medium tracking-[0.22em] text-white/45 uppercase">
-                Certificaciones
-              </span>
+            <div className="v2-eyebrow">
+              <span className="v2-eyebrow-num">04</span>
+              <span className="v2-eyebrow-line" />
+              <span className="v2-eyebrow-label">Certificaciones</span>
             </div>
-            <h2 className="font-grotesk font-extrabold text-white text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.08] tracking-[-0.03em]">
+            <h2 className="v2-h2">
               Capacidad certificada.
               <br />
-              <span className="text-[#2b8fd4]">Operación normada.</span>
+              <span className="accent">Operación normada.</span>
             </h2>
           </motion.div>
 
