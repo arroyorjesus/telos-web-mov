@@ -46,7 +46,7 @@ export default function Certificaciones() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="mb-6 flex items-center gap-3">
-              <span className="font-mono text-xs font-bold tracking-[0.22em] text-[#2b8fd4]">05</span>
+              <span className="font-mono text-xs font-bold tracking-[0.22em] text-[#2b8fd4]">04</span>
               <span className="h-px w-9 bg-white/15" />
               <span className="font-mono text-[0.7rem] font-medium tracking-[0.22em] text-white/45 uppercase">
                 Certificaciones

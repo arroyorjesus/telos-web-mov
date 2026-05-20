@@ -6,10 +6,7 @@ import Link from 'next/link'
 export default function NosotrosCTA() {
   return (
     <section className="relative bg-[#021829] py-20 md:py-28 overflow-hidden">
-      {/* Subtle top separator */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-      {/* Centered radial glow — acceptable for terminal CTA */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_50%_at_50%_50%,rgba(13,92,145,0.18)_0%,transparent_70%)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_35%_40%_at_50%_100%,rgba(13,92,145,0.10)_0%,transparent_65%)] pointer-events-none" />
 
@@ -25,22 +22,20 @@ export default function NosotrosCTA() {
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.05]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#2b8fd4] animate-pulse" />
             <span className="font-mono text-[0.68rem] font-medium tracking-[0.18em] text-white/50 uppercase">
-              Diagnóstico gratuito
+              Análisis estratégico · Sin compromiso inicial
             </span>
           </div>
 
-          {/* Headline */}
+          {/* Headline — mismo tono interrogativo del Inicio */}
           <h2 className="font-grotesk font-extrabold text-white text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.08] tracking-[-0.03em] text-balance">
-            Tu operación no necesita
+            ¿Tu operación está trabajando
             <br />
-            otro proveedor.{' '}
-            <span className="text-[#2b8fd4]">Necesita un aliado técnico.</span>
+            <span className="text-[#2b8fd4]">a su capacidad real de OPEX?</span>
           </h2>
 
-          {/* Subtext */}
+          {/* Subtext — lenguaje técnico alineado con Inicio */}
           <p className="text-white/45 text-base leading-relaxed max-w-[48ch]">
-            Diagnóstico real, propuesta a medida, ejecución llave en mano.
-            Sin compromisos hasta que veas los números.
+            Hacemos el diagnóstico. Tú decides si tiene sentido continuar.
           </p>
 
           {/* CTAs */}
@@ -49,14 +44,14 @@ export default function NosotrosCTA() {
               href="/contacto"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#0d5c91] text-white font-semibold text-sm hover:bg-[#1a7abf] active:scale-[0.98] transition-all duration-200 shadow-[0_0_0_1px_rgba(255,255,255,0.08),inset_0_1px_0_rgba(255,255,255,0.10)]"
             >
-              Solicitar diagnóstico
-              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
+              ¿Cuánto puedo optimizar de mi operación?
             </Link>
 
             <a
-              href="https://wa.me/5215512345678?text=Hola%2C%20quiero%20solicitar%20un%20diagn%C3%B3stico%20energ%C3%A9tico"
+              href="https://wa.me/525544517101?text=Hola%2C%20quiero%20solicitar%20un%20an%C3%A1lisis%20estrat%C3%A9gico%20de%20infraestructura%20energ%C3%A9tica."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-white/15 bg-white/[0.05] text-white/75 font-semibold text-sm hover:bg-white/[0.09] hover:text-white active:scale-[0.98] transition-all duration-200"
@@ -68,9 +63,9 @@ export default function NosotrosCTA() {
             </a>
           </div>
 
-          {/* Engineering footnote */}
-          <p className="font-mono text-[0.65rem] text-white/25 tracking-wide mt-2">
-            Respuesta en menos de 24 h · Sin costo ni compromiso
+          {/* Trust micro-copy — igual que HomeCTA */}
+          <p className="font-mono text-[0.65rem] text-white/25 tracking-wide mt-1">
+            Sin compromisos · Respuesta en menos de 24 horas hábiles
           </p>
         </motion.div>
       </div>

@@ -100,7 +100,7 @@ export default function ValoresSection() {
           className="mb-12 lg:mb-14"
         >
           <div className="mb-6 flex items-center gap-3">
-            <span className="font-mono text-xs font-bold tracking-[0.22em] text-[#2b8fd4]">06</span>
+            <span className="font-mono text-xs font-bold tracking-[0.22em] text-[#2b8fd4]">05</span>
             <span className="h-px w-9 bg-white/15" />
             <span className="font-mono text-[0.7rem] font-medium tracking-[0.22em] text-white/45 uppercase">
               Valores
@@ -119,8 +119,8 @@ export default function ValoresSection() {
           viewport={{ once: true, margin: '-60px' }}
           className="grid md:grid-cols-2 lg:grid-cols-[1.2fr_1fr] gap-4 lg:gap-5"
         >
-          {/* First value — large card spanning full height */}
-          <div className="md:row-span-2 lg:row-span-1 flex">
+          {/* First value — large card spanning full height on both md and lg */}
+          <div className="row-span-2 flex">
             <ValorCard val={first} large />
           </div>
 
