@@ -47,6 +47,9 @@ body {
 a { text-decoration: none; }
 img { display: block; max-width: 100%; }
 
+/* ─── Utilities ─────────────────────────────────────────────────────────────── */
+.font-grotesk { font-family: 'Space Grotesk', sans-serif; }
+
 /* ─────────────────────────────────────────
    NAVBAR
 ───────────────────────────────────────── */

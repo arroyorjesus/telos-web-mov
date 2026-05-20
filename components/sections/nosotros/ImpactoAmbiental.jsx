@@ -19,11 +19,62 @@ function calcLive() {
   return { co2, kwh }
 }
 
+// ── SVG icons per equivalence (no emojis — Anti-Emoji Policy) ────────────────
+const EQ_ICONS = {
+  arboles: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22V12M12 12L8 8M12 12l4-4M5 17l3-3M19 17l-3-3M3 21h18M7 12a5 5 0 0 1 5-9 5 5 0 0 1 5 9"/>
+    </svg>
+  ),
+  autos: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l3-4h10l3 4h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/>
+      <circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>
+    </svg>
+  ),
+  azteca: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="7" width="20" height="14" rx="2"/>
+      <path d="M2 11h20M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/>
+      <circle cx="12" cy="15" r="2"/>
+    </svg>
+  ),
+  vuelos: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19.5 2.5c-1.5-1.5-3.5-1.5-5 0L11 6 2.8 4.2l-2 2 7.4 3.7L3 15H1l-1 3 3-1v2l3-1v-2l5.5-5.5 3.7 7.4 2-2z"/>
+    </svg>
+  ),
+  hogares: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+  ),
+  barriles: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/>
+      <path d="M3 5v14a9 3 0 0 0 18 0V5"/>
+      <path d="M3 12a9 3 0 0 0 18 0"/>
+    </svg>
+  ),
+  gp: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 17h1l3-3 4 2 3-5 3 4 1-2h2"/>
+      <path d="M3 7h18M5 3l2 4M19 3l-2 4"/>
+      <circle cx="7" cy="19" r="1"/><circle cx="17" cy="19" r="1"/>
+    </svg>
+  ),
+  ac: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 12h20M12 2v20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07"/>
+    </svg>
+  ),
+}
+
 // ── Equivalencias (se recalculan con el total vivo) ──────────────────────────
 const EQ = [
   {
     id: 'arboles',
-    icon: '🌳',
     label: 'Árboles capturando\nCO₂ por 1 año',
     calc: ({ co2 }) => (co2 * 1000) / 21.77,
     fmt:  (v) => v >= 1000 ? `${(v/1000).toLocaleString('es-MX',{minimumFractionDigits:1,maximumFractionDigits:1})}k` : Math.round(v).toLocaleString('es-MX'),
@@ -32,7 +83,6 @@ const EQ = [
   },
   {
     id: 'autos',
-    icon: '🚗',
     label: 'Autos fuera de\ncirculación por 1 año',
     calc: ({ co2 }) => co2 / 4.6,
     fmt:  (v) => Math.round(v).toLocaleString('es-MX'),
@@ -41,7 +91,6 @@ const EQ = [
   },
   {
     id: 'azteca',
-    icon: '🏟️',
     label: 'Partidos iluminando\nel Estadio Azteca',
     calc: ({ kwh }) => kwh / 25000,
     fmt:  (v) => v.toLocaleString('es-MX', { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
@@ -50,7 +99,6 @@ const EQ = [
   },
   {
     id: 'vuelos',
-    icon: '✈️',
     label: 'Vuelos CDMX–París\npor pasajero',
     calc: ({ co2 }) => co2 / 1.7,
     fmt:  (v) => Math.round(v).toLocaleString('es-MX'),
@@ -59,7 +107,6 @@ const EQ = [
   },
   {
     id: 'hogares',
-    icon: '🏠',
     label: 'Hogares mexicanos\nabastecidos por 1 año',
     calc: ({ kwh }) => kwh / 1800,
     fmt:  (v) => Math.round(v).toLocaleString('es-MX'),
@@ -68,7 +115,6 @@ const EQ = [
   },
   {
     id: 'barriles',
-    icon: '🛢️',
     label: 'Barriles de petróleo\nequivalentes evitados',
     calc: ({ kwh }) => kwh / 1699.8,
     fmt:  (v) => Math.round(v).toLocaleString('es-MX'),
@@ -77,7 +123,6 @@ const EQ = [
   },
   {
     id: 'gp',
-    icon: '🏎️',
     label: 'Vueltas al\nGP de México',
     calc: ({ kwh }) => kwh / 45.1,
     fmt:  (v) => Math.round(v).toLocaleString('es-MX'),
@@ -86,7 +131,6 @@ const EQ = [
   },
   {
     id: 'ac',
-    icon: '❄️',
     label: 'Horas de minisplit\neficiente funcionando',
     calc: ({ kwh }) => kwh / 1000000,
     fmt:  (v) => v.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + 'M',
@@ -215,7 +259,7 @@ export default function ImpactoAmbiental() {
                 transition={{ delay: 0.05 * i, duration: 0.45 }}
                 className="rounded-2xl border border-white/15 bg-white/[0.05] p-4 md:p-5 flex flex-col gap-3 hover:border-white/25 transition-colors duration-300"
               >
-                <span className="text-2xl">{eq.icon}</span>
+                <span style={{ color: eq.accent }}>{EQ_ICONS[eq.id]}</span>
                 <div>
                   <p
                     className="text-xl md:text-2xl font-black tabular-nums leading-tight"
