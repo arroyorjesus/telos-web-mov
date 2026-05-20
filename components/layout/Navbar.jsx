@@ -45,8 +45,8 @@ export default function Navbar() {
         <div className="nav-links">
           <Link href="/" className="nav-link">Inicio</Link>
           <Link href="/nosotros" className="nav-link">Nosotros</Link>
-          <Link href="/#soluciones" className="nav-link">Capacidades</Link>
-          <Link href="/#resultados" className="nav-link">Proyectos</Link>
+          <Link href="/ustedes" className="nav-link">Ustedes</Link>
+          <Link href="/ellos" className="nav-link">Ellos</Link>
           <Link href="/contacto" className="nav-link">Contacto</Link>
         </div>
 
@@ -73,8 +73,8 @@ export default function Navbar() {
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`} aria-hidden={!menuOpen}>
         <Link href="/" className="mobile-nav-link" onClick={closeMenu}>Inicio</Link>
         <Link href="/nosotros" className="mobile-nav-link" onClick={closeMenu}>Nosotros</Link>
-        <Link href="/#soluciones" className="mobile-nav-link" onClick={closeMenu}>Capacidades</Link>
-        <Link href="/#resultados" className="mobile-nav-link" onClick={closeMenu}>Proyectos</Link>
+        <Link href="/ustedes" className="mobile-nav-link" onClick={closeMenu}>Ustedes</Link>
+        <Link href="/ellos" className="mobile-nav-link" onClick={closeMenu}>Ellos</Link>
         <Link href="/contacto" className="mobile-nav-link" onClick={closeMenu}>Contacto</Link>
         <Link href="/contacto" className="btn-primary" style={{ marginTop: '0.5rem' }} onClick={closeMenu}>
           Análisis estratégico
