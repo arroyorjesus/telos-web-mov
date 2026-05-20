@@ -77,9 +77,10 @@ export default function QuienesSomos() {
             {/* Blockquote */}
             <motion.blockquote
               variants={item}
-              className="pl-4 border-l-2 border-[#2b8fd4]/50 mb-10"
+              className="pl-4 border-l-2 mb-10"
+              style={{ borderColor: 'rgba(43,143,212,0.45)' }}
             >
-              <p className="text-white/70 font-medium leading-relaxed text-base sm:text-lg">
+              <p className="font-grotesk font-medium leading-relaxed text-base sm:text-lg text-white/70">
                 No comercializamos equipos. Desarrollamos activos energéticos con visión
                 técnica, financiera y operativa de largo plazo.
               </p>
@@ -95,10 +96,10 @@ export default function QuienesSomos() {
                 >
                   {/* Mono index + icon */}
                   <div className="shrink-0 flex flex-col items-center gap-2 pt-0.5">
-                    <span className="font-mono text-[0.65rem] font-bold text-[#2b8fd4]/60 tracking-widest">
+                    <span className="font-mono text-[0.65rem] font-bold text-[var(--blue-light)]/60 tracking-widest">
                       {card.index}
                     </span>
-                    <div className="text-[#2b8fd4]/70 group-hover:text-[#2b8fd4] transition-colors duration-300">
+                    <div className="text-[var(--blue-light)]/70 group-hover:text-[var(--blue-light)] transition-colors duration-300">
                       {card.icon}
                     </div>
                   </div>
@@ -125,7 +126,7 @@ export default function QuienesSomos() {
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
               {/* Header */}
               <div className="flex items-center gap-2 mb-5">
-                <span className="font-mono text-[0.65rem] font-bold tracking-[0.2em] text-[#2b8fd4]/60 uppercase">
+                <span className="font-mono text-[0.65rem] font-bold tracking-[0.2em] text-[var(--blue-light)]/60 uppercase">
                   Cobertura
                 </span>
                 <span className="h-px flex-1 bg-white/10" />
@@ -169,7 +170,7 @@ export default function QuienesSomos() {
                   <p className="text-xs text-white/40 mt-0.5">Estados activos</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-mono text-2xl font-bold text-[#2b8fd4] tabular-nums">48</p>
+                  <p className="font-mono text-2xl font-bold text-[var(--blue-light)] tabular-nums">48</p>
                   <p className="text-xs text-white/40 mt-0.5">Personas en campo</p>
                 </div>
               </div>
