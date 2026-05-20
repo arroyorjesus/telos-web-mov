@@ -1,90 +1,228 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import AnimatedCounter from '@/components/ui/AnimatedCounter'
-import { USTEDES_METRICS } from '@/data/metrics'
+import Link from 'next/link'
+
+// Marquee row 1 — industries
+const INDUSTRY_ITEMS = [
+  { label: 'Hotelería',           dot: '#8b5cf6' },
+  { label: 'Logística · CEDIS',   dot: '#22c55e' },
+  { label: 'Industrial',          dot: '#f97316' },
+  { label: 'Corporativos',        dot: '#2b8fd4' },
+  { label: 'Clubes Deportivos',   dot: '#ec4899' },
+  { label: 'Manufactura',         dot: '#f97316' },
+  { label: 'Condominios',         dot: '#6366f1' },
+  { label: 'Centros Comerciales', dot: '#ef4444' },
+  { label: 'Hospitales',          dot: '#14b8a6' },
+]
+
+// Marquee row 2 — real project metrics
+const METRIC_ITEMS = [
+  { label: '340 kWp · CEDIS Puebla',           num: 'SOL', dot: '#22c55e' },
+  { label: '$3.9M MXN / año',                   num: 'OPEX', dot: '#22c55e' },
+  { label: '297 kWp · Parque Industrial',        num: 'SOL', dot: '#22c55e' },
+  { label: '30% agua recuperada · Los Cabos',   num: 'H₂O', dot: '#3b82f6' },
+  { label: '−70% CO₂ · Hotel 190 hab',          num: 'GAS', dot: '#f97316' },
+  { label: '−3 pipas/mes · Hotel CDMX',         num: 'H₂O', dot: '#3b82f6' },
+  { label: '$3.4M MXN / año · Amozoc',          num: 'OPEX', dot: '#22c55e' },
+  { label: '50% gas · Centro Deportivo',        num: 'GAS', dot: '#f97316' },
+]
 
 const container = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 }
 const item = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 }
 
-const VERTICAL_DOTS = [
-  { color: '#22c55e', label: 'Electricidad' },
-  { color: '#3b82f6', label: 'Agua' },
-  { color: '#f97316', label: 'Gas térmico' },
-]
-
 export default function UstedesHero() {
   return (
-    <section className="relative min-h-[78dvh] flex items-center overflow-hidden bg-[#021829] pt-36 pb-20">
+    <section className="relative overflow-hidden bg-[#021829]" style={{ minHeight: '100dvh' }}>
 
       {/* Blueprint grid */}
       <div
         className="v2-blueprint"
         style={{
-          maskImage: 'radial-gradient(ellipse 75% 70% at 22% 32%, #000 0%, transparent 78%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 75% 70% at 22% 32%, #000 0%, transparent 78%)',
+          maskImage: 'radial-gradient(ellipse 80% 75% at 18% 28%, #000 0%, transparent 72%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 75% at 18% 28%, #000 0%, transparent 72%)',
         }}
       />
 
       {/* Ambient glows */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_55%_45%_at_10%_-8%,rgba(13,92,145,0.28)_0%,transparent_70%)]" />
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_45%_55%_at_102%_108%,rgba(13,92,145,0.14)_0%,transparent_65%)]" />
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse 100% 55% at 78% 12%, rgba(13,92,145,0.22) 0%, transparent 55%), radial-gradient(ellipse 55% 70% at 6% 90%, rgba(34,197,94,0.05) 0%, transparent 50%)',
+      }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.div variants={container} initial="hidden" animate="visible" className="max-w-3xl">
+      {/* Fade bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none" style={{
+        background: 'linear-gradient(to bottom, transparent 0%, #021829 100%)',
+        zIndex: 2,
+      }} />
 
-          {/* Eyebrow */}
-          <motion.div variants={item} className="v2-eyebrow">
-            <span className="v2-eyebrow-num">01</span>
-            <span className="v2-eyebrow-line" />
-            <span className="v2-eyebrow-label">Portafolio · Casos reales</span>
-          </motion.div>
+      <div className="v2-hero-inner">
+        <div className="v2-hero-grid">
 
-          {/* Headline */}
-          <motion.h1 variants={item} className="v2-h1">
-            Resultados reales.
-            <br />
-            <span className="accent">Sin nombres. Con números.</span>
-          </motion.h1>
+          {/* ── LEFT: Copy ─────────────────────────────────────── */}
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="visible"
+          >
+            {/* Pill badge */}
+            <motion.div variants={item} style={{ marginBottom: '1.875rem' }}>
+              <span className="pill-badge">
+                Portafolio de proyectos &nbsp;·&nbsp; Casos reales con métricas
+              </span>
+            </motion.div>
 
-          {/* Subtitle */}
-          <motion.p variants={item} className="v2-body mb-8 max-w-[58ch]">
-            Agua, gas y electricidad optimizados en empresas, hoteles, centros
-            deportivos e industrias a lo largo del país. Proyectos ejecutados,
-            medidos y documentados.
-          </motion.p>
+            {/* Eyebrow */}
+            <motion.div variants={item} className="v2-eyebrow">
+              <span className="v2-eyebrow-num">01</span>
+              <span className="v2-eyebrow-line" />
+              <span className="v2-eyebrow-label">Portafolio · Casos reales</span>
+            </motion.div>
 
-          {/* Vertical legend dots */}
-          <motion.div variants={item} className="flex items-center gap-5 mb-12">
-            {VERTICAL_DOTS.map((d) => (
-              <div key={d.label} className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full shrink-0" style={{ background: d.color }} />
-                <span className="v2-mono-label">{d.label}</span>
+            {/* Headline */}
+            <motion.h1 variants={item} className="v2-h1">
+              Resultados reales.
+              <br />
+              <span className="accent">Sin nombres. Con números.</span>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p variants={item} className="hero-sub" style={{ marginBottom: '2.25rem' }}>
+              Agua, gas y electricidad optimizados en empresas, hoteles, centros
+              deportivos e industrias a lo largo del país. Medidos y documentados.
+            </motion.p>
+
+            {/* Vertical legend + CTAs */}
+            <motion.div variants={item} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {/* Vertical dots */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                {[
+                  { color: '#22c55e', label: 'Electricidad' },
+                  { color: '#3b82f6', label: 'Agua' },
+                  { color: '#f97316', label: 'Gas térmico' },
+                ].map((d) => (
+                  <div key={d.label} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ width: 7, height: 7, borderRadius: '50%', background: d.color, flexShrink: 0, display: 'block' }} />
+                    <span className="v2-mono-label">{d.label}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </motion.div>
 
-          {/* Engineering spec grid */}
-          <motion.div variants={item} className="v2-spec-grid">
-            {USTEDES_METRICS.map((m) => (
-              <div key={m.label} className="v2-spec-cell">
-                <p className="v2-spec-value tabular-nums">
-                  {m.prefix}
-                  <AnimatedCounter value={parseFloat(m.value)} decimals={m.value % 1 !== 0 ? 1 : 0} />
-                  {m.suffix}
-                </p>
-                <p className="v2-spec-label">{m.label}</p>
+              {/* CTAs */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.875rem' }}>
+                <Link href="/contacto" className="btn-primary">
+                  Solicitar análisis estratégico
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </Link>
+                <Link href="#electricidad" className="btn-secondary">
+                  Ver proyectos
+                </Link>
               </div>
-            ))}
+            </motion.div>
           </motion.div>
 
+          {/* ── RIGHT: Stats card ───────────────────────────────── */}
+          <motion.div
+            className="hidden lg:block"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="stats-card">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.375rem' }}>
+                <span className="live-label">Impacto acumulado · Portafolio activo</span>
+                <div className="en-vivo-badge">
+                  <span className="en-vivo-dot" />
+                  En vivo
+                </div>
+              </div>
+
+              <div style={{ marginBottom: '0.5rem' }}>
+                <div className="co2-value">$23.5M</div>
+                <div className="co2-unit">MXN en OPEX optimizado / año</div>
+              </div>
+
+              <div className="card-divider" />
+
+              <div className="metrics-grid">
+                <div>
+                  <div className="metric-value">9+</div>
+                  <div className="metric-label">Proyectos<br/>documentados</div>
+                </div>
+                <div>
+                  <div className="metric-value">3</div>
+                  <div className="metric-label">Verticales<br/>activos</div>
+                </div>
+                <div>
+                  <div className="metric-value">−2,195t</div>
+                  <div className="metric-label">CO₂<br/>reducidas</div>
+                </div>
+              </div>
+
+              <div className="card-divider" />
+
+              <Link href="/contacto" className="card-link">
+                <span>Analizar mi operación</span>
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </Link>
+            </div>
+          </motion.div>
+
+        </div>
+
+        {/* ── Marquee strips ─────────────────────────────────────── */}
+        <motion.div
+          className="marquee-strips-wrapper"
+          style={{ marginTop: '3.5rem' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.55 }}
+        >
+          <div className="strip-header marquee-strip-label">
+            <div className="strip-line" />
+            <span className="strip-label">Industrias que operamos</span>
+            <div className="strip-line" />
+          </div>
+
+          <div className="marquee-row" style={{ marginBottom: '0.625rem' }}>
+            <div className="marquee-track marquee-track--left">
+              {[...INDUSTRY_ITEMS, ...INDUSTRY_ITEMS].map((c, i) => (
+                <div key={i} className="mq-text-card" aria-hidden={i >= INDUSTRY_ITEMS.length}>
+                  <span className="mq-text-card-dot" style={{ background: c.dot }} />
+                  <span className="mq-text-card-label">{c.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="strip-header marquee-strip-label" style={{ marginTop: '1.25rem' }}>
+            <div className="strip-line" />
+            <span className="strip-label">Proyectos ejecutados · Métricas reales</span>
+            <div className="strip-line" />
+          </div>
+
+          <div className="marquee-row">
+            <div className="marquee-track marquee-track--right">
+              {[...METRIC_ITEMS, ...METRIC_ITEMS].map((c, i) => (
+                <div key={i} className="mq-text-card" aria-hidden={i >= METRIC_ITEMS.length}>
+                  <span className="mq-text-card-dot" style={{ background: c.dot }} />
+                  <span className="mq-text-card-label">{c.label}</span>
+                  <span className="mq-text-card-num">{c.num}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
+
       </div>
     </section>
   )

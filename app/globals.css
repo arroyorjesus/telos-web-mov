@@ -1095,15 +1095,16 @@ img { display: block; max-width: 100%; }
   color: rgba(255,255,255,0.45);
 }
 
-/* ── Hero heading (dark) ─────────────────────────────────────── */
+/* ── Hero heading (dark inner pages — matches Inicio .hero-h1) ── */
 .v2-h1 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2.625rem, 5.5vw, 4rem);
+  font-size: clamp(2.875rem, 6vw, 5.25rem);
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.03;
   letter-spacing: -0.04em;
   color: #ffffff;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.625rem;
+  text-wrap: balance;
 }
 .v2-h1 .accent { color: var(--blue-light); }
 
@@ -1265,3 +1266,48 @@ img { display: block; max-width: 100%; }
   color: rgba(255,255,255,0.42);
   line-height: 1.4;
 }
+
+/* ── Text-only marquee card (inner page heroes, no images needed) ─ */
+.mq-text-card {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.6875rem 1.125rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 0.875rem;
+  white-space: nowrap;
+  cursor: inherit;
+}
+.mq-text-card-dot {
+  width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
+}
+.mq-text-card-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8125rem; font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.01em;
+}
+.mq-text-card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.625rem; font-weight: 600;
+  color: rgba(255,255,255,0.22);
+  letter-spacing: 0.1em;
+}
+
+/* ── Inner-page hero grid (matches Inicio .hero-grid split) ───── */
+.v2-hero-inner {
+  position: relative; z-index: 10;
+  max-width: 1280px; margin: 0 auto;
+  padding: 8rem 2.5rem 2.5rem; width: 100%;
+  display: flex; flex-direction: column;
+}
+.v2-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+@media (min-width: 1024px) { .v2-hero-grid { grid-template-columns: 1.25fr 0.75fr; } }
+@media (max-width: 480px) { .v2-hero-inner { padding: 7rem 1.25rem 2rem; } }
