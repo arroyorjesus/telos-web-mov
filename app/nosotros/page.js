@@ -8,9 +8,9 @@ import JsonLd from '@/components/ui/JsonLd'
 import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo'
 
 export const metadata = buildMetadata({
-  title: 'Nosotros — Ingeniería de capital energético',
+  title: 'Empresa de Ingeniería Energética Certificada',
   description:
-    'Firma de ingeniería energética desde 2017. Transformamos el gasto ineficiente en utilidad neta. Desarrollamos activos en agua, gas y electricidad que se pagan solos. Cobertura nacional.',
+    'Firma de ingeniería energética con +9 años en México. Cuadrillas propias certificadas NOM/ANCE/STPS. Activos en agua, gas y electricidad que se pagan solos. Cobertura nacional.',
   path: '/nosotros',
 })
 

@@ -7,9 +7,9 @@ import JsonLd from '@/components/ui/JsonLd'
 import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo'
 
 export const metadata = buildMetadata({
-  title: 'Ustedes — Casos reales de ahorro energético',
+  title: 'Solar, BESS y Tratamiento de Agua: Casos Reales',
   description:
-    'Proyectos reales de eficiencia energética con números, sin nombres. Agua, gas y electricidad optimizados en hoteles, industrias y corporativos en todo México.',
+    'Proyectos en hoteles, industrias, corporativos y casas de alto consumo: solar, BESS, calderas y tratamiento de agua. TELOS, empresa confiable de ingeniería energética en México.',
   path: '/ustedes',
 })
 

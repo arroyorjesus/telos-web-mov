@@ -9,9 +9,9 @@ import JsonLd from '@/components/ui/JsonLd'
 import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo'
 
 export const metadata = buildMetadata({
-  title: 'Ellos — Comparativa del mercado energético',
+  title: 'Comparativa de Proveedores Energéticos en México',
   description:
-    'El mercado tiene muchas opciones. Pocas resuelven el problema completo. Compara a TELOS con proveedores de solar, equipo y plataformas digitales antes de decidir.',
+    'Proveedores que resuelven agua, gas y electricidad con ahorro real. Financiamiento y arrendamiento disponibles. Ingeniería integral certificada NOM/ANCE vs proveedores de una sola vertical.',
   path: '/ellos',
 })
 
