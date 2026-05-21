@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const CO2_BASE  = 2195.26
 const CO2_EPOCH = new Date('2026-05-05T06:00:00Z').getTime()
@@ -35,7 +36,14 @@ function MarqueeCard({ card, type }) {
   const cls = type === 'spec' ? 'mq-spec-card' : 'mq-ind-card'
   return (
     <div className={cls}>
-      <img className="mq-card-img" src={card.img} alt={card.tag} loading="lazy"/>
+      <Image
+        className="mq-card-img"
+        src={card.img}
+        alt={card.tag}
+        fill
+        sizes="260px"
+        style={{ objectFit: 'cover' }}
+      />
       <div className="mq-card-tint" style={{ background: card.tint }}></div>
       <div className="mq-card-gradient"></div>
       <div className="mq-card-label">

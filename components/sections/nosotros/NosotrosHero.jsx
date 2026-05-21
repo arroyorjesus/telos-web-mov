@@ -41,16 +41,10 @@ const item = {
 
 export default function NosotrosHero() {
   return (
-    <section className="relative overflow-hidden bg-[#021829]" style={{ minHeight: '100dvh' }}>
+    <section className="relative overflow-hidden inner-hero-bg" style={{ minHeight: '100dvh' }}>
 
-      {/* Blueprint grid */}
-      <div
-        className="v2-blueprint"
-        style={{
-          maskImage: 'radial-gradient(ellipse 80% 75% at 18% 28%, #000 0%, transparent 72%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 80% 75% at 18% 28%, #000 0%, transparent 72%)',
-        }}
-      />
+      {/* Dot pattern — igual que Inicio */}
+      <div className="hero-dots" />
 
       {/* Ambient glows — same pattern as home hero */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -96,8 +90,8 @@ export default function NosotrosHero() {
 
             {/* Subtitle */}
             <motion.p variants={item} className="hero-sub" style={{ marginBottom: '2.25rem' }}>
-              Ingeniería aplicada al margen operativo — agua, gas y electricidad —
-              con visión técnica, financiera y de largo plazo.
+              Ingeniería aplicada a la rentabilidad: transformamos el gasto ineficiente
+              en utilidad neta mediante la optimización de activos críticos.
             </motion.p>
 
             {/* CTAs */}
@@ -123,7 +117,7 @@ export default function NosotrosHero() {
           >
             <div className="stats-card">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.375rem' }}>
-                <span className="live-label">Capacidad operativa · Portafolio</span>
+                <span className="live-label">Patrimonio Energético Optimizado</span>
                 <div className="en-vivo-badge" style={{ borderColor: 'rgba(43,143,212,0.35)', background: 'rgba(43,143,212,0.10)', color: 'var(--blue-light)' }}>
                   <span className="en-vivo-dot" style={{ background: 'var(--blue-light)', boxShadow: '0 0 6px rgba(43,143,212,0.7)' }} />
                   Activo
@@ -131,22 +125,22 @@ export default function NosotrosHero() {
               </div>
 
               <div style={{ marginBottom: '0.5rem' }}>
-                <div className="co2-value" style={{ color: 'var(--blue-light)', fontSize: 'clamp(2.5rem, 4vw, 3.5rem)' }}>
-                  +150
+                <div className="co2-value" style={{ color: 'var(--blue-light)', fontSize: 'clamp(2.2rem, 3.5vw, 3rem)' }}>
+                  +$450M
                 </div>
-                <div className="co2-unit">proyectos de infraestructura ejecutados</div>
+                <div className="co2-unit">MXN en ahorro operativo generado para clientes</div>
               </div>
 
               <div className="card-divider" />
 
               <div className="metrics-grid">
                 <div>
-                  <div className="metric-value">2017</div>
-                  <div className="metric-label">Año de<br/>fundación</div>
+                  <div className="metric-value">+150</div>
+                  <div className="metric-label">Proyectos<br/>ejecutados</div>
                 </div>
                 <div>
-                  <div className="metric-value">8</div>
-                  <div className="metric-label">Cuadrillas<br/>en campo</div>
+                  <div className="metric-value">2017</div>
+                  <div className="metric-label">Fundación<br/>firma</div>
                 </div>
                 <div>
                   <div className="metric-value">≤36m</div>

@@ -1,23 +1,28 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import SectionHeader from '@/components/ui/SectionHeader'
 import { StaggerContainer, fadeUpItem } from '@/components/ui/MotionWrapper'
 import { MARKET_PLAYERS } from '@/data/comparisons'
 
 export default function PanoramaMercado() {
   return (
-    <section className="relative bg-slate-50 py-section overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+    <section className="relative py-section overflow-hidden">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          badge="Panorama del mercado"
-          badgeVariant="white"
-          title="¿Qué tipo de empresa estás evaluando?"
-          subtitle={null}
-          className="mb-12"
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12 max-w-2xl"
+        >
+          <span className="section-badge badge-blue" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+            Panorama del mercado
+          </span>
+          <h2 className="section-h2">
+            ¿Qué tipo de empresa estás evaluando?
+          </h2>
+        </motion.div>
 
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {MARKET_PLAYERS.map((player) => (

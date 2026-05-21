@@ -127,9 +127,9 @@ export default function Footer() {
               </li>
               <li>
                 <p className="text-sm text-white/35 leading-snug">
-                  Pedregal 44, PH.<br />
+                  Vosgos 230-B,<br />
                   Lomas de Chapultepec,<br />
-                  CDMX, 11000
+                  Miguel Hidalgo, CDMX, 11000
                 </p>
               </li>
             </ul>

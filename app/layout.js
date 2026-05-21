@@ -1,6 +1,7 @@
 import './globals.css'
 import { SITE } from '@/data/site'
-import { SCHEMA_ORGANIZATION } from '@/lib/seo'
+import { SCHEMA_BUSINESS, OG_IMAGE } from '@/lib/seo'
+import JsonLd from '@/components/ui/JsonLd'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import GlossaryPanel from '@/components/ui/GlossaryPanel'
@@ -14,18 +15,20 @@ export const metadata = {
   },
   description:
     'Diseñamos e implementamos proyectos de eficiencia energética en electricidad, gas térmico y agua para hoteles, industrias y empresas con alto consumo. Diagnóstico técnico gratuito.',
+  alternates: { canonical: SITE.url },
   keywords: [
     'eficiencia energética',
-    'ahorro energético',
+    'ahorro energético empresas',
     'paneles solares industriales',
     'calderas de condensación',
-    'tratamiento de agua',
+    'tratamiento de agua industrial',
     'fotovoltaico México',
     'ROI energético',
     'ahorro en CFE',
   ],
   authors: [{ name: 'TELOS', url: SITE.url }],
   creator: 'TELOS',
+  publisher: 'TELOS',
   openGraph: {
     type: 'website',
     locale: 'es_MX',
@@ -34,14 +37,14 @@ export const metadata = {
     title: 'TELOS | Eficiencia energética integral para empresas en México',
     description:
       'Eficiencia energética en agua, gas y electricidad para hoteles, industrias y corporativos. Diagnóstico gratuito.',
-    images: [{ url: `${SITE.url}/opengraph-image`, width: 1200, height: 630, alt: 'TELOS — Eficiencia energética integral' }],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'TELOS | Eficiencia energética integral',
     description:
       'Eficiencia energética en agua, gas y electricidad para empresas en México.',
-    images: [`${SITE.url}/opengraph-image`],
+    images: [OG_IMAGE.url],
   },
   robots: {
     index: true,
@@ -54,27 +57,16 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
-  },
-  icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.png', type: 'image/png' },
-    ],
-    shortcut: '/favicon.svg',
-    apple: '/favicon.png',
-  },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="es-MX">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA_ORGANIZATION) }}
-        />
+        <JsonLd data={SCHEMA_BUSINESS} />
       </head>
       <body>
         <RevealObserver />

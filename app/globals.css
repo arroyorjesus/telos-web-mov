@@ -280,6 +280,83 @@ img { display: block; max-width: 100%; }
 }
 @keyframes bg-breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.85; } }
 @media (prefers-reduced-motion: reduce) { .hero-bg { animation: none; } }
+
+/* ── Fondo páginas internas — navy profundo → azul medio (Nosotros, Ustedes, Ellos) ── */
+/* Inspirado en home hero pero sin animación. Skill: Dark OLED + Aurora subtle           */
+.inner-hero-bg {
+  background:
+    radial-gradient(ellipse 95% 55% at 72% 10%, rgba(13,92,145,0.22) 0%, transparent 58%),
+    radial-gradient(ellipse 50% 65% at  5% 90%, rgba(4,36,61,0.40)   0%, transparent 52%),
+    radial-gradient(ellipse 70% 45% at 50% 55%, rgba(4,36,61,0.50)   0%, transparent 68%),
+    linear-gradient(168deg, #021829 0%, #052d4a 48%, #031e35 78%, #021829 100%);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GRADIENT LINEAL COMPLETO — Nosotros · Ustedes · Ellos
+   Skill: Dark OLED + Aurora subtle. Oscuro → azul medio #0d5c91 sin colores
+   claros. El gradiente frena en #0d5c91 y se queda ahí (no sigue aclarando).
+──────────────────────────────────────────────────────────────────────────── */
+.page-dark-gradient {
+  background: linear-gradient(
+    to bottom,
+    #021829   0%,    /* start — navy profundo */
+    #021829  12%,    /* zona hero sin transición */
+    #031e35  30%,    /* primera transición */
+    #042844  50%,    /* transición media */
+    #073d5e  72%,    /* desaceleración */
+    #084d7a  88%,    /* tono de llegada — entre #073d5e y #0d5c91 */
+    #084d7a 100%     /* se queda aquí */
+  );
+}
+
+/* Todas las secciones hijas directas → transparentes */
+.page-dark-gradient > section {
+  background: transparent !important;
+}
+
+/* ── Clases de sección con background propio en CSS → transparentes ── */
+.page-dark-gradient .results-section    { background: transparent !important; }
+.page-dark-gradient .final-cta-section { background: transparent !important; }
+
+/* ── Suprimir líneas 1px entre secciones (decorativas en fondos sólidos) ── */
+.page-dark-gradient section > div.absolute.h-px { display: none !important; }
+
+/* ── Ustedes: results-section — texto que estaba oscuro sobre blanco ── */
+.page-dark-gradient .section-h2          { color: #ffffff !important; }
+.page-dark-gradient .section-sub         { color: rgba(255,255,255,0.60) !important; }
+.page-dark-gradient .results-statbar     { border-top-color: rgba(255,255,255,0.10) !important; }
+.page-dark-gradient .results-statbar-num { color: #ffffff !important; }
+.page-dark-gradient .results-statbar-label { color: rgba(255,255,255,0.45) !important; }
+
+/* ── Ellos: secciones con texto oscuro (slate) → blanco sobre gradiente ── */
+.page-dark-gradient .text-slate-900 { color: rgba(255,255,255,0.92) !important; }
+.page-dark-gradient .text-slate-800 { color: rgba(255,255,255,0.85) !important; }
+.page-dark-gradient .text-slate-700 { color: rgba(255,255,255,0.78) !important; }
+.page-dark-gradient .text-slate-600 { color: rgba(255,255,255,0.62) !important; }
+.page-dark-gradient .text-slate-500 { color: rgba(255,255,255,0.52) !important; }
+.page-dark-gradient .text-slate-400 { color: rgba(255,255,255,0.42) !important; }
+
+/* text-display (Ellos CTA h2) */
+.page-dark-gradient .text-display       { color: rgba(255,255,255,0.95) !important; }
+
+/* Badges claros → glass oscuro */
+.page-dark-gradient .bg-slate-100       { background: rgba(255,255,255,0.08) !important; }
+.page-dark-gradient .border-slate-200   { border-color: rgba(255,255,255,0.14) !important; }
+.page-dark-gradient .border-slate-100   { border-color: rgba(255,255,255,0.09) !important; }
+.page-dark-gradient .text-slate-600.text-xs { color: rgba(255,255,255,0.65) !important; }
+
+/* Light cards (Ellos BeneficiosIntegral, EscenariosReales) */
+.page-dark-gradient .light-card {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+
+/* Separadores slate */
+.page-dark-gradient .via-slate-200 { --tw-gradient-via: rgba(255,255,255,0.12) !important; }
+
+/* Table rows alternos */
+.page-dark-gradient .bg-slate-50  { background: rgba(255,255,255,0.04) !important; }
+
 .hero-dots {
   position: absolute; inset: 0; pointer-events: none;
   background-image: radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px);
@@ -311,7 +388,7 @@ img { display: block; max-width: 100%; }
 }
 .hero-h1 {
   font-family: 'Space Grotesk', sans-serif; font-weight: 800;
-  font-size: clamp(3rem, 6.5vw, 6rem); line-height: 1.0;
+  font-size: clamp(2.875rem, 6vw, 5.25rem); line-height: 1.03;
   letter-spacing: -0.04em; color: #ffffff; text-wrap: balance;
 }
 .hero-h1 .accent { color: var(--blue); }
@@ -939,10 +1016,10 @@ img { display: block; max-width: 100%; }
   transition: box-shadow 0.25s var(--ease-out), border-color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) { .result-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.07); border-color: #cbd5e1; transform: translateY(-2px); } }
-.result-card-hero { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr; gap: 2.5rem; align-items: center; padding: 2rem 2rem 2rem 2.375rem; }
+.result-card-hero { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(240px, auto) 1fr; gap: 2.5rem; align-items: center; padding: 2rem 2rem 2rem 2.375rem; }
 .result-card-hero .result-metric { font-size: clamp(3rem, 5vw, 4.5rem); }
 .result-card-hero .result-metric-sub { font-size: 0.875rem; margin-bottom: 0; }
-.result-card-hero .result-hero-left { min-width: 200px; }
+.result-card-hero .result-hero-left { min-width: 240px; }
 .result-card-hero .result-desc { font-size: 0.875rem; }
 @media (max-width: 640px) { .result-card-hero { grid-template-columns: 1fr; gap: 1rem; } }
 .result-card-bar { position: absolute; top: 0; left: 0; bottom: 0; width: 3px; }
@@ -1012,37 +1089,236 @@ img { display: block; max-width: 100%; }
 .final-cta-trust-check { color: rgba(45,128,42,0.7); flex-shrink: 0; }
 
 /* ─────────────────────────────────────────
-   GLOSSARY
+   GLOSSARY — Glosario contextual inteligente
+   Botón flotante fijo bottom-right.
+   Filtra términos según usePathname().
+   Bg: #05080a · Accent: #0d5c91 · Terms: #2d802a
 ───────────────────────────────────────── */
+
+/* ── Botón flotante ── */
 .gloss-btn {
   position: fixed;
   bottom: max(1.75rem, calc(env(safe-area-inset-bottom) + 0.75rem));
-  right:  max(1.75rem, env(safe-area-inset-right));
-  z-index: 300; background: #fff; border: none;
-  border-radius: 2rem; padding: 0.5rem 1rem;
-  font-family: 'Outfit', sans-serif; font-size: 0.8125rem; font-weight: 600; color: #0d5c91;
-  cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-  display: flex; align-items: center; gap: 0.375rem;
-  touch-action: manipulation; transition: transform 220ms ease, box-shadow 220ms ease;
+  right: max(1.75rem, env(safe-area-inset-right));
+  z-index: 400;
+  background: #05080a;
+  border: 1px solid rgba(13,92,145,0.35);
+  border-radius: 2rem;
+  padding: 0.45rem 0.75rem 0.45rem 0.875rem;
+  font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 600;
+  color: rgba(255,255,255,0.70);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 0.4rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);
+  touch-action: manipulation;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, color 200ms ease;
 }
-.gloss-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.14); }
+.gloss-btn:hover,
+.gloss-btn-active {
+  color: rgba(255,255,255,0.92);
+  border-color: rgba(13,92,145,0.65);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.50), 0 0 0 1px rgba(13,92,145,0.22), inset 0 1px 0 rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+.gloss-btn:active { transform: translateY(0) scale(0.98); }
+
+/* Badge numérico en el botón */
+.gloss-btn-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem; font-weight: 700;
+  line-height: 1;
+  color: #2d802a;
+  background: rgba(45,128,42,0.12);
+  border: 1px solid rgba(45,128,42,0.22);
+  border-radius: 100px;
+  padding: 0.1rem 0.38rem;
+}
+
+/* ── Panel flotante ── */
 .gloss-panel {
   position: fixed;
-  bottom: max(4.5rem, calc(env(safe-area-inset-bottom) + 3rem));
+  bottom: max(4.25rem, calc(env(safe-area-inset-bottom) + 2.75rem));
   right: max(1.75rem, env(safe-area-inset-right));
-  z-index: 299; background: #fff; border: 1px solid #e2e8f0; border-radius: 1rem;
-  padding: 1rem 1.25rem; width: 272px; max-height: 70vh;
-  overflow-y: auto; -webkit-overflow-scrolling: touch;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.13);
-  opacity: 0; transform: translateY(10px); pointer-events: none;
-  transition: opacity 240ms ease, transform 240ms ease;
+  z-index: 399;
+  background: #05080a;
+  border: 1px solid rgba(13,92,145,0.28);
+  border-radius: 1rem;
+  width: 320px;
+  max-height: 74vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.65),
+    0 0 0 1px rgba(13,92,145,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 260ms cubic-bezier(0.16,1,0.3,1), transform 260ms cubic-bezier(0.16,1,0.3,1);
 }
-.gloss-panel.gloss-open { opacity: 1; transform: translateY(0); pointer-events: auto; }
-@media (max-width: 400px) { .gloss-panel { right: 1rem; width: calc(100vw - 2rem); } .gloss-btn { right: 1rem; } }
-.gloss-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.875rem; font-weight: 700; color: #0f172a; margin-bottom: 0.625rem; padding-bottom: 0.5rem; border-bottom: 1px solid #f1f5f9; }
-.gloss-item { margin-bottom: 0.5rem; }
-.gloss-term { font-family: 'JetBrains Mono', monospace; font-size: 0.7375rem; font-weight: 700; color: #0d5c91; }
-.gloss-def { font-family: 'Outfit', sans-serif; font-size: 0.7875rem; color: #64748b; line-height: 1.4; margin-top: 0.05rem; }
+.gloss-panel.gloss-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* ── Header ── */
+.gloss-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.875rem 0.625rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+  background: rgba(13,92,145,0.06);
+}
+.gloss-panel-header-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+  background: rgba(13,92,145,0.15);
+  color: rgba(13,92,145,0.8);
+}
+.gloss-panel-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.78rem; font-weight: 700;
+  color: rgba(255,255,255,0.88);
+  letter-spacing: -0.01em;
+}
+.gloss-panel-count {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.52rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(13,92,145,0.80);
+  background: rgba(13,92,145,0.12);
+  border: 1px solid rgba(13,92,145,0.20);
+  border-radius: 100px;
+  padding: 0.15rem 0.5rem;
+  white-space: nowrap;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Body scrollable ── */
+.gloss-panel-body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+.gloss-panel-body::-webkit-scrollbar { width: 3px; }
+.gloss-panel-body::-webkit-scrollbar-track { background: transparent; }
+.gloss-panel-body::-webkit-scrollbar-thumb { background: rgba(13,92,145,0.25); border-radius: 2px; }
+
+/* ── Categoría ── */
+.gloss-cat { border-bottom: 1px solid rgba(255,255,255,0.05); }
+.gloss-cat-btn {
+  width: 100%; display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 0.875rem;
+  background: transparent; border: none; cursor: pointer;
+  transition: background 160ms ease;
+}
+.gloss-cat-btn:hover { background: rgba(13,92,145,0.07); }
+.gloss-cat-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.575rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.13em;
+  color: rgba(255,255,255,0.35);
+}
+.gloss-cat-count-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.53rem;
+  color: rgba(13,92,145,0.55);
+}
+
+/* ── Términos ── */
+.gloss-cat-terms { padding: 0 0 0.25rem; }
+.gloss-item {
+  padding: 0.5rem 0.875rem;
+  transition: background 140ms ease;
+  border-radius: 0;
+}
+.gloss-item:hover { background: rgba(13,92,145,0.06); }
+.gloss-item-head {
+  display: flex; align-items: center; gap: 0.4rem;
+  margin-bottom: 0.25rem;
+  flex-wrap: wrap;
+}
+
+/* Punto verde — término referenciado inline en la página */
+.gloss-inline-dot {
+  display: inline-block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #2d802a;
+  box-shadow: 0 0 5px rgba(45,128,42,0.55);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.gloss-term {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 700;
+  color: #2d802a;
+  letter-spacing: 0.03em;
+}
+.gloss-full-term {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.58rem;
+  color: rgba(255,255,255,0.22);
+  font-style: italic;
+}
+.gloss-def {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.685rem; line-height: 1.55;
+  color: rgba(255,255,255,0.45);
+  margin: 0;
+}
+
+/* ── Botón explorar / volver ── */
+.gloss-explore-wrap {
+  padding: 0.625rem 0.875rem 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.gloss-explore-btn {
+  width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 0.45rem 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(13,92,145,0.25);
+  border-radius: 0.5rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem; font-weight: 600;
+  color: rgba(13,92,145,0.75);
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+.gloss-explore-btn:hover {
+  background: rgba(13,92,145,0.10);
+  border-color: rgba(13,92,145,0.45);
+  color: rgba(13,92,145,1);
+}
+.gloss-explore-btn:active { transform: scale(0.98); }
+.gloss-explore-back {
+  color: rgba(255,255,255,0.35);
+  border-color: rgba(255,255,255,0.10);
+}
+.gloss-explore-back:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.20);
+  color: rgba(255,255,255,0.65);
+}
+
+/* ── Responsive ── */
+@media (max-width: 400px) {
+  .gloss-panel { right: 1rem; width: calc(100vw - 2rem); }
+  .gloss-btn   { right: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gloss-panel { transition: opacity 120ms ease; }
+  .gloss-btn   { transition: none; }
+}
 
 @media (max-width: 480px) {
   .final-cta-section { padding-left: 1.25rem; padding-right: 1.25rem; }

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import MapaCobertura from '@/components/ui/MapaCobertura'
 
 const CARDS = [
   {
@@ -60,11 +61,11 @@ export default function QuienesSomos() {
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
           >
-            {/* Eyebrow */}
-            <motion.div variants={item} className="v2-eyebrow">
-              <span className="v2-eyebrow-num">02</span>
-              <span className="v2-eyebrow-line" />
-              <span className="v2-eyebrow-label">Quiénes somos</span>
+            {/* Badge */}
+            <motion.div variants={item}>
+              <span className="section-badge badge-green" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+                Firma de ingeniería · Desde 2017
+              </span>
             </motion.div>
 
             {/* Headline */}
@@ -116,65 +117,14 @@ export default function QuienesSomos() {
             </motion.div>
           </motion.div>
 
-          {/* ── Right col — Presencia nacional panel ─────────────────────── */}
+          {/* ── Right col — Radar de Cobertura Nacional ──────────────────── */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-              {/* Header */}
-              <div className="flex items-center gap-2 mb-5">
-                <span className="font-mono text-[0.65rem] font-bold tracking-[0.2em] text-[var(--blue-light)]/60 uppercase">
-                  Cobertura
-                </span>
-                <span className="h-px flex-1 bg-white/10" />
-              </div>
-
-              <p className="font-grotesk font-bold text-white text-xl leading-snug mb-1">
-                República Mexicana
-              </p>
-              <p className="text-white/45 text-sm mb-6 leading-relaxed">
-                Cuadrillas activas en múltiples estados simultáneamente.
-              </p>
-
-              {/* State chips */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {STATES.map((s) => (
-                  <span
-                    key={s}
-                    className="border border-white/12 bg-white/[0.05] text-white/60 px-3 py-1.5 rounded-full text-xs font-mono font-medium tracking-wide"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-
-              {/* Operational capacity block */}
-              <div className="border border-white/10 bg-[#021829] rounded-xl p-4">
-                <p className="font-mono text-[0.65rem] font-bold tracking-[0.2em] text-white/35 uppercase mb-2">
-                  Capacidad operativa
-                </p>
-                <p className="text-sm text-white/60 leading-relaxed">
-                  Hasta <span className="text-white font-semibold">8 cuadrillas</span> de{' '}
-                  <span className="text-white font-semibold">6 personas</span> ejecutando
-                  instalaciones simultáneas bajo NOM e ISO.
-                </p>
-              </div>
-
-              {/* Bottom stat */}
-              <div className="mt-5 pt-5 border-t border-white/10 flex items-center justify-between">
-                <div>
-                  <p className="font-mono text-2xl font-bold text-white tabular-nums">+7</p>
-                  <p className="text-xs text-white/40 mt-0.5">Estados activos</p>
-                </div>
-                <div className="text-right">
-                  <p className="font-mono text-2xl font-bold text-[var(--blue-light)] tabular-nums">48</p>
-                  <p className="text-xs text-white/40 mt-0.5">Personas en campo</p>
-                </div>
-              </div>
-            </div>
+            <MapaCobertura />
           </motion.div>
 
         </div>

@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import SectionHeader from '@/components/ui/SectionHeader'
 import MotionWrapper from '@/components/ui/MotionWrapper'
 import { COMPARISON_CRITERIA } from '@/data/comparisons'
 
@@ -39,21 +38,71 @@ export default function TablaComparativa() {
     { label: 'Enfoque digital', highlight: false },
   ]
 
+  const cols = (row) => [
+    { label: 'TELOS', value: row.telos, highlight: true },
+    { label: 'Solo solar', value: row.solar, highlight: false },
+    { label: 'Proveedor equipo', value: row.equipo, highlight: false },
+    { label: 'Enfoque digital', value: row.digital, highlight: false },
+  ]
+
   return (
-    <section className="relative bg-white py-section overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+    <section id="comparativa" className="relative py-section overflow-hidden scroll-mt-24">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          badge="Comparativa"
-          badgeVariant="white"
-          title="Criterios que importan — sin rodeos."
-          subtitle="Comparativa basada en oferta pública de mercado. Mayo 2026."
-          className="mb-12"
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12 max-w-2xl"
+        >
+          <span className="section-badge badge-blue" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+            Comparativa
+          </span>
+          <h2 className="section-h2" style={{ marginBottom: '0.875rem' }}>
+            Criterios que importan — sin rodeos.
+          </h2>
+          <p className="section-sub">
+            Comparativa basada en oferta pública de mercado. Mayo 2026.
+          </p>
+        </motion.div>
 
         <MotionWrapper preset="fadeUp" delay={0.2}>
-          <div className="overflow-x-auto">
+          {/* ── Mobile: stacked cards (toda la data visible, sin scroll horizontal) ── */}
+          <div className="md:hidden flex flex-col gap-3">
+            {COMPARISON_CRITERIA.map((row) => (
+              <div
+                key={row.label}
+                className="rounded-xl border border-white/10 bg-white/[0.04] p-4"
+              >
+                <p className="text-sm font-semibold text-white mb-3">{row.label}</p>
+                <div className="grid grid-cols-2 gap-2.5">
+                  {cols(row).map((c) => (
+                    <div
+                      key={c.label}
+                      className={`flex items-center gap-2 rounded-lg px-2.5 py-2 ${
+                        c.highlight
+                          ? 'bg-[#0d5c91]/10 border border-[#0d5c91]/25'
+                          : 'bg-white/[0.03] border border-white/[0.06]'
+                      }`}
+                    >
+                      <Check value={c.value} />
+                      <span
+                        className={`text-xs leading-tight ${
+                          c.highlight ? 'text-[#0d5c91] font-semibold' : 'text-white/55'
+                        }`}
+                      >
+                        {c.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Desktop / tablet: tabla ── */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full min-w-[640px]">
               <thead>
                 <tr>

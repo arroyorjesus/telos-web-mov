@@ -3,57 +3,65 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SERVICES } from '@/data/services'
+import GlossaryTerm from '@/components/ui/GlossaryTerm'
 
-const PROCESS = {
+// Estado A → Estado B: el antes/después que ve el Gerente de Operaciones
+const PROCESO = {
   agua: {
+    estadoA: 'Dependencia y riesgo de desabasto',
+    estadoB: 'Autonomía hídrica total',
     pasos: [
-      'Diagnóstico integral de consumos actuales y puntos de fuga',
-      'Diseño de sistemas de captación, tratamiento y reuso',
-      'Instalación con tecnología de ósmosis y filtración avanzada',
-      'Monitoreo en tiempo real del consumo y calidad del agua',
+      { antes: 'Dependencia total del suministro municipal', despues: 'Sistema autónomo: ósmosis, captación y reuso propio' },
+      { antes: 'Costo recurrente de pipas de agua ($X / mes)', despues: 'Ahorro en logística hídrica desde el primer mes' },
+      { antes: 'Riesgo sanitario y paros operativos por desabasto', despues: 'Cero paros · Calidad normada · NOM garantizada' },
+      { antes: 'Sin monitoreo ni control de consumo', despues: 'Telemetría en tiempo real del consumo y calidad' },
     ],
     resultados: [
-      { value: '40–80%', label: 'reducción en consumo de agua' },
-      { value: '100%', label: 'independencia del suministro municipal' },
-      { value: '0', label: 'paros por desabasto' },
-      { value: 'NOM', label: 'cumplimiento normativo garantizado' },
+      { value: '40–80%', label: 'reducción en costo hídrico operativo' },
+      { value: '100%', label: 'autonomía del suministro municipal' },
+      { value: '0',     label: 'paros por desabasto' },
+      { value: '≤36m',  label: 'payback garantizado por contrato' },
     ],
   },
   gas: {
+    estadoA: 'Activos obsoletos y fuga de calor',
+    estadoB: 'Sistemas de alta eficiencia que se pagan solos',
     pasos: [
-      'Auditoría de sistemas térmicos y puntos de pérdida de calor',
-      'Diseño e instalación de calderas de condensación eficientes',
-      'Integración de heat pumps y recuperadores de calor',
-      'Optimización de procesos térmicos y ACS',
+      { antes: 'Calderas viejas con eficiencia térmica < 70%', despues: 'Calderas de condensación: eficiencia > 95%' },
+      { antes: 'Fuga de calor no recuperada = dinero que se escapa', despues: 'Recuperadores de calor: desperdicio cero' },
+      { antes: 'Factura de gas absorbida como costo fijo', despues: 'El ahorro generado paga la inversión completa' },
+      { antes: 'Sin datos de consumo térmico por zona', despues: 'Monitoreo SCADA por zona y por equipo' },
     ],
     resultados: [
       { value: '30–99%', label: 'ahorro en factura de gas' },
-      { value: 'Cero', label: 'emisiones directas en algunos casos' },
-      { value: '+25%', label: 'vida útil de equipos' },
-      { value: '24/7', label: 'continuidad operativa térmica' },
+      { value: '>95%',   label: 'eficiencia térmica post-instalación' },
+      { value: '0',      label: 'desperdicio térmico residual' },
+      { value: '≤36m',   label: 'payback garantizado por contrato' },
     ],
   },
   electricidad: {
+    estadoA: 'Tarifas variables e incertidumbre de CFE',
+    estadoB: 'Costo energético bajo control total',
     pasos: [
-      'Auditoría energética y mapeo de cargas eléctricas',
-      'Diseño de sistemas fotovoltaicos a medida',
-      'Instalación de BESS (baterías de almacenamiento)',
-      'Optimización de demanda y factor de potencia',
+      { antes: 'Tarifa horaria y cargos por demanda impredecibles', despues: 'Costo por kWh fijo y predecible con generación propia' },
+      { antes: 'Apagones de red detienen la operación', despues: 'BESS garantiza continuidad ante cortes de red' },
+      { antes: '100% de dependencia de CFE = pasivo estructural', despues: 'Hasta 90% de reducción en factura CFE' },
+      { antes: 'Cero visibilidad del consumo eléctrico por área', despues: 'Dashboard en tiempo real: consumo, generación, ahorro' },
     ],
     resultados: [
-      { value: '≤36m', label: 'payback garantizado' },
-      { value: '100%', label: 'independencia posible de CFE' },
-      { value: '0', label: 'cargos por demanda eliminados' },
-      { value: '24/7', label: 'monitoreo en tiempo real' },
+      { value: '≤36m',  label: 'payback garantizado por contrato' },
+      { value: '−90%',  label: 'reducción máxima en factura CFE' },
+      { value: '0',     label: 'cargos por demanda tras optimización' },
+      { value: '24/7',  label: 'continuidad operativa con BESS' },
     ],
   },
 }
 
-// Accent colors per vertical
+// Colores Telos por vertical
 const ACCENT = {
-  agua: '#3b82f6',
-  gas: '#f97316',
-  electricidad: '#22c55e',
+  agua:         '#0d5c91',  // Azul Telos
+  gas:          '#f97316',  // Naranja Telos
+  electricidad: '#2d802a',  // Verde Telos
 }
 
 // SVG icons per vertical
@@ -85,7 +93,7 @@ const contentVariants = {
 export default function SolucionesInteractivas() {
   const [selected, setSelected] = useState('agua')
   const service  = SERVICES.find(s => s.id === selected)
-  const process  = PROCESS[selected]
+  const proceso  = PROCESO[selected]
   const accent   = ACCENT[selected]
 
   return (
@@ -104,18 +112,18 @@ export default function SolucionesInteractivas() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12 lg:mb-16 max-w-2xl"
         >
-          <div className="v2-eyebrow">
-            <span className="v2-eyebrow-num">03</span>
-            <span className="v2-eyebrow-line" />
-            <span className="v2-eyebrow-label">Capacidades técnicas</span>
-          </div>
+          <span className="section-badge badge-green" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+            Agua · Gas · Electricidad
+          </span>
           <h2 className="v2-h2 mb-4">
-            Tres verticales.
+            No es un catálogo.
             <br />
-            <span className="accent">Una estrategia integral.</span>
+            <span className="accent">Es una solución de negocio.</span>
           </h2>
           <p className="v2-body">
-            Cada solución es diagnóstica, no de catálogo. Sin auditoría, no hay propuesta.
+            Para cada Gerente de Operaciones: diagnóstico del estado actual, diseño del estado objetivo y garantía de{' '}
+            <GlossaryTerm term="Payback" dark>payback</GlossaryTerm>
+            {' '}por contrato.
           </p>
         </motion.div>
 
@@ -179,14 +187,11 @@ export default function SolucionesInteractivas() {
               exit="exit"
               className="grid md:grid-cols-[1fr_280px] gap-6"
             >
-              {/* ── Process steps ───────────────────────────────────────── */}
+              {/* ── Estado A → Estado B ─────────────────────────────────── */}
               <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 lg:p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-                {/* Service header */}
+                {/* Contrast header */}
                 <div className="flex items-center gap-3 mb-6">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: `${accent}18`, color: accent }}
-                  >
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${accent}18`, color: accent }}>
                     {ICONS[selected]}
                   </div>
                   <div>
@@ -195,26 +200,29 @@ export default function SolucionesInteractivas() {
                   </div>
                 </div>
 
-                <p className="font-mono text-[0.65rem] font-bold tracking-[0.2em] text-white/35 uppercase mb-4">
-                  Metodología
-                </p>
+                {/* A → B state labels */}
+                <div className="flex items-center gap-3 mb-5 p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <span className="font-mono text-[0.6rem] font-bold tracking-widest uppercase text-red-400/70 line-through">{proceso.estadoA}</span>
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="shrink-0 text-white/30">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="font-mono text-[0.6rem] font-bold tracking-widest uppercase" style={{ color: accent }}>{proceso.estadoB}</span>
+                </div>
 
                 <div className="flex flex-col gap-0">
-                  {process.pasos.map((step, i) => (
+                  {proceso.pasos.map((paso, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, x: -8 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.08 * i, duration: 0.4 }}
-                      className="flex gap-4 py-3.5 border-b border-white/[0.06] last:border-0"
+                      className="py-3.5 border-b border-white/[0.06] last:border-0 grid grid-cols-[1fr_16px_1fr] gap-2 items-start"
                     >
-                      <span
-                        className="shrink-0 font-mono text-xs font-bold tabular-nums mt-0.5"
-                        style={{ color: `${accent}90` }}
-                      >
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <p className="text-sm text-white/65 leading-relaxed">{step}</p>
+                      <p className="text-xs text-white/35 leading-relaxed line-through">{paso.antes}</p>
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="mt-0.5 shrink-0 text-white/20">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <p className="text-xs text-white/75 leading-relaxed font-medium">{paso.despues}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -222,24 +230,19 @@ export default function SolucionesInteractivas() {
                 {/* Tech tags */}
                 <div className="mt-5 flex flex-wrap gap-1.5">
                   {service.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-mono text-[0.65rem] px-2 py-1 rounded border border-white/10 text-white/40"
-                    >
-                      {tag}
-                    </span>
+                    <span key={tag} className="font-mono text-[0.65rem] px-2 py-1 rounded border border-white/10 text-white/40">{tag}</span>
                   ))}
                 </div>
               </div>
 
-              {/* ── Results metrics ──────────────────────────────────────── */}
+              {/* ── Resultados garantizados ──────────────────────────────── */}
               <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] flex flex-col">
                 <p className="font-mono text-[0.65rem] font-bold tracking-[0.2em] text-white/35 uppercase mb-5">
-                  Resultados típicos
+                  Resultados garantizados
                 </p>
 
                 <div className="flex flex-col gap-0 flex-1">
-                  {process.resultados.map((r, i) => (
+                  {proceso.resultados.map((r, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, y: 8 }}
@@ -247,10 +250,7 @@ export default function SolucionesInteractivas() {
                       transition={{ delay: 0.1 * i, duration: 0.4 }}
                       className="py-4 border-b border-white/[0.06] last:border-0"
                     >
-                      <p
-                        className="font-mono text-2xl font-bold tabular-nums leading-none mb-1"
-                        style={{ color: accent }}
-                      >
+                      <p className="font-mono text-2xl font-bold tabular-nums leading-none mb-1" style={{ color: accent }}>
                         {r.value}
                       </p>
                       <p className="text-xs text-white/50 leading-snug">{r.label}</p>

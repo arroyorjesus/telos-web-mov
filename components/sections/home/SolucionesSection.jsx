@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import Reveal from '@/components/ui/Reveal'
 
 const SOLUTIONS = [
@@ -72,7 +73,14 @@ export default function SolucionesSection() {
       <div className="sol-grid-main">
         {SOLUTIONS.map((sol) => (
           <article key={sol.num} className="sol-card reveal" style={sol.style} aria-label={`Solución ${sol.area}`} suppressHydrationWarning>
-            <img className="sol-card-img" src={sol.img} alt={sol.alt} loading="lazy"/>
+            <Image
+              className="sol-card-img"
+              src={sol.img}
+              alt={sol.alt}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 33vw"
+              style={{ objectFit: 'cover' }}
+            />
             <div className="sol-card-dark-overlay" style={sol.overlay ? { background: sol.overlay } : undefined}></div>
             <div className="sol-card-inner">
               <div className="sol-card-num-row">

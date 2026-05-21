@@ -1,27 +1,33 @@
 import Reveal from '@/components/ui/Reveal'
 import { CASE_STUDIES_ELECTRICIDAD } from '@/data/caseStudies'
 
-const GREEN = '#22c55e'
+// Verde Telos
+const GREEN = '#2d802a'
 
-// Aggregate stats for the bottom bar
 const STATS = [
-  { num: '637 kWp',      label: 'capacidad fotovoltaica instalada' },
-  { num: '$8.3M MXN',   label: 'OPEX optimizado / año en portafolio' },
-  { num: '≤36 meses',   label: 'payback promedio garantizado' },
-  { num: '−2,195t',     label: 'CO₂ evitadas acumuladas' },
+  { num: '637 kWp',     label: 'capacidad fotovoltaica instalada' },
+  { num: '$8.3M MXN',  label: 'OPEX optimizado / año en portafolio' },
+  { num: '≤36 meses',  label: 'payback promedio garantizado' },
+  { num: '−2,195t',    label: 'CO₂ evitadas acumuladas' },
 ]
 
-// Map data for result-card format
 function toResultCard(cs) {
   const mxn = (cs.savingsNum / 1_000_000).toFixed(1)
+
+  const DESCS = {
+    'cedis-puebla':      'Blindaje energético completo. El ahorro mensual de $325K MXN se convierte en flujo de caja directo para la operación. BESS garantiza continuidad ante cortes de red.',
+    'parque-amozoc':     'Control total del costo eléctrico. $283K MXN/mes que antes iban a CFE ahora fortalecen el margen operativo. Operación continua incluso sin suministro externo.',
+    'corporativo-cdmx':  'Energía propia para una torre corporativa. El sistema se paga solo en menos de 36 meses y protege contra aumentos de tarifa eléctrica indefinidamente.',
+  }
+
   return {
-    id:       cs.id,
-    vertical: 'ELECTRICIDAD',
-    metric:   `$${mxn}M`,
-    metricSub:`MXN en OPEX optimizado / año · ${cs.capacity} instalados`,
-    project:  cs.title,
-    desc:     `${cs.subtitle}. ${cs.detail}.`,
-    tags:     cs.tags,
+    id:        cs.id,
+    vertical:  'OPTIMIZACIÓN ELÉCTRICA',
+    metric:    `$${mxn}M`,
+    metricSub: `MXN optimizados / año · ${cs.capacity} instalados · Payback ≤ 36 meses`,
+    project:   cs.title,
+    desc:      DESCS[cs.id] ?? `${cs.subtitle}. ${cs.detail}.`,
+    tags:      cs.tags,
   }
 }
 
@@ -36,18 +42,18 @@ export default function ElectricidadCases() {
         <div style={{ marginBottom: '3rem' }}>
           <Reveal style={{ '--i': 0 }}>
             <span className="section-badge badge-green" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
-              Electricidad · Energía solar fotovoltaica
+              Optimización eléctrica · Energía propia
             </span>
           </Reveal>
 
           <h2 className="section-h2 reveal-heading" style={{ '--i': 1, marginBottom: '0.875rem' }}>
-            Generación distribuida.{' '}
-            <span style={{ color: GREEN }}>Independencia de CFE.</span>
+            Energía propia.{' '}
+            <span style={{ color: GREEN }}>Control total de tu costo eléctrico.</span>
           </h2>
 
           <p className="section-sub reveal" style={{ '--i': 2 }}>
-            Sistemas fotovoltaicos con BESS para operaciones de alto consumo.
-            ROI garantizado en ≤&nbsp;36 meses. Sin depender de la red.
+            Deja de pagar renta a la red. Produce tu propia energía con sistemas inteligentes
+            de almacenamiento y rompe la dependencia de las tarifas externas.
           </p>
         </div>
 
@@ -56,7 +62,7 @@ export default function ElectricidadCases() {
 
           {/* Featured hero card */}
           <div className="result-card result-card-hero reveal-card" style={{ '--i': 3 }}>
-            <div className="result-card-bar" style={{ background: `linear-gradient(to bottom, ${GREEN}, #16a34a)` }} />
+            <div className="result-card-bar" style={{ background: `linear-gradient(to bottom, ${GREEN}, #1e5c1d)` }} />
 
             {/* Left: big metric */}
             <div className="result-hero-left">
@@ -82,7 +88,7 @@ export default function ElectricidadCases() {
           {/* Secondary cards */}
           {rest.map((cs, i) => (
             <div key={cs.id} className="result-card reveal-card" style={{ '--i': 4 + i }}>
-              <div className="result-card-bar" style={{ background: `linear-gradient(to bottom, ${GREEN}, #16a34a)` }} />
+              <div className="result-card-bar" style={{ background: `linear-gradient(to bottom, ${GREEN}, #1e5c1d)` }} />
               <div className="result-card-vert">
                 <span className="result-card-dot" style={{ background: GREEN }} />
                 {cs.vertical}

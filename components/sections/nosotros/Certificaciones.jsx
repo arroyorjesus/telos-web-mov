@@ -45,15 +45,13 @@ export default function Certificaciones() {
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="v2-eyebrow">
-              <span className="v2-eyebrow-num">04</span>
-              <span className="v2-eyebrow-line" />
-              <span className="v2-eyebrow-label">Certificaciones</span>
-            </div>
+            <span className="section-badge badge-blue" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+              Certificaciones · Blindaje normativo
+            </span>
             <h2 className="v2-h2">
-              Capacidad certificada.
+              Operación normada.
               <br />
-              <span className="accent">Operación normada.</span>
+              <span className="accent">Cero multas. Cero riesgos.</span>
             </h2>
           </motion.div>
 
@@ -64,8 +62,9 @@ export default function Certificaciones() {
             transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="text-white/45 text-sm leading-relaxed"
           >
-            Certificaciones nacionales e internacionales que respaldan cada
-            instalación que realizamos. Sin excepciones.
+            Cada instalación está respaldada por normativas NOM, ANCE y STPS,
+            asegurando que tu inversión cumpla con el 100% de la regulación vigente
+            y eliminando pasivos contingentes por incumplimiento.
           </motion.p>
         </div>
 

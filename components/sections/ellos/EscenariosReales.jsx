@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import SectionHeader from '@/components/ui/SectionHeader'
 import { StaggerContainer, fadeUpItem } from '@/components/ui/MotionWrapper'
 import { SCENARIOS } from '@/data/comparisons'
 import Link from 'next/link'
@@ -41,16 +40,23 @@ export default function EscenariosReales() {
   const [active, setActive] = useState(0)
 
   return (
-    <section className="relative bg-white py-section overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+    <section className="relative py-section overflow-hidden">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          badge="Escenarios reales"
-          badgeVariant="white"
-          title="Cuando el problema es real, una solución parcial no alcanza."
-          className="mb-12"
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12 max-w-2xl"
+        >
+          <span className="section-badge badge-blue" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+            Escenarios reales
+          </span>
+          <h2 className="section-h2">
+            Cuando el problema es real, una solución parcial no alcanza.
+          </h2>
+        </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-6">
           {/* Scenarios list */}

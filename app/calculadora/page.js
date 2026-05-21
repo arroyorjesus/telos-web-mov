@@ -1,10 +1,13 @@
 import Link from 'next/link'
+import { buildMetadata } from '@/lib/seo'
 
-export const metadata = {
+export const metadata = buildMetadata({
   title: 'Calculadora de ahorro energético',
-  description: 'Estima tu ahorro potencial en electricidad, gas y agua. Calculadora en desarrollo — solicita tu diagnóstico gratuito mientras tanto.',
-  robots: { index: false, follow: false },
-}
+  description:
+    'Estima tu ahorro potencial en electricidad, gas y agua. Calculadora en desarrollo — solicita tu diagnóstico gratuito mientras tanto.',
+  path: '/calculadora',
+  noIndex: true,
+})
 
 export default function CalculadoraPage() {
   return (

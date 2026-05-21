@@ -1,22 +1,28 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import SectionHeader from '@/components/ui/SectionHeader'
 import MotionWrapper from '@/components/ui/MotionWrapper'
 import { TELOS_BENEFITS, MARKET_LIMITATIONS } from '@/data/comparisons'
 
 export default function BeneficiosIntegral() {
   return (
-    <section className="relative bg-slate-50 py-section overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+    <section className="relative py-section overflow-hidden">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          badge="Aliado vs. especialista de silo"
-          badgeVariant="white"
-          title="Lo que ganas con un aliado integral vs un especialista de silo."
-          className="mb-12"
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12 max-w-2xl"
+        >
+          <span className="section-badge badge-blue" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+            Aliado vs. especialista de silo
+          </span>
+          <h2 className="section-h2">
+            Lo que ganas con un aliado integral vs un especialista de silo.
+          </h2>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* TELOS column */}

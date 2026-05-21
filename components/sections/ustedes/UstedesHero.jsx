@@ -6,7 +6,7 @@ import Link from 'next/link'
 // Marquee row 1 — industries
 const INDUSTRY_ITEMS = [
   { label: 'Hotelería',           dot: '#8b5cf6' },
-  { label: 'Logística · CEDIS',   dot: '#22c55e' },
+  { label: 'Logística · CEDIS',   dot: '#2d802a' },
   { label: 'Industrial',          dot: '#f97316' },
   { label: 'Corporativos',        dot: '#2b8fd4' },
   { label: 'Clubes Deportivos',   dot: '#ec4899' },
@@ -18,14 +18,14 @@ const INDUSTRY_ITEMS = [
 
 // Marquee row 2 — real project metrics
 const METRIC_ITEMS = [
-  { label: '340 kWp · CEDIS Puebla',           num: 'SOL', dot: '#22c55e' },
-  { label: '$3.9M MXN / año',                   num: 'OPEX', dot: '#22c55e' },
-  { label: '297 kWp · Parque Industrial',        num: 'SOL', dot: '#22c55e' },
-  { label: '30% agua recuperada · Los Cabos',   num: 'H₂O', dot: '#3b82f6' },
-  { label: '−70% CO₂ · Hotel 190 hab',          num: 'GAS', dot: '#f97316' },
-  { label: '−3 pipas/mes · Hotel CDMX',         num: 'H₂O', dot: '#3b82f6' },
-  { label: '$3.4M MXN / año · Amozoc',          num: 'OPEX', dot: '#22c55e' },
-  { label: '50% gas · Centro Deportivo',        num: 'GAS', dot: '#f97316' },
+  { label: '$3.9M MXN / año · CEDIS Puebla',          num: 'OPEX', dot: '#2d802a' },
+  { label: 'Blindaje energético · 340 kWp',            num: 'ELEC', dot: '#2d802a' },
+  { label: 'Autonomía total · Hotel Los Cabos',        num: 'H₂O',  dot: '#0d5c91' },
+  { label: '−50% factura gas · Centro Deportivo',      num: 'GAS',  dot: '#f97316' },
+  { label: '$3.4M MXN / año · Amozoc',                 num: 'OPEX', dot: '#2d802a' },
+  { label: '−3 pipas/mes eliminadas · Hotel CDMX',     num: 'H₂O',  dot: '#0d5c91' },
+  { label: '−3,300t CO₂ · Modernización BCS',          num: 'GAS',  dot: '#f97316' },
+  { label: 'Inversión neta cero · 297 kWp instalados', num: 'ELEC', dot: '#2d802a' },
 ]
 
 const container = {
@@ -39,16 +39,10 @@ const item = {
 
 export default function UstedesHero() {
   return (
-    <section className="relative overflow-hidden bg-[#021829]" style={{ minHeight: '100dvh' }}>
+    <section className="relative overflow-hidden inner-hero-bg" style={{ minHeight: '100dvh' }}>
 
-      {/* Blueprint grid */}
-      <div
-        className="v2-blueprint"
-        style={{
-          maskImage: 'radial-gradient(ellipse 80% 75% at 18% 28%, #000 0%, transparent 72%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 80% 75% at 18% 28%, #000 0%, transparent 72%)',
-        }}
-      />
+      {/* Dot pattern — igual que Inicio */}
+      <div className="hero-dots" />
 
       {/* Ambient glows */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -102,9 +96,9 @@ export default function UstedesHero() {
               {/* Vertical dots */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
                 {[
-                  { color: '#22c55e', label: 'Electricidad' },
-                  { color: '#3b82f6', label: 'Agua' },
-                  { color: '#f97316', label: 'Gas térmico' },
+                  { color: '#2d802a', label: 'Optimización eléctrica' },
+                  { color: '#0d5c91', label: 'Estrategia hídrica' },
+                  { color: '#f97316', label: 'Ingeniería térmica' },
                 ].map((d) => (
                   <div key={d.label} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <span style={{ width: 7, height: 7, borderRadius: '50%', background: d.color, flexShrink: 0, display: 'block' }} />

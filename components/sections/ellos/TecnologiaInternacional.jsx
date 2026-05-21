@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import SectionHeader from '@/components/ui/SectionHeader'
 import { StaggerContainer, fadeUpItem } from '@/components/ui/MotionWrapper'
 import { TECHNOLOGY_ORIGINS } from '@/data/comparisons'
 
@@ -13,19 +12,30 @@ const colorMap = {
 
 export default function TecnologiaInternacional() {
   return (
-    <section className="relative bg-slate-50 py-section overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+    <section className="relative py-section overflow-hidden">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div>
-            <SectionHeader
-              badge="Tecnología"
-              badgeVariant="white"
-              title="Acceso a lo mejor del mundo.&#10;Sin restricciones de marca."
-              subtitle="No estamos casados con un fabricante.&#10;Seleccionamos la tecnología correcta para cada proyecto, de donde venga."
-              className="mb-8"
-            />
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-8 max-w-2xl"
+            >
+              <span className="section-badge badge-blue" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+                Tecnología
+              </span>
+              <h2 className="section-h2" style={{ marginBottom: '0.875rem' }}>
+                Acceso a lo mejor del mundo.<br />
+                Sin restricciones de marca.
+              </h2>
+              <p className="section-sub">
+                No estamos casados con un fabricante. Seleccionamos la tecnología
+                correcta para cada proyecto, de donde venga.
+              </p>
+            </motion.div>
 
             <div className="space-y-4">
               {[

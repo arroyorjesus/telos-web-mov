@@ -1,9 +1,10 @@
 export const SITE = {
   name: 'TELOS',
+  legalName: 'TELOS MEXICO',
   tagline: 'Eficiencia energética integral para empresas en México',
   description:
     'Diseñamos e implementamos proyectos de eficiencia energética en electricidad, gas térmico y agua para hoteles, industrias y empresas con alto consumo. Diagnóstico técnico, ejecución llave en mano y resultados medibles.',
-  url: 'https://www.telos.com.mx',
+  url: 'https://telos.com.mx',
   email: 'contacto@telos.com.mx',
   emailAlt: 'contacto@telos.com.mx',
   phone: '+52 (55) 4451 7101',
@@ -11,7 +12,7 @@ export const SITE = {
   whatsapp: '525544517101',
   whatsappMessage:
     'Hola, quiero solicitar un diagnóstico energético para mi empresa. Me interesa evaluar ahorro en electricidad, gas o agua.',
-  address: 'Pedregal 44, PH. Lomas de Chapultepec, CDMX, 11000',
+  address: 'Vosgos 230-B, Lomas de Chapultepec, Miguel Hidalgo, CDMX, 11000',
   city: 'Ciudad de México, México',
   founded: 2017,
   schedule: {
