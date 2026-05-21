@@ -10,7 +10,7 @@ import { buildMetadata } from '@/lib/seo'
 
 export const metadata = buildMetadata({
   description:
-    'Diseñamos e implementamos proyectos de eficiencia energética en electricidad, gas térmico y agua para hoteles, industrias y empresas con alto consumo. Diagnóstico técnico gratuito y resultados medibles desde el primer mes.',
+    'Eficiencia energética en electricidad, gas y agua para hoteles, industrias y corporativos en México. Diagnóstico técnico gratuito. Resultados medibles y payback garantizado en ≤36 meses.',
   path: '',
 })
 

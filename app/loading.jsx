@@ -10,6 +10,7 @@ export default function Loading() {
             alt="TELOS"
             width={72}
             height={72}
+            priority
             className="object-contain"
             style={{ width: 72, height: 72 }}
           />

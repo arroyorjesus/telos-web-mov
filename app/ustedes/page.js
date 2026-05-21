@@ -9,7 +9,7 @@ import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo'
 export const metadata = buildMetadata({
   title: 'Ustedes — Casos reales de ahorro energético',
   description:
-    'Proyectos reales de eficiencia energética sin nombres, con números. Agua, gas y electricidad optimizados en empresas, hoteles, centros deportivos e industrias a lo largo del país.',
+    'Proyectos reales de eficiencia energética con números, sin nombres. Agua, gas y electricidad optimizados en hoteles, industrias y corporativos en todo México.',
   path: '/ustedes',
 })
 

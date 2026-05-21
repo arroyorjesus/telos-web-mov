@@ -10,7 +10,7 @@ import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo'
 export const metadata = buildMetadata({
   title: 'Nosotros — Ingeniería de capital energético',
   description:
-    'Firma de ingeniería estratégica desde 2017. Transformamos el gasto energético ineficiente en utilidad neta. No vendemos equipos — desarrollamos activos que se pagan solos. Agua, gas y electricidad.',
+    'Firma de ingeniería energética desde 2017. Transformamos el gasto ineficiente en utilidad neta. Desarrollamos activos en agua, gas y electricidad que se pagan solos. Cobertura nacional.',
   path: '/nosotros',
 })
 

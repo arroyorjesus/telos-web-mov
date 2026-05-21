@@ -1,4 +1,5 @@
 import './globals.css'
+import { Space_Grotesk, Outfit, JetBrains_Mono } from 'next/font/google'
 import { SITE } from '@/data/site'
 import { SCHEMA_BUSINESS, OG_IMAGE } from '@/lib/seo'
 import JsonLd from '@/components/ui/JsonLd'
@@ -7,10 +8,29 @@ import Footer from '@/components/layout/Footer'
 import GlossaryPanel from '@/components/ui/GlossaryPanel'
 import RevealObserver from '@/components/ui/RevealObserver'
 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['700', '800'],
+  variable: '--font-grotesk',
+  display: 'swap',
+})
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-outfit',
+  display: 'swap',
+})
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['500', '600', '700', '800'],
+  variable: '--font-mono',
+  display: 'swap',
+})
+
 export const metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: 'TELOS | Eficiencia energética integral para empresas en México',
+    default: 'TELOS | Eficiencia energética para empresas en México',
     template: '%s | TELOS',
   },
   description:
@@ -64,7 +84,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es-MX">
+    <html lang="es-MX" className={`${spaceGrotesk.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
       <head>
         <JsonLd data={SCHEMA_BUSINESS} />
       </head>
