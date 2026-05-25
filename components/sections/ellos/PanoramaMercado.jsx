@@ -24,7 +24,7 @@ export default function PanoramaMercado() {
           </h2>
         </motion.div>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {MARKET_PLAYERS.map((player) => (
             <motion.div
               key={player.id}
