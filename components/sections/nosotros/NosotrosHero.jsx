@@ -38,6 +38,12 @@ const item = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 }
+// LCP fix: el h1 es el Largest Contentful Paint — no puede empezar invisible.
+// Solo anima posición (no opacity) para que Google y el browser lo pinten de inmediato.
+const itemH1 = {
+  hidden: { opacity: 1, y: 14 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+}
 
 export default function NosotrosHero() {
   return (
@@ -80,8 +86,8 @@ export default function NosotrosHero() {
               <span className="v2-eyebrow-label">Sobre TELOS</span>
             </motion.div>
 
-            {/* Headline */}
-            <motion.h1 variants={item} className="v2-h1">
+            {/* Headline — LCP: usa itemH1 (opacity siempre 1, solo anima y) */}
+            <motion.h1 variants={itemH1} className="v2-h1">
               Desarrollamos activos
               <br className="hidden sm:block" /> energéticos.
               <br />

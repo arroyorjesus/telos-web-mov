@@ -139,6 +139,54 @@ export default function QuienesSomos() {
             transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
             <MapaCobertura />
+
+            {/* Texto estático de cobertura geográfica — indexable por Google */}
+            <div className="mt-5 pt-4" style={{ borderTop: '1px solid rgba(13,92,145,0.18)' }}>
+              <p className="font-mono text-[0.5rem] font-bold tracking-[0.2em] uppercase text-white/25 mb-3">
+                Proyectos ejecutados por estado
+              </p>
+              <dl className="space-y-2">
+                {[
+                  {
+                    state: 'Ciudad de México',
+                    projects: 'Corporativo Coyoacán 165 kWp solar · Hotel 190 hab tratamiento de agua · Captación pluvial 24,000 L',
+                  },
+                  {
+                    state: 'Puebla',
+                    projects: 'CEDIS 340 kWp fotovoltaico · Parque Industrial Amozoc 297 kWp',
+                  },
+                  {
+                    state: 'Estado de México',
+                    projects: 'Gimnasio 3 calderas de condensación sustituyen 8 · −40% en factura de gas',
+                  },
+                  {
+                    state: 'Los Cabos, Baja California Sur',
+                    projects: 'Hotel 13 calderas de condensación −30% en gas · Ósmosis inversa 1 L/seg 30% agua recuperada',
+                  },
+                  {
+                    state: 'Guadalajara, Jalisco',
+                    projects: 'Planta industrial · optimización eléctrica y eficiencia energética',
+                  },
+                  {
+                    state: 'Monterrey, Nuevo León',
+                    projects: 'Planta industrial · ingeniería de agua y electricidad',
+                  },
+                  {
+                    state: 'Quintana Roo',
+                    projects: 'Complejo hotelero · estrategia hídrica integral y tratamiento de agua',
+                  },
+                ].map(({ state, projects }) => (
+                  <div key={state} className="flex gap-3">
+                    <dt className="shrink-0 font-grotesk font-semibold text-[0.65rem] text-white/45 w-[130px]">
+                      {state}
+                    </dt>
+                    <dd className="text-[0.62rem] text-white/25 leading-relaxed">
+                      {projects}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </motion.div>
 
         </div>

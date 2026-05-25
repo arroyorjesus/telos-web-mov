@@ -36,6 +36,11 @@ const item = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 }
+// LCP fix: h1 es el Largest Contentful Paint — siempre visible, solo anima posición
+const itemH1 = {
+  hidden: { opacity: 1, y: 14 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+}
 
 export default function UstedesHero() {
   return (
@@ -78,8 +83,8 @@ export default function UstedesHero() {
               <span className="v2-eyebrow-label">Portafolio · Casos reales</span>
             </motion.div>
 
-            {/* Headline */}
-            <motion.h1 variants={item} className="v2-h1">
+            {/* Headline — LCP: usa itemH1 (opacity siempre 1, solo anima y) */}
+            <motion.h1 variants={itemH1} className="v2-h1">
               Resultados reales.
               <br />
               <span className="accent">Sin nombres. Con números.</span>
