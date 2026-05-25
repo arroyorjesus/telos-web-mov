@@ -35,14 +35,12 @@ export default function TablaComparativa() {
     { label: 'TELOS', highlight: true },
     { label: 'Solo solar', highlight: false },
     { label: 'Proveedor equipo', highlight: false },
-    { label: 'Enfoque digital', highlight: false },
   ]
 
   const cols = (row) => [
     { label: 'TELOS', value: row.telos, highlight: true },
     { label: 'Solo solar', value: row.solar, highlight: false },
     { label: 'Proveedor equipo', value: row.equipo, highlight: false },
-    { label: 'Enfoque digital', value: row.digital, highlight: false },
   ]
 
   return (
@@ -150,11 +148,6 @@ export default function TablaComparativa() {
                     <td className="py-3.5 px-4 text-center">
                       <div className="flex justify-center">
                         <Check value={row.equipo} />
-                      </div>
-                    </td>
-                    <td className="py-3.5 px-4 text-center">
-                      <div className="flex justify-center">
-                        <Check value={row.digital} />
                       </div>
                     </td>
                   </motion.tr>

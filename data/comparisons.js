@@ -18,15 +18,6 @@ export const MARKET_PLAYERS = [
     telos: false,
   },
   {
-    id: 'integracion-digital',
-    title: 'Integración con base tecnológica',
-    description:
-      'Proyectos integrales con énfasis en plataformas de software para monitoreo centralizado.',
-    strengths: ['Visión integral + monitoreo digital', 'Dashboard y analytics'],
-    limitations: ['Modelo híbrido: tecnología + ejecución', 'Suscripción mensual'],
-    telos: false,
-  },
-  {
     id: 'telos',
     title: 'TELOS',
     description:
@@ -44,7 +35,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: false,
     equipo: false,
-    digital: 'partial',
     tooltip: 'Diagnóstico y solución de las 3 verticales en un solo proyecto',
   },
   {
@@ -52,7 +42,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: 'partial',
     equipo: false,
-    digital: false,
     tooltip: 'TELOS tiene 8 cuadrillas de 6 personas certificadas ANCE y STPS',
   },
   {
@@ -60,7 +49,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: 'partial',
     equipo: false,
-    digital: 'partial',
     tooltip: 'Diseño, ingeniería, instalación y puesta en marcha sin terceros',
   },
   {
@@ -68,7 +56,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: false,
     equipo: false,
-    digital: 'partial',
     tooltip: 'Diagnóstico técnico real, no propuesta de catálogo',
   },
   {
@@ -76,7 +63,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: 'partial',
     equipo: false,
-    digital: 'partial',
     tooltip: 'El proyecto no termina en la entrega de la llave',
   },
   {
@@ -84,7 +70,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: false,
     equipo: false,
-    digital: 'partial',
     tooltip: 'Un solo diagnóstico cubre electricidad, gas y agua',
   },
   {
@@ -92,7 +77,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: 'partial',
     equipo: false,
-    digital: false,
     tooltip: 'Garantía de retorno de inversión documentada',
   },
   {
@@ -100,7 +84,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: true,
     equipo: 'partial',
-    digital: true,
     tooltip: 'Italia, España, China, EE.UU. — sin ataduras de marca',
   },
   {
@@ -108,7 +91,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: 'partial',
     equipo: 'partial',
-    digital: false,
     tooltip: 'Desde 2013 en proyectos de eficiencia energética',
   },
   {
@@ -116,7 +98,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: true,
     equipo: true,
-    digital: false,
     tooltip: 'El ahorro es tuyo, no de una plataforma mensual',
   },
   {
@@ -124,7 +105,6 @@ export const COMPARISON_CRITERIA = [
     telos: true,
     solar: 'partial',
     equipo: 'partial',
-    digital: 'partial',
     tooltip: 'ANCE, STPS, NOM y normas de fabricante internacional',
   },
 ]
