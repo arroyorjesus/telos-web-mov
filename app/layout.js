@@ -10,7 +10,7 @@ import RevealObserver from '@/components/ui/RevealObserver'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
-  weight: ['700', '800'],
+  weight: ['600', '700'],
   variable: '--font-grotesk',
   display: 'swap',
 })
