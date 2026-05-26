@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import Reveal from '@/components/ui/Reveal'
 
 const SOLUTIONS = [
@@ -10,8 +9,7 @@ const SOLUTIONS = [
     descJsx: true,
     desc: null,
     tags: ['Solar fotovoltaico', 'BESS', 'Optimización de demanda CFE', 'Factor de potencia', 'Generación distribuida'],
-    img: '/images/sectores/electrica.jpg',
-    alt: 'Proyecto eléctrico TELOS',
+    video: '/videos/electricidad-web.mp4',
     style: { '--i': 0 },
   },
   {
@@ -20,8 +18,7 @@ const SOLUTIONS = [
     title: 'Modernización de\ninfraestructura térmica',
     desc: 'Sustituimos infraestructura térmica obsoleta por sistemas de alta eficiencia — calderas de condensación, cogeneración y recuperación de calor — con impacto directo en OPEX y emisiones.',
     tags: ['Calderas de condensación', 'Cogeneración', 'Heat pumps', 'Recuperación de calor', 'ACS solar térmica'],
-    img: '/images/sectores/termica.jpg',
-    alt: 'Proyecto de gas térmico TELOS',
+    video: '/videos/gas-termico-web.mp4',
     style: { '--i': 1 },
   },
   {
@@ -30,8 +27,7 @@ const SOLUTIONS = [
     title: 'Resiliencia hídrica\ny reducción de OPEX',
     desc: 'Eliminamos la dependencia de pipas, reducimos el costo hídrico y garantizamos continuidad operativa mediante tratamiento, reúso y gestión técnica del recurso.',
     tags: ['Tratamiento y reúso', 'Ósmosis inversa', 'Captación pluvial', 'Presurización eficiente', 'Gestión hídrica'],
-    img: '/images/sectores/hidrica.jpg',
-    alt: 'Proyecto de agua TELOS',
+    video: '/videos/agua-web.mp4',
     style: { '--i': 2 },
   },
   {
@@ -41,8 +37,7 @@ const SOLUTIONS = [
     desc: 'Eléctrica, térmica e hídrica bajo una sola estrategia técnica y financiera. Un interlocutor, ingeniería integrada, impacto verificable en OPEX y ESG.',
     tags: [],
     cta: true,
-    img: '/images/sectores/infraestructura.jpg',
-    alt: 'Estrategia integral TELOS',
+    video: '/videos/estrategia-integral-web.mp4',
     overlay: 'rgba(0,0,0,0.50)',
     style: { '--i': 3 },
   },
@@ -73,13 +68,14 @@ export default function SolucionesSection() {
       <div className="sol-grid-main">
         {SOLUTIONS.map((sol) => (
           <article key={sol.num} className="sol-card reveal" style={sol.style} aria-label={`Solución ${sol.area}`} suppressHydrationWarning>
-            <Image
+            <video
               className="sol-card-img"
-              src={sol.img}
-              alt={sol.alt}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1100px) 50vw, 33vw"
-              style={{ objectFit: 'cover' }}
+              src={sol.video}
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', inset: 0 }}
             />
             <div className="sol-card-dark-overlay" style={sol.overlay ? { background: sol.overlay } : undefined}></div>
             <div className="sol-card-inner">
