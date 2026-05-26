@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Reveal from '@/components/ui/Reveal'
+import VideoLoop from '@/components/ui/VideoLoop'
 
 const SOLUTIONS = [
   {
@@ -68,13 +69,8 @@ export default function SolucionesSection() {
       <div className="sol-grid-main">
         {SOLUTIONS.map((sol) => (
           <article key={sol.num} className="sol-card reveal" style={sol.style} aria-label={`Solución ${sol.area}`} suppressHydrationWarning>
-            <video
-              className="sol-card-img"
+            <VideoLoop
               src={sol.video}
-              autoPlay
-              muted
-              loop
-              playsInline
               style={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', inset: 0 }}
             />
             <div className="sol-card-dark-overlay" style={sol.overlay ? { background: sol.overlay } : undefined}></div>
