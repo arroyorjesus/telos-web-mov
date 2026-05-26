@@ -3,16 +3,9 @@
 /**
  * VideoLoop — video de fondo con loop infinito garantizado.
  *
- * Problema: iOS Safari y algunos Chromium ignoran el atributo `loop`
- * cuando el video está en bajo consumo, la pestaña pierde foco, o el
- * buffer se interrumpe entre iteraciones.
- *
- * Solución:
- * 1. `loop` nativo como fallback para la mayoría de browsers.
- * 2. `onEnded` → reset manual a 0 y replay (cubre iOS Safari).
- * 3. `visibilitychange` → reanuda si el video se pausó al volver al tab.
- * 4. `preload="auto"` → el video está en buffer antes de reproducirse.
- * 5. `onSuspend` → fuerza play si el browser suspende la carga.
+ * Fix principal: escuchar `canplay` para forzar play cuando el browser
+ * tiene suficiente buffer. iOS Safari y algunos Chromium no respetan
+ * el atributo `autoPlay` solo — necesitan el call explícito a play().
  */
 
 import { useRef, useEffect } from 'react'
@@ -26,30 +19,30 @@ export default function VideoLoop({ src, className, style }) {
 
     const play = () => video.play().catch(() => {})
 
-    // Cuando termina — reinicia inmediatamente (iOS Safari fix)
+    // El browser tiene suficiente buffer — arranca
+    const onCanPlay = () => play()
+
+    // Terminó — reinicia (fix iOS Safari que ignora loop en bajo consumo)
     const onEnded = () => {
       video.currentTime = 0
       play()
     }
 
-    // Cuando el tab vuelve a estar visible — reanuda si se pausó
+    // Vuelves al tab — reanuda si se pausó
     const onVisibility = () => {
       if (!document.hidden && video.paused) play()
     }
 
-    // Si el browser suspende la carga — fuerza play
-    const onSuspend = () => play()
-
+    video.addEventListener('canplay', onCanPlay)
     video.addEventListener('ended', onEnded)
-    video.addEventListener('suspend', onSuspend)
     document.addEventListener('visibilitychange', onVisibility)
 
-    // Intento inicial de play (necesario en algunos browsers móviles)
+    // Intento inmediato — por si el video ya está en cache
     play()
 
     return () => {
+      video.removeEventListener('canplay', onCanPlay)
       video.removeEventListener('ended', onEnded)
-      video.removeEventListener('suspend', onSuspend)
       document.removeEventListener('visibilitychange', onVisibility)
     }
   }, [])
