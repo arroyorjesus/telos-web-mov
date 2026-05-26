@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 const NAV = [
   { label: 'Inicio',    href: '/' },
@@ -36,13 +37,14 @@ export default function Footer() {
           {/* Brand col */}
           <div className="col-span-2 md:col-span-1">
             {/* Logo */}
-            <Link href="/" className="inline-flex items-center gap-2.5 mb-5 group">
-              <div className="w-7 h-7 rounded-lg bg-[#0d5c91] flex items-center justify-center shrink-0 group-hover:bg-[#1a7abf] transition-colors duration-200">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#fff"/>
-                </svg>
-              </div>
-              <span className="font-grotesk font-bold text-white text-lg tracking-tight">TELOS</span>
+            <Link href="/" className="inline-flex mb-5">
+              <Image
+                src="/logos/logo-blanco.png"
+                alt="TELOS"
+                width={120}
+                height={40}
+                style={{ objectFit: 'contain', height: '30px', width: 'auto' }}
+              />
             </Link>
 
             <p className="text-white/45 text-sm leading-relaxed max-w-[24ch] mb-5">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -34,12 +35,14 @@ export default function Navbar() {
     <>
       <nav id="nav" className={scrolled ? 'scrolled' : ''}>
         <Link href="/" className="nav-logo">
-          <div className="nav-logo-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#fff"/>
-            </svg>
-          </div>
-          <span className="nav-logo-text">TELOS</span>
+          <Image
+            src="/logos/logo-blanco.png"
+            alt="TELOS"
+            width={120}
+            height={40}
+            priority
+            style={{ objectFit: 'contain', height: '32px', width: 'auto' }}
+          />
         </Link>
 
         <div className="nav-links">
