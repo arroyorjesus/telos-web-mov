@@ -5,7 +5,7 @@ import { buildMetadata } from '@/lib/seo'
 export const metadata = buildMetadata({
   title: 'Aviso de Privacidad',
   description:
-    'Aviso de Privacidad Integral de TELOS conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).',
+    'Aviso de Privacidad de TELOS conforme a la LFPDPPP. Consulta el tratamiento de datos personales, derechos ARCO y uso de cookies.',
   path: '/privacidad',
 })
 

@@ -59,7 +59,7 @@ const SCHEMA_NOSOTROS = {
 export const metadata = buildMetadata({
   title: 'Empresa de Ingeniería Energética Certificada',
   description:
-    'Firma de ingeniería energética con +9 años en México. Cuadrillas propias certificadas NOM/ANCE/STPS. Activos en agua, gas y electricidad que se pagan solos. Cobertura nacional.',
+    'Firma de ingeniería energética con +9 años en México. Cuadrillas certificadas NOM/ANCE/STPS y proyectos en agua, gas y electricidad con cobertura nacional.',
   path: '/nosotros',
 })
 

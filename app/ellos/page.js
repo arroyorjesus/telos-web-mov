@@ -22,7 +22,7 @@ const FAQS_DATA = [
 export const metadata = buildMetadata({
   title: 'Comparativa de Proveedores Energéticos en México',
   description:
-    'Proveedores que resuelven agua, gas y electricidad con ahorro real. Financiamiento y arrendamiento disponibles. Ingeniería integral certificada NOM/ANCE vs proveedores de una sola vertical.',
+    'Compara proveedores tradicionales con TELOS: eficiencia energética en agua, gas y electricidad, certificaciones NOM/ANCE y opciones de financiamiento.',
   path: '/ellos',
 })
 

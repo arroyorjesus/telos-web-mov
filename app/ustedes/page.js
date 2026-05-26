@@ -9,7 +9,7 @@ import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo'
 export const metadata = buildMetadata({
   title: 'Solar, BESS y Tratamiento de Agua: Casos Reales',
   description:
-    'Proyectos en hoteles, industrias, corporativos y casas de alto consumo: solar, BESS, calderas y tratamiento de agua. TELOS, empresa confiable de ingeniería energética en México.',
+    'Soluciones para hoteles, industrias y corporativos que buscan reducir y ahorrar costos en electricidad, gas y agua con solar, BESS, calderas, tratamiento de agua y HVAC.',
   path: '/ustedes',
 })
 

@@ -11,7 +11,7 @@ import { buildMetadata } from '@/lib/seo'
 export const metadata = buildMetadata({
   title: 'Ahorro Energético y Resiliencia Operativa en México',
   description:
-    'Reducción y Ahorro de OPEX en electricidad, gas y agua para hoteles, industrias y corporativos. Certificados NOM/STPS. Retorno de Inversión garantizado en menos de 3 años. Diagnóstico técnico gratuito.',
+    'Eficiencia energética para reducir OPEX y ahorrar en electricidad, gas y agua. Soluciones para hoteles, industrias, corporativos y casas con ROI menor a 36 meses.',
   path: '',
 })
 
