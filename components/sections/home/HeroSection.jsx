@@ -42,6 +42,7 @@ function MarqueeCard({ card, type }) {
         alt={card.tag}
         fill
         sizes="260px"
+        loading="lazy"
         style={{ objectFit: 'cover' }}
       />
       <div className="mq-card-tint" style={{ background: card.tint }}></div>
@@ -107,7 +108,7 @@ export default function HeroSection() {
               operativo de activos críticos.
             </p>
 
-            <div className="reveal" suppressHydrationWarning style={{ display: 'flex', flexWrap: 'wrap', gap: '0.875rem', marginBottom: '2rem', transitionDelay: '180ms' }}>
+            <div className="reveal" suppressHydrationWarning style={{ display: 'flex', flexWrap: 'wrap', gap: '0.875rem', marginBottom: '1.25rem', transitionDelay: '180ms' }}>
               <Link href="/contacto" className="btn-primary">
                 Solicitar análisis estratégico
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -118,6 +119,35 @@ export default function HeroSection() {
                 Ver capacidades
               </Link>
             </div>
+
+            {/* Mobile/tablet metrics pill — hidden on desktop where stats-card is visible */}
+            <a
+              href="#impacto-ambiental"
+              className="hero-mobile-stats reveal"
+              suppressHydrationWarning
+              style={{ transitionDelay: '240ms' }}
+            >
+              <div className="hero-mob-top">
+                <span className="en-vivo-badge" style={{ fontSize: '0.6rem', padding: '0.2rem 0.5rem' }}>
+                  <span className="en-vivo-dot"></span>
+                  En vivo
+                </span>
+                <span className="hero-mob-label">Impacto acumulado · portafolio activo</span>
+              </div>
+              <div className="hero-mob-co2">
+                {co2Str} <span className="hero-mob-unit">tCO₂e evitadas</span>
+              </div>
+              <div className="hero-mob-metrics">
+                <span>+150 proyectos</span>
+                <span className="hero-mob-sep">·</span>
+                <span>≤36m payback</span>
+                <span className="hero-mob-sep">·</span>
+                <span>$23.5M MXN/año</span>
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ marginLeft: 'auto', flexShrink: 0 }}>
+                  <path d="M8 12l4-4-4-4M4 8h8" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" transform="rotate(90 8 8)"/>
+                </svg>
+              </div>
+            </a>
           </div>
 
           {/* RIGHT: Stats card */}

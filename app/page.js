@@ -9,7 +9,7 @@ import HomeCTA from '@/components/sections/home/HomeCTA'
 import { buildMetadata } from '@/lib/seo'
 
 export const metadata = buildMetadata({
-  title: 'Ahorro Energético y Resiliencia Operativa en México',
+  title: 'Eficiencia Energética para Empresas en México',
   description:
     'Eficiencia energética para reducir OPEX y ahorrar en electricidad, gas y agua. Soluciones para hoteles, industrias, corporativos y casas con ROI menor a 36 meses.',
   path: '',

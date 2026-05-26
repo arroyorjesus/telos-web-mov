@@ -57,19 +57,21 @@ img { display: block; max-width: 100%; }
 #nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.375rem 2.5rem;
+  padding: 0.2rem 2.5rem;
   padding-left:  max(2.5rem, env(safe-area-inset-left));
   padding-right: max(2.5rem, env(safe-area-inset-right));
   transition:
     background var(--dur-base) var(--ease-out),
     padding    var(--dur-base) var(--ease-out),
-    box-shadow var(--dur-base) var(--ease-out);
+    box-shadow var(--dur-base) var(--ease-out),
+    transform  300ms var(--ease-out);
 }
+#nav.nav-hidden { transform: translateY(-115%); }
 #nav.scrolled {
   background: rgba(2, 24, 41, 0.93);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  padding-top: 1rem; padding-bottom: 1rem;
+  padding-top: 0.5rem; padding-bottom: 0.5rem;
   box-shadow: 0 1px 0 rgba(255,255,255,0.07);
 }
 .nav-logo { display: flex; align-items: center; gap: 0.625rem; flex-shrink: 0; }
@@ -179,15 +181,15 @@ img { display: block; max-width: 100%; }
 .reveal-card.in { opacity: 1; transform: translateY(0) scale(1); }
 
 .reveal-heading {
-  opacity: 0; transform: translateY(24px); filter: blur(8px);
-  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out), filter 900ms var(--ease-out);
-  will-change: opacity, transform, filter;
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out);
+  will-change: opacity, transform;
 }
-.reveal-heading.in { opacity: 1; transform: translateY(0); filter: blur(0px); }
+.reveal-heading.in { opacity: 1; transform: translateY(0); }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-card { transition: opacity 1ms; transform: none !important; }
-  .reveal-heading { transition: opacity 1ms; transform: none !important; filter: none !important; }
+  .reveal-heading { transition: opacity 1ms; transform: none !important; }
 }
 
 /* ─────────────────────────────────────────
@@ -457,6 +459,29 @@ img { display: block; max-width: 100%; }
 .stats-col { display: none; }
 @media (min-width: 1024px) { .stats-col { display: block; } }
 
+/* Mobile metrics pill */
+.hero-mobile-stats {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  text-decoration: none; color: inherit;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  margin-bottom: 1.5rem;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-mobile-stats:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.18); }
+}
+@media (min-width: 1024px) { .hero-mobile-stats { display: none; } }
+.hero-mob-top { display: flex; align-items: center; gap: 0.625rem; }
+.hero-mob-label { font-size: 0.6rem; font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.hero-mob-co2 { font-size: 1.35rem; font-weight: 700; font-family: var(--font-mono); color: #fff; letter-spacing: -0.02em; line-height: 1.1; }
+.hero-mob-unit { font-size: 0.7rem; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 0; }
+.hero-mob-metrics { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; font-size: 0.68rem; font-family: var(--font-mono); color: rgba(255,255,255,0.4); letter-spacing: 0.02em; }
+.hero-mob-sep { color: rgba(255,255,255,0.2); }
+
 /* Marquee strips */
 .marquee-strips-wrapper { margin-left: -2.5rem; margin-right: -2.5rem; }
 .marquee-strip-label { max-width: 1280px; margin: 0 auto 1rem; padding: 0 2.5rem; }
@@ -551,7 +576,7 @@ img { display: block; max-width: 100%; }
 /* ─────────────────────────────────────────
    PROBLEM SECTION
 ───────────────────────────────────────── */
-.problem-section { padding: 6.5rem 2.5rem; position: relative; z-index: 1; }
+.problem-section { padding: 4rem 2.5rem; position: relative; z-index: 1; }
 .problem-section-inner {
   max-width: 1280px; margin: 0 auto;
   display: grid; grid-template-columns: 1fr; gap: 4rem; align-items: start;
@@ -763,7 +788,7 @@ img { display: block; max-width: 100%; }
 /* ─────────────────────────────────────────
    DATOS SECTION
 ───────────────────────────────────────── */
-.datos-section { background: #021829; padding: 5rem 2.5rem; position: relative; overflow: hidden; }
+.datos-section { background: #021829; padding: 3rem 2.5rem; position: relative; overflow: hidden; }
 .datos-inner {
   max-width: 72rem; margin: 0 auto;
   display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1;

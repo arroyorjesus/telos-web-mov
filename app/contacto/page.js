@@ -16,7 +16,7 @@ export const metadata = buildMetadata({
 
 export default function ContactoPage() {
   return (
-    <>
+    <div className="page-dark-gradient">
       <JsonLd data={buildFAQSchema(FAQS)} />
       <JsonLd
         data={buildBreadcrumbSchema([
@@ -29,6 +29,6 @@ export default function ContactoPage() {
       <ContactoDirecto />
       <FAQSection />
       <ContactoCTA />
-    </>
+    </div>
   )
 }

@@ -8,23 +8,22 @@ import { FAQS } from '@/data/faqs'
 
 function FAQItem({ faq, isOpen, onToggle }) {
   return (
-    <div className={`border-b border-slate-200 transition-colors duration-200 ${isOpen ? 'border-slate-100' : ''}`}>
+    <div className="transition-colors duration-200" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <button
         onClick={onToggle}
         className="w-full text-left py-5 flex items-start justify-between gap-4 group"
         aria-expanded={isOpen}
       >
-        <span className={`text-base font-medium transition-colors duration-200 ${isOpen ? 'text-slate-900' : 'text-slate-600 group-hover:text-slate-900'}`}>
+        <span className="text-base font-medium transition-colors duration-200" style={{ color: isOpen ? '#fff' : 'rgba(255,255,255,0.6)' }}>
           {faq.question}
         </span>
         <span
           className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center transition-all duration-300 ${
-            isOpen
-              ? 'border-telos-green/30 bg-telos-green/10 rotate-45'
-              : 'border-slate-200 bg-transparent'
+            isOpen ? 'rotate-45' : ''
           }`}
+          style={{ border: isOpen ? '1px solid rgba(45,128,42,0.4)' : '1px solid rgba(255,255,255,0.15)', background: isOpen ? 'rgba(45,128,42,0.12)' : 'transparent' }}
         >
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" className={isOpen ? 'text-telos-green' : 'text-slate-500'}>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style={{ color: isOpen ? '#2d802a' : 'rgba(255,255,255,0.4)' }}>
             <path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
           </svg>
         </span>
@@ -39,7 +38,7 @@ function FAQItem({ faq, isOpen, onToggle }) {
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <p className="pb-5 text-slate-500 leading-relaxed text-sm pr-10">{faq.answer}</p>
+            <p className="pb-5 leading-relaxed text-sm pr-10" style={{ color: 'rgba(255,255,255,0.5)' }}>{faq.answer}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -51,19 +50,20 @@ export default function FAQSection() {
   const [openId, setOpenId] = useState(null)
 
   return (
-    <section className="relative bg-slate-50 py-section overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+    <section className="relative py-section overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.07), transparent)' }} />
 
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           badge="FAQ"
-          badgeVariant="white"
+          badgeVariant="blue"
           title="Preguntas frecuentes"
+          titleClass="text-white"
           className="mb-10"
         />
 
         <MotionWrapper preset="fadeUp" delay={0.1}>
-          <div className="light-card rounded-2xl divide-y divide-slate-200 overflow-hidden p-0">
+          <div className="rounded-2xl overflow-hidden p-0" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.09)' }}>
             <div className="px-6">
               {FAQS.map((faq) => (
                 <FAQItem

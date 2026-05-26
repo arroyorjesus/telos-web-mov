@@ -1,18 +1,34 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [navHidden, setNavHidden] = useState(false)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 48)
+    const onScroll = () => {
+      const current = window.scrollY
+      setScrolled(current > 48)
+
+      if (!menuOpen) {
+        if (current < 80) {
+          setNavHidden(false)
+        } else if (current - lastScrollY.current > 4) {
+          setNavHidden(true)   // scrolling down
+        } else if (lastScrollY.current - current > 4) {
+          setNavHidden(false)  // scrolling up
+        }
+      }
+      lastScrollY.current = current
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [menuOpen])
 
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape' && menuOpen) closeMenu() }
@@ -33,15 +49,16 @@ export default function Navbar() {
 
   return (
     <>
-      <nav id="nav" className={scrolled ? 'scrolled' : ''}>
+      <nav id="nav" className={[scrolled ? 'scrolled' : '', navHidden ? 'nav-hidden' : ''].filter(Boolean).join(' ')}>
         <Link href="/" className="nav-logo">
           <Image
             src="/logos/logo-blanco.png"
             alt="TELOS"
-            width={120}
-            height={40}
+            width={400}
+            height={400}
             priority
-            style={{ objectFit: 'contain', height: '32px', width: 'auto' }}
+            quality={100}
+            style={{ objectFit: 'contain', height: '120px', width: '120px' }}
           />
         </Link>
 

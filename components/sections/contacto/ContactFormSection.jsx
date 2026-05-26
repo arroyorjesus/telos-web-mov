@@ -47,7 +47,7 @@ const SELECT_OPTIONS = {
 function FormField({ label, error, required, children }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-medium text-slate-600">
+      <label className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.55)' }}>
         {label} {required && <span className="text-telos-green">*</span>}
       </label>
       {children}
@@ -68,10 +68,10 @@ function FormField({ label, error, required, children }) {
 }
 
 const inputClass = (hasError) =>
-  `w-full h-11 px-4 text-sm text-slate-900 bg-white border rounded-xl outline-none transition-all duration-200 placeholder:text-slate-400 [&>option]:text-slate-900 ${
+  `w-full h-11 px-4 text-sm text-white border rounded-xl outline-none transition-all duration-200 placeholder:text-white/30 [&>option]:text-slate-900 ${
     hasError
-      ? 'border-red-500/40 focus:border-red-500/60'
-      : 'border-slate-200 focus:border-telos-green/40 hover:border-slate-300'
+      ? 'border-red-500/40 focus:border-red-500/60 bg-red-500/5'
+      : 'border-white/12 focus:border-[#0d5c91]/70 hover:border-white/20 bg-white/[0.06]'
   }`
 
 export default function ContactFormSection() {
@@ -111,15 +111,15 @@ export default function ContactFormSection() {
   }
 
   return (
-    <section className="relative bg-slate-50 py-section overflow-hidden" id="formulario">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+    <section className="relative py-section overflow-hidden" id="formulario">
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(13,92,145,0.4), transparent)' }} />
 
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <MotionWrapper preset="fadeUp">
-          <div className="light-card rounded-3xl p-8 md:p-10">
+          <div className="rounded-3xl p-8 md:p-10" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.09)' }}>
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">Formulario de diagnóstico</h2>
-              <p className="text-slate-500 text-sm">Cuéntanos sobre tu operación y te contactamos en menos de 24 horas hábiles.</p>
+              <h2 className="text-2xl font-bold text-white mb-2">Formulario de diagnóstico</h2>
+              <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>Cuéntanos sobre tu operación y te contactamos en menos de 24 horas hábiles.</p>
             </div>
 
             {status === 'success' ? (
@@ -133,8 +133,8 @@ export default function ContactFormSection() {
                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Solicitud enviada</h3>
-                <p className="text-slate-500 max-w-md mx-auto">
+                <h3 className="text-xl font-bold text-white mb-2">Solicitud enviada</h3>
+                <p className="max-w-md mx-auto" style={{ color: 'rgba(255,255,255,0.5)' }}>
                   Recibimos tu solicitud.
                   <br />
                   Te contactamos en menos de 24 horas hábiles para coordinar el diagnóstico.
@@ -275,7 +275,7 @@ export default function ContactFormSection() {
                     )}
                   </button>
 
-                  <p className="text-xs text-slate-500 text-center">
+                  <p className="text-xs text-center" style={{ color: 'rgba(255,255,255,0.35)' }}>
                     Sin spam. Sin compromisos.
                     <br />
                     Te contactaremos en menos de 24 horas hábiles.

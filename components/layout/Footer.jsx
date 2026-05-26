@@ -41,9 +41,10 @@ export default function Footer() {
               <Image
                 src="/logos/logo-blanco.png"
                 alt="TELOS"
-                width={120}
-                height={40}
-                style={{ objectFit: 'contain', height: '30px', width: 'auto' }}
+                width={400}
+                height={400}
+                quality={100}
+                style={{ objectFit: 'contain', height: '56px', width: '56px' }}
               />
             </Link>
 

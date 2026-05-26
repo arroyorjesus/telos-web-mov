@@ -22,7 +22,7 @@ const outfit = Outfit({
 })
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['500', '600', '700', '800'],
+  weight: ['500', '600'],
   variable: '--font-mono',
   display: 'swap',
 })
