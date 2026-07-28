@@ -267,14 +267,24 @@
   .cm-calcref button:hover{background:var(--blue-l);}
   .cm-preview-wrap{margin-top:18px;}
   .cm-pv-hint{font-size:11px;color:var(--muted);margin-bottom:8px;}
-  .png-btn{margin-left:auto;background:var(--card2);border:1px solid var(--line);color:var(--blue);border-radius:7px;
+  .png-actions{margin-left:auto;display:inline-flex;gap:6px;}
+  .png-btn{background:var(--card2);border:1px solid var(--line);color:var(--blue);border-radius:7px;
     font-size:11px;font-weight:700;padding:4px 9px;cursor:pointer;font-family:inherit;letter-spacing:0;text-transform:none;
-    display:inline-flex;align-items:center;gap:4px;}
+    display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}
   .png-btn:hover{border-color:var(--blue);background:#fff;}
   .png-btn:disabled{opacity:.6;cursor:default;}
+  .png-btn.copy{color:var(--green);}
+  .png-btn.copy:hover{border-color:var(--green);}
+  .cm-bar2{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-4px 0 14px;}
+  .cm-lbl{font-size:12px;color:var(--muted);font-weight:600;}
+  .cm-moneda{max-width:150px;}
+  .cm-tc{width:90px;background:var(--card2);border:1px solid var(--line);border-radius:8px;color:var(--txt);
+    padding:6px 9px;font-size:13px;font-weight:700;font-family:inherit;}
+  .cm-tchint{font-size:11px;color:var(--muted);}
   /* Espacio blanco a la izquierda (para la imagen del costado, sin líneas) */
   .cm-preview{max-width:700px;background:#fff;padding:12px 12px 12px 64px;}
-  .cm-pv-title{color:#2f6fb0;font-weight:800;font-size:15px;letter-spacing:.5px;text-align:center;padding:15px 0 13px;}
+  .cm-pv-title{color:#2f6fb0;font-weight:800;font-size:15px;letter-spacing:.5px;text-align:center;padding:15px 0 4px;}
+  .cm-pv-cur{color:#6b7c8f;font-size:10.5px;text-align:center;padding:0 0 12px;}
   .cm-pv-table{width:100%;border-collapse:collapse;font-size:12px;}
   .cm-pv-table th{background:#4a72a8;color:#fff;font-weight:700;padding:7px 10px;text-align:center;
     font-size:11.5px;letter-spacing:.3px;border:1px solid #3c5f8f;}
@@ -599,6 +609,16 @@
       <div class="cm-calcref">Precio calculado (sin IVA): <b id="cmCalcRef">$0</b>
         <button type="button" id="cmUseCalc" title="Usar el precio de la inversión calculada arriba">Usar ↴</button></div>
     </div>
+    <div class="cm-bar2">
+      <span class="cm-lbl">Moneda:</span>
+      <div class="toggle cm-moneda" id="cmMoneda">
+        <button data-mon="USD" class="on">USD</button>
+        <button data-mon="MXN">MXN</button>
+      </div>
+      <span class="cm-lbl">TC (USD→MXN):</span>
+      <input type="number" id="cmTc" step="0.01" min="0" class="cm-tc">
+      <span class="cm-tchint" id="cmTcHint"></span>
+    </div>
 
     <div class="cm-doc" id="cmDoc">
       <!-- Modo rápido: descripción + precio -->
@@ -692,7 +712,7 @@ let state={segmento:"comercial", periodo:"mensual", consumo:[], precioKwh:4.14,
   panelModelo:"POLI-MONO BIFACIAL", panelMarca:"JA Solar / Yingli",
   invModelo:"20 / 60 / 80 kW", invMarca:"Huawei / Solis", invCant:"1 a 4",
   cotProyecto:"Eco-Empresa", cotCliente:"", cotAtencion:"", cotFecha:"", cotVigencia:"15",
-  cotMan:{modo:"rapido", desc:"", precioRapido:0, iva:true, rows:[]}};
+  cotMan:{modo:"rapido", desc:"", precioRapido:0, iva:true, moneda:"USD", tc:17.5, rows:[]}};
 let last={};  // resultados del último cálculo (para la cotización)
 
 // Rubros predefinidos para el cotizador manual (modo detallado)
@@ -1158,16 +1178,17 @@ function cmSubtotal(){
 }
 function renderCmTot(){
   const c=state.cotMan, sub=cmSubtotal(), iva=c.iva?sub*0.16:0, tot=sub+iva;
-  let h=`<div class="r sub"><span class="lb">Subtotal (sin IVA)</span><span class="vv">${money(sub)}</span></div>`;
+  let h=`<div class="r sub"><span class="lb">Subtotal (sin IVA)</span><span class="vv">${moneyC(sub)}</span></div>`;
   if(c.iva){
-    h+=`<div class="r"><span class="lb">IVA 16%</span><span class="vv">${money(iva)}</span></div>`;
-    h+=`<div class="r grand"><span class="lb">Total con IVA</span><span class="vv">${money(tot)}</span></div>`;
+    h+=`<div class="r"><span class="lb">IVA 16%</span><span class="vv">${moneyC(iva)}</span></div>`;
+    h+=`<div class="r grand"><span class="lb">Total con IVA</span><span class="vv">${moneyC(tot)}</span></div>`;
   }
   $("cmTot").innerHTML=h;
   renderCmPreview();
 }
-// Vista propuesta con formato tipo documento (2 decimales, $)
-const moneyC=n=>isFinite(n)?"$ "+n.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2}):"$ 0.00";
+// Formato con moneda seleccionada (USD/MXN), 2 decimales
+const cmCur=()=>state.cotMan.moneda||'USD';
+const moneyC=n=>(isFinite(n)?"$ "+n.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2}):"$ 0.00")+" "+cmCur();
 const cmEsc=t=>(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 function renderCmPreview(){
   const c=state.cotMan, sub=cmSubtotal(), iva=c.iva?sub*0.16:0, tot=sub+iva;
@@ -1184,8 +1205,12 @@ function renderCmPreview(){
     foot+=`<tr class="iva"><td colspan="2">IVA 16%</td><td class="s">${moneyC(iva)}</td></tr>`;
     foot+=`<tr class="tot"><td colspan="2">Total</td><td class="s">${moneyC(tot)}</td></tr>`;
   }
+  const curNote = cmCur()==='USD'
+    ? `Precios en dólares americanos (USD) · TC referencia $${(state.cotMan.tc||0).toFixed(2)} MXN`
+    : `Precios en pesos mexicanos (MXN)`;
   $("cmPreview").innerHTML=`
     <div class="cm-pv-title">PROPUESTA ECONÓMICA</div>
+    <div class="cm-pv-cur">${curNote}</div>
     <table class="cm-pv-table">
       <thead><tr><th class="c">CANT</th><th>DESCRIPCIÓN</th><th class="s">SUBTOTAL</th></tr></thead>
       <tbody>${rows}</tbody>
@@ -1217,12 +1242,15 @@ function renderCmQuick(){
     renderCmRows(); renderCmTot();
   }));
 }
-// Precio de referencia = inversión calculada arriba, SIN IVA
-function cmCalcVal(){ return (last && last.invTotal) ? last.invTotal/1.16 : 0; }
+// Precio de referencia = inversión calculada arriba, SIN IVA, en la moneda elegida
+function cmCalcVal(){
+  const mxn=(last && last.invTotal) ? last.invTotal/1.16 : 0;
+  return cmCur()==='USD' ? (state.cotMan.tc>0 ? mxn/state.cotMan.tc : 0) : mxn;
+}
 function updateCmCalcRef(){
   const el=$("cmCalcRef"); if(!el) return;
   const v=cmCalcVal();
-  el.textContent=money(v);
+  el.textContent=moneyC(v);
   // Auto-precarga el precio rápido la primera vez (si sigue vacío)
   if(state.cotMan && state.cotMan.modo==='rapido' && !state.cotMan.precioRapido && v>0){
     state.cotMan.precioRapido=Math.round(v*100)/100;
@@ -1237,6 +1265,9 @@ function renderCotMan(){
   $("cmRapido").style.display = c.modo==='rapido'?'flex':'none';
   $("cmDetallado").style.display = c.modo==='detallado'?'block':'none';
   $("cmIva").checked=!!c.iva;
+  document.querySelectorAll('#cmMoneda button').forEach(b=>b.classList.toggle('on',b.dataset.mon===(c.moneda||'USD')));
+  $("cmTc").value=c.tc||'';
+  $("cmTcHint").textContent = (c.moneda||'USD')==='USD' ? 'se usa para el precio de referencia y al cambiar a MXN' : 'se usa al cambiar a USD';
   $("cmDesc").value=c.desc||'';
   $("cmPrecioRapido").value=c.precioRapido||'';
   renderCmQuick(); renderCmRows(); renderCmTot();
@@ -1245,30 +1276,50 @@ function renderCotMan(){
 // ====== Descargar secciones como imagen PNG ======
 function cmSlug(t){return (t||'seccion').normalize('NFD').replace(/[̀-ͯ]/g,'')
   .replace(/[^a-zA-Z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,50)||'seccion';}
+async function cmCanvas(el){
+  return html2canvas(el,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,
+    ignoreElements:e=>e.classList&&e.classList.contains('png-actions')});
+}
 async function downloadPng(el,name,btn){
   if(typeof html2canvas!=='function'){ alert('No se pudo cargar el generador de imágenes (html2canvas).'); return; }
-  const orig=btn?btn.innerHTML:''; if(btn){btn.innerHTML='⏳';btn.disabled=true;}
+  const orig=btn.innerHTML; btn.innerHTML='⏳'; btn.disabled=true;
   try{
-    const canvas=await html2canvas(el,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,
-      ignoreElements:e=>e.classList&&e.classList.contains('png-btn')});
+    const canvas=await cmCanvas(el);
     const a=document.createElement('a');
     a.href=canvas.toDataURL('image/png');
     a.download='TELOS-'+cmSlug(name)+'.png';
     document.body.appendChild(a); a.click(); a.remove();
   }catch(e){ alert('Error al generar la imagen: '+e.message); }
-  finally{ if(btn){btn.innerHTML=orig;btn.disabled=false;} }
+  finally{ btn.innerHTML=orig; btn.disabled=false; }
+}
+async function copyPng(el,name,btn){
+  if(typeof html2canvas!=='function'){ alert('No se pudo cargar el generador de imágenes (html2canvas).'); return; }
+  if(!navigator.clipboard || !window.ClipboardItem){ alert('Tu navegador no permite copiar imágenes aquí. Usa el botón 📥 PNG para descargar.'); return; }
+  const orig=btn.innerHTML; btn.innerHTML='⏳'; btn.disabled=true;
+  try{
+    const canvas=await cmCanvas(el);
+    const blob=await new Promise(res=>canvas.toBlob(res,'image/png'));
+    await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+    btn.innerHTML='✓ Copiado';
+    setTimeout(()=>{ btn.innerHTML=orig; btn.disabled=false; },1400);
+    return;
+  }catch(e){ alert('No se pudo copiar la imagen: '+e.message+'\nUsa el botón 📥 PNG para descargar.'); }
+  btn.innerHTML=orig; btn.disabled=false;
 }
 function addPngButtons(){
   document.querySelectorAll('.block > h3').forEach(h=>{
-    if(h.querySelector('.png-btn')) return;
+    if(h.querySelector('.png-actions')) return;
     const block=h.parentElement;
-    const b=document.createElement('button');
-    b.className='png-btn'; b.type='button'; b.innerHTML='📥 PNG';
-    b.addEventListener('click',()=>{
-      if(block.id==='cotManBlock') downloadPng($("cmPreview"),'Propuesta-economica',b);
-      else downloadPng(block,h.textContent,b);
-    });
-    h.appendChild(b);
+    const target=()=> block.id==='cotManBlock' ? $("cmPreview") : block;
+    const name=()=> block.id==='cotManBlock' ? 'Propuesta-economica' : h.textContent;
+    const wrap=document.createElement('span'); wrap.className='png-actions';
+    const cp=document.createElement('button');
+    cp.className='png-btn copy'; cp.type='button'; cp.innerHTML='📋 Copiar';
+    cp.addEventListener('click',()=>copyPng(target(),name(),cp));
+    const dl=document.createElement('button');
+    dl.className='png-btn'; dl.type='button'; dl.innerHTML='📥 PNG';
+    dl.addEventListener('click',()=>downloadPng(target(),name(),dl));
+    wrap.appendChild(cp); wrap.appendChild(dl); h.appendChild(wrap);
   });
 }
 
@@ -1367,12 +1418,26 @@ $("cmUseCalc").addEventListener('click',()=>{
     renderCmRows(); renderCmTot();
   }
 });
+$("cmMoneda").addEventListener('click',e=>{
+  if(e.target.tagName!=='BUTTON')return;
+  const nueva=e.target.dataset.mon, actual=state.cotMan.moneda||'USD';
+  if(nueva===actual)return;
+  const tc=state.cotMan.tc>0?state.cotMan.tc:1;
+  const factor=(actual==='USD'&&nueva==='MXN')?tc:(actual==='MXN'&&nueva==='USD')?1/tc:1;
+  const conv=n=>Math.round((n||0)*factor*100)/100;
+  state.cotMan.precioRapido=conv(state.cotMan.precioRapido);
+  state.cotMan.rows.forEach(r=>{ r.subtotal=conv(r.subtotal); });
+  state.cotMan.moneda=nueva;
+  renderCotMan();
+});
+$("cmTc").addEventListener('input',e=>{ state.cotMan.tc=parseFloat(e.target.value)||0; updateCmCalcRef(); renderCmPreview(); });
 
 // ====== Init ======
 state.componentes=defaultComponentes();
 $("tc2").value=state.tc; $("precioKwh2").value=state.precioKwh;
 (function(){var d=new Date(); state.cotFecha=d.toISOString().slice(0,10); $("cotFecha").value=state.cotFecha;})();
 buildCiudades(); buildConsumo(); renderComponentes(); recalc();
+state.cotMan.tc=state.tc||17.5;
 renderCotMan();
 addPngButtons();
 
@@ -1433,7 +1498,9 @@ $("btnGuardar").addEventListener('click',guardarCotizacion);
 function applyState(saved){
   Object.assign(state, saved);
   // Compatibilidad con cotizaciones guardadas antes del cotizador manual
-  if(!state.cotMan) state.cotMan={modo:"rapido", desc:"", precioRapido:0, iva:true, rows:[]};
+  if(!state.cotMan) state.cotMan={modo:"rapido", desc:"", precioRapido:0, iva:true, moneda:"USD", tc:state.tc||17.5, rows:[]};
+  if(!state.cotMan.moneda) state.cotMan.moneda="USD";
+  if(!state.cotMan.tc) state.cotMan.tc=state.tc||17.5;
   // Chips de segmento
   document.querySelectorAll('.seg').forEach(s=>s.classList.toggle('active',s.dataset.seg===state.segmento));
   const d=SEG_DEFAULTS[state.segmento]||{};
