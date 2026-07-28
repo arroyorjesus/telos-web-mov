@@ -6,11 +6,14 @@
 <title>TELOS · Calculadora Solar</title>
 <style>
   :root{
-    --navy:#0a1a2f; --navy2:#0f2742; --navy3:#16365c;
-    --line:#1d3a5c; --blue:#2f7fd6; --blue-l:#5aa6f0;
-    --green:#3fb950; --green-d:#2e9e45; --amber:#f0a93b;
-    --txt:#e8f0fa; --muted:#8aa3c0; --white:#fff;
-    --card:#0f2742; --card2:#12304f;
+    /* Tema CLARO: fondos blancos, colores de realce conservados.
+       Truco: --white se usa para "texto resaltado" (antes blanco sobre oscuro);
+       ahora apunta a un azul-tinta oscuro para que se lea sobre blanco. */
+    --navy:#eef3f9; --navy2:#e6eef7; --navy3:#dbe7f3;
+    --line:#d3e0ec; --blue:#2f7fd6; --blue-l:#1f6fc4;
+    --green:#2e9e45; --green-d:#25843a; --amber:#c77f1a;
+    --txt:#1d2b3a; --muted:#5f748c; --white:#12283f;
+    --card:#ffffff; --card2:#f5f9fd;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
@@ -18,15 +21,15 @@
   .wrap{max-width:1180px;margin:0 auto;padding:0 18px;}
 
   /* Header */
-  header{background:linear-gradient(180deg,#0c2238 0%,var(--navy) 100%);
-    border-bottom:1px solid var(--line);padding:18px 0;margin-bottom:24px;}
+  header{background:#0c2238;
+    border-bottom:1px solid #16365c;padding:18px 0;margin-bottom:24px;}
   .hbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-  .logo{font-size:30px;font-weight:900;letter-spacing:2px;color:var(--white);}
+  .logo{font-size:30px;font-weight:900;letter-spacing:2px;color:#fff;}
   .logo img{height:38px;display:block;width:auto;}
   .logo .dot{color:var(--green);}
   .hsep{width:3px;height:34px;background:var(--green);border-radius:2px;}
-  .htitle{font-size:14px;font-weight:700;color:var(--blue-l);text-transform:uppercase;letter-spacing:1px;}
-  .htitle small{display:block;color:var(--muted);font-weight:500;letter-spacing:0;text-transform:none;font-size:12px;}
+  .htitle{font-size:14px;font-weight:700;color:#8ab4d4;text-transform:uppercase;letter-spacing:1px;}
+  .htitle small{display:block;color:#9fb3c8;font-weight:500;letter-spacing:0;text-transform:none;font-size:12px;}
   .tagline{margin-left:auto;font-size:11px;color:var(--muted);font-style:italic;}
 
   /* Segment tabs */
@@ -79,7 +82,7 @@
   .kpi .v{font-size:24px;font-weight:900;color:var(--white);line-height:1.1;}
   .kpi .v small{font-size:13px;font-weight:700;color:var(--blue-l);}
   .kpi .l{font-size:10.5px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.4px;}
-  .kpi.hl{background:linear-gradient(135deg,#103a23,#0f2742);border-color:var(--green-d);}
+  .kpi.hl{background:linear-gradient(135deg,#eafaf0,#f5faf6);border-color:#cdeed8;}
   .kpi.hl .v{color:var(--green);}
 
   .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;}
@@ -97,7 +100,7 @@
   .money{background:var(--navy);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center;}
   .money .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
   .money .v{font-size:18px;font-weight:800;margin-top:4px;}
-  .money.red .v{color:#ff7a7a;} .money.green .v{color:var(--green);} .money.blue .v{color:var(--blue-l);}
+  .money.red .v{color:#d64545;} .money.green .v{color:var(--green);} .money.blue .v{color:var(--blue-l);}
 
   /* env */
   .env-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
@@ -139,7 +142,7 @@
   .ptable input.concepto:hover,.ptable input.concepto:focus{border-color:var(--line);}
   .ptable .sub{font-weight:800;color:var(--green);text-align:right;white-space:nowrap;}
   .colq{width:74px;} .colc{width:96px;} .colm{width:70px;}
-  .delrow{background:none;border:none;color:#ff7a7a;font-size:16px;cursor:pointer;padding:0 4px;}
+  .delrow{background:none;border:none;color:#d64545;font-size:16px;cursor:pointer;padding:0 4px;}
   .addrow{margin-top:10px;background:var(--navy);border:1px dashed var(--blue);color:var(--blue-l);
     border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
   .ptot{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px;}
@@ -159,14 +162,14 @@
   .recibo-table th.num,.recibo-table td.num{text-align:right;}
   .recibo-table td{padding:5px 10px;border-bottom:1px solid var(--line);}
   .recibo-table tr.tot td{font-weight:800;color:var(--white);border-top:2px solid var(--blue);border-bottom:none;}
-  .recibo-table tr.tot td.kwh{color:var(--green);} .recibo-table tr.tot td.pago{color:#ff9b9b;}
+  .recibo-table tr.tot td.kwh{color:var(--green);} .recibo-table tr.tot td.pago{color:#d64545;}
   .recibo-table td.prod{color:var(--green);} .recibo-table tr.tot td.prodtot{color:var(--green);}
   .recibo-wrap{overflow-x:auto;}
   .recibo-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
   .rsum{background:var(--navy);border:1px solid var(--line);border-radius:10px;padding:11px;text-align:center;}
   .rsum .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
   .rsum .v{font-size:18px;font-weight:800;margin-top:3px;}
-  .rsum.cfe .v{color:#ff9b9b;} .rsum.sfv .v{color:var(--green);} .rsum.aho .v{color:var(--blue-l);}
+  .rsum.cfe .v{color:#d64545;} .rsum.sfv .v{color:var(--green);} .rsum.aho .v{color:var(--blue-l);}
 
   /* Gráfica consumo vs producción */
   .legend{display:flex;gap:18px;justify-content:center;margin:4px 0 12px;font-size:11.5px;font-weight:700;}
@@ -201,7 +204,7 @@
   .inv-row .amt{font-size:9px;color:var(--muted);width:82px;flex-shrink:0;text-align:right;}
 
   /* ROI destacado (estilo cotización) */
-  .roi-hero{background:linear-gradient(135deg,#103a23,#0f2742);border:1px solid var(--green-d);
+  .roi-hero{background:linear-gradient(135deg,#eafaf0,#f0f7ff);border:1px solid #cdeed8;
     border-radius:12px;padding:16px;text-align:center;margin:12px 0;}
   .roi-hero .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;}
   .roi-hero .v{font-size:38px;font-weight:900;color:var(--green);line-height:1.05;margin-top:4px;}
@@ -218,6 +221,45 @@
   .tcbtn:hover{background:var(--blue-l);}
   .tcbtn:disabled{opacity:.6;cursor:default;}
   .tcinfo{font-size:10.5px;color:var(--muted);align-self:center;max-width:240px;line-height:1.4;}
+
+  /* ====== Cotizador manual ====== */
+  #cotManBlock .cm-bar{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:14px;}
+  #cotManBlock .toggle{max-width:300px;}
+  .cm-chk{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:600;cursor:pointer;}
+  .cm-chk input{width:auto;}
+  .cm-doc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
+  .cm-rapido{display:flex;gap:14px;align-items:stretch;flex-wrap:wrap;}
+  .cm-rapido textarea{flex:1;min-width:240px;background:var(--card2);border:1px solid var(--line);border-radius:9px;
+    color:var(--txt);padding:11px 13px;font-size:13.5px;line-height:1.55;font-family:inherit;resize:vertical;}
+  .cm-precio{width:210px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;}
+  .cm-precio-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-weight:700;text-align:right;}
+  .cm-inp{display:flex;align-items:center;gap:4px;background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:8px 11px;}
+  .cm-inp b{color:var(--muted);font-size:18px;}
+  .cm-inp input{border:none;background:none;font-size:20px;font-weight:800;color:var(--green);text-align:right;padding:0;width:100%;}
+  .cm-quick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+  .cm-quick button{background:var(--card2);border:1px solid var(--line);border-radius:20px;color:var(--blue-l);
+    font-size:11.5px;font-weight:700;padding:5px 11px;cursor:pointer;font-family:inherit;}
+  .cm-quick button:hover{border-color:var(--blue);color:var(--blue);}
+  .cm-twrap{overflow-x:auto;}
+  .cm-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .cm-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);
+    font-weight:700;padding:6px 8px;border-bottom:1px solid var(--line);}
+  .cm-table th.cm-sub,.cm-table td.cm-sub{text-align:right;}
+  .cm-table td{padding:3px 6px;border-bottom:1px solid var(--line);}
+  .cm-table input{background:none;border:1px solid transparent;border-radius:6px;padding:7px 8px;font-size:13px;
+    color:var(--txt);font-family:inherit;width:100%;}
+  .cm-table input:hover{border-color:var(--line);}
+  .cm-table input:focus{border-color:var(--blue);background:var(--card2);outline:none;}
+  .cm-table th.cm-cant,.cm-table td.cm-cant{width:64px;}
+  .cm-table td.cm-cant input{text-align:center;font-weight:700;}
+  .cm-table th.cm-sub{width:160px;} .cm-table td.cm-sub input{text-align:right;font-weight:800;color:var(--green);}
+  .cm-del{background:none;border:none;color:#d64545;font-size:15px;cursor:pointer;padding:0 4px;}
+  .cm-tot{margin-top:14px;margin-left:auto;max-width:330px;}
+  .cm-tot .r{display:flex;justify-content:space-between;gap:20px;font-size:13px;padding:5px 0;color:var(--txt);}
+  .cm-tot .r .lb{color:var(--muted);}
+  .cm-tot .r.sub{border-top:1px solid var(--line);padding-top:9px;font-weight:700;}
+  .cm-tot .r.grand{border-top:2px solid var(--green);margin-top:4px;padding-top:9px;font-size:17px;font-weight:900;}
+  .cm-tot .r.grand .vv{color:var(--green);}
 </style>
 </head>
 <body>
@@ -517,6 +559,43 @@
     </div>
     <div class="note" id="ptRangeNote" style="display:none;"></div>
   </div>
+
+  <!-- COTIZADOR MANUAL (herramienta para armar / capturar) -->
+  <div class="block" id="cotManBlock">
+    <h3>🧾 Cotizador manual — arma y captura</h3>
+    <div class="cm-bar">
+      <div class="toggle" id="cmModo">
+        <button data-cm="rapido" class="on">⚡ Rápido</button>
+        <button data-cm="detallado">📋 Detallado</button>
+      </div>
+      <label class="cm-chk"><input type="checkbox" id="cmIva" checked> Mostrar IVA (16%)</label>
+    </div>
+
+    <div class="cm-doc" id="cmDoc">
+      <!-- Modo rápido: descripción + precio -->
+      <div id="cmRapido" class="cm-rapido">
+        <textarea id="cmDesc" rows="4" placeholder="Descripción del proyecto…&#10;Ej: Proyecto de paneles solares de 100 celdas con 2 inversores. Incluye estructura, material eléctrico, instalación, trámites e interconexión ante CFE y puesta en marcha."></textarea>
+        <div class="cm-precio">
+          <span class="cm-precio-l">Subtotal (sin IVA)</span>
+          <div class="cm-inp"><b>$</b><input type="number" id="cmPrecioRapido" placeholder="0" min="0" step="any"></div>
+        </div>
+      </div>
+
+      <!-- Modo detallado: tabla por renglones -->
+      <div id="cmDetallado" style="display:none;">
+        <div class="cm-quick" id="cmQuick"></div>
+        <div class="cm-twrap">
+          <table class="cm-table">
+            <thead><tr><th class="cm-cant">Cant.</th><th>Concepto</th><th class="cm-sub">Subtotal (sin IVA)</th><th></th></tr></thead>
+            <tbody id="cmBody"></tbody>
+          </table>
+        </div>
+        <button class="addrow" id="cmAdd">+ Agregar renglón</button>
+      </div>
+
+      <div class="cm-tot" id="cmTot"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -576,8 +655,14 @@ let state={segmento:"comercial", periodo:"mensual", consumo:[], precioKwh:4.14,
   modo:"rapido", componentes:[],
   panelModelo:"POLI-MONO BIFACIAL", panelMarca:"JA Solar / Yingli",
   invModelo:"20 / 60 / 80 kW", invMarca:"Huawei / Solis", invCant:"1 a 4",
-  cotProyecto:"Eco-Empresa", cotCliente:"", cotAtencion:"", cotFecha:"", cotVigencia:"15"};
+  cotProyecto:"Eco-Empresa", cotCliente:"", cotAtencion:"", cotFecha:"", cotVigencia:"15",
+  cotMan:{modo:"rapido", desc:"", precioRapido:0, iva:true, rows:[]}};
 let last={};  // resultados del último cálculo (para la cotización)
+
+// Rubros predefinidos para el cotizador manual (modo detallado)
+const CM_RUBROS=['Paneles solares','Inversor(es)','Estructura de montaje','Material eléctrico y protecciones',
+  'Mano de obra / instalación','Trámites e interconexión CFE','Sistema de monitoreo','Medidor bidireccional',
+  'Ingeniería y diseño','Envío / logística'];
 
 // ====== Componentes (modo detallado) ======
 function defaultComponentes(){return [
@@ -1028,6 +1113,57 @@ function generarCotizacion(){
   document.body.appendChild(overlay);
 }
 
+// ====== Cotizador manual ======
+function cmSubtotal(){
+  const c=state.cotMan;
+  if(c.modo==='rapido') return c.precioRapido||0;
+  return c.rows.reduce((a,r)=>a+(r.subtotal||0),0);
+}
+function renderCmTot(){
+  const c=state.cotMan, sub=cmSubtotal(), iva=c.iva?sub*0.16:0, tot=sub+iva;
+  let h=`<div class="r sub"><span class="lb">Subtotal (sin IVA)</span><span class="vv">${money(sub)}</span></div>`;
+  if(c.iva){
+    h+=`<div class="r"><span class="lb">IVA 16%</span><span class="vv">${money(iva)}</span></div>`;
+    h+=`<div class="r grand"><span class="lb">Total con IVA</span><span class="vv">${money(tot)}</span></div>`;
+  }
+  $("cmTot").innerHTML=h;
+}
+function renderCmRows(){
+  const tb=$("cmBody");
+  tb.innerHTML=state.cotMan.rows.map((r,i)=>`
+    <tr>
+      <td class="cm-cant"><input type="number" min="0" step="any" data-cmf="cant" data-i="${i}" value="${r.cant??''}"></td>
+      <td><input type="text" data-cmf="concepto" data-i="${i}" value="${(r.concepto||'').replace(/"/g,'&quot;')}"></td>
+      <td class="cm-sub"><input type="number" min="0" step="any" data-cmf="subtotal" data-i="${i}" value="${r.subtotal??''}"></td>
+      <td><button class="cm-del" data-cmdel="${i}" title="Quitar">✕</button></td>
+    </tr>`).join('');
+  tb.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
+    const i=+e.target.dataset.i, f=e.target.dataset.cmf;
+    state.cotMan.rows[i][f] = f==='concepto' ? e.target.value : (parseFloat(e.target.value)||0);
+    renderCmTot();
+  }));
+  tb.querySelectorAll('.cm-del').forEach(b=>b.addEventListener('click',e=>{
+    state.cotMan.rows.splice(+e.currentTarget.dataset.cmdel,1); renderCmRows(); renderCmTot();
+  }));
+}
+function renderCmQuick(){
+  $("cmQuick").innerHTML=CM_RUBROS.map(r=>`<button data-cmr="${r.replace(/"/g,'&quot;')}">+ ${r}</button>`).join('');
+  $("cmQuick").querySelectorAll('button').forEach(b=>b.addEventListener('click',e=>{
+    state.cotMan.rows.push({cant:1,concepto:e.currentTarget.dataset.cmr,subtotal:0});
+    renderCmRows(); renderCmTot();
+  }));
+}
+function renderCotMan(){
+  const c=state.cotMan;
+  document.querySelectorAll('#cmModo button').forEach(b=>b.classList.toggle('on',b.dataset.cm===c.modo));
+  $("cmRapido").style.display = c.modo==='rapido'?'flex':'none';
+  $("cmDetallado").style.display = c.modo==='detallado'?'block':'none';
+  $("cmIva").checked=!!c.iva;
+  $("cmDesc").value=c.desc||'';
+  $("cmPrecioRapido").value=c.precioRapido||'';
+  renderCmQuick(); renderCmRows(); renderCmTot();
+}
+
 // ====== Eventos ======
 $("segs").addEventListener('click',e=>{
   const seg=e.target.closest('.seg'); if(!seg)return;
@@ -1101,11 +1237,26 @@ $("addRow").addEventListener('click',()=>{
   renderComponentes(); recalc();
 });
 
+// Eventos del cotizador manual
+$("cmModo").addEventListener('click',e=>{
+  if(e.target.tagName!=='BUTTON')return;
+  state.cotMan.modo=e.target.dataset.cm;
+  document.querySelectorAll('#cmModo button').forEach(b=>b.classList.toggle('on',b===e.target));
+  $("cmRapido").style.display = state.cotMan.modo==='rapido'?'flex':'none';
+  $("cmDetallado").style.display = state.cotMan.modo==='detallado'?'block':'none';
+  renderCmTot();
+});
+$("cmIva").addEventListener('change',e=>{ state.cotMan.iva=e.target.checked; renderCmTot(); });
+$("cmDesc").addEventListener('input',e=>{ state.cotMan.desc=e.target.value; });
+$("cmPrecioRapido").addEventListener('input',e=>{ state.cotMan.precioRapido=parseFloat(e.target.value)||0; renderCmTot(); });
+$("cmAdd").addEventListener('click',()=>{ state.cotMan.rows.push({cant:1,concepto:'',subtotal:0}); renderCmRows(); renderCmTot(); });
+
 // ====== Init ======
 state.componentes=defaultComponentes();
 $("tc2").value=state.tc; $("precioKwh2").value=state.precioKwh;
 (function(){var d=new Date(); state.cotFecha=d.toISOString().slice(0,10); $("cotFecha").value=state.cotFecha;})();
 buildCiudades(); buildConsumo(); renderComponentes(); recalc();
+renderCotMan();
 
 // ====== CRM: Guardar / Reabrir cotización (integración telos-web-mov) ======
 let cotizId = null;  // si != null estamos editando una cotización existente
@@ -1163,6 +1314,8 @@ $("btnGuardar").addEventListener('click',guardarCotizacion);
 // Restaura el estado guardado y re-renderiza todos los controles del formulario.
 function applyState(saved){
   Object.assign(state, saved);
+  // Compatibilidad con cotizaciones guardadas antes del cotizador manual
+  if(!state.cotMan) state.cotMan={modo:"rapido", desc:"", precioRapido:0, iva:true, rows:[]};
   // Chips de segmento
   document.querySelectorAll('.seg').forEach(s=>s.classList.toggle('active',s.dataset.seg===state.segmento));
   const d=SEG_DEFAULTS[state.segmento]||{};
@@ -1188,6 +1341,7 @@ function applyState(saved){
   setVal('cotAtencion',state.cotAtencion); setVal('cotFecha',state.cotFecha); setVal('cotVigencia',state.cotVigencia);
   // Re-render dependiente del estado
   buildCiudades(); buildConsumo(); renderComponentes(); recalc();
+  renderCotMan();
 }
 
 async function cargarCotizacion(id){
