@@ -260,6 +260,23 @@
   .cm-tot .r.sub{border-top:1px solid var(--line);padding-top:9px;font-weight:700;}
   .cm-tot .r.grand{border-top:2px solid var(--green);margin-top:4px;padding-top:9px;font-size:17px;font-weight:900;}
   .cm-tot .r.grand .vv{color:var(--green);}
+  /* Vista propuesta (recuadro para capturar) */
+  .cm-preview-wrap{margin-top:18px;}
+  .cm-pv-hint{font-size:11px;color:var(--muted);margin-bottom:8px;}
+  .cm-preview{max-width:640px;background:#fff;border:1px solid #cfd9e6;}
+  .cm-pv-title{color:#2f6fb0;font-weight:800;font-size:15px;letter-spacing:.5px;text-align:center;padding:15px 0 13px;}
+  .cm-pv-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .cm-pv-table th{background:#4a72a8;color:#fff;font-weight:700;padding:7px 10px;text-align:center;
+    font-size:11.5px;letter-spacing:.3px;border:1px solid #3c5f8f;}
+  .cm-pv-table td{padding:8px 10px;border:1px solid #cfd9e6;vertical-align:top;color:#1d2b3a;}
+  .cm-pv-table td.c{text-align:center;width:52px;white-space:nowrap;}
+  .cm-pv-table td.d{white-space:pre-wrap;line-height:1.5;}
+  .cm-pv-table th.s,.cm-pv-table td.s{text-align:right;width:112px;white-space:nowrap;}
+  .cm-pv-table .ph{color:#9aa7b5;}
+  .cm-pv-table tfoot td{background:#dbe6f4;font-weight:800;}
+  .cm-pv-table tfoot td:first-child{text-align:right;}
+  .cm-pv-table tfoot tr.iva td{background:#eaf1f9;font-weight:600;}
+  .cm-pv-table tfoot tr.tot td{background:#c6d9ef;font-size:13px;}
 </style>
 </head>
 <body>
@@ -594,6 +611,12 @@
       </div>
 
       <div class="cm-tot" id="cmTot"></div>
+    </div>
+
+    <!-- Vista propuesta (recuadro para capturar, tamaño carta reducida) -->
+    <div class="cm-preview-wrap">
+      <div class="cm-pv-hint">👁️ Vista propuesta — esto es lo que capturas (ancho carta con espacio para tus imágenes del costado):</div>
+      <div class="cm-preview" id="cmPreview"></div>
     </div>
   </div>
 </div>
@@ -1127,6 +1150,33 @@ function renderCmTot(){
     h+=`<div class="r grand"><span class="lb">Total con IVA</span><span class="vv">${money(tot)}</span></div>`;
   }
   $("cmTot").innerHTML=h;
+  renderCmPreview();
+}
+// Vista propuesta con formato tipo documento (2 decimales, $)
+const moneyC=n=>isFinite(n)?"$ "+n.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2}):"$ 0.00";
+const cmEsc=t=>(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function renderCmPreview(){
+  const c=state.cotMan, sub=cmSubtotal(), iva=c.iva?sub*0.16:0, tot=sub+iva;
+  let rows;
+  if(c.modo==='rapido'){
+    rows=`<tr><td class="c">1</td><td class="d">${cmEsc(c.desc)||'<span class="ph">Escribe la descripción del proyecto…</span>'}</td><td class="s">${moneyC(c.precioRapido||0)}</td></tr>`;
+  } else {
+    rows = c.rows.length
+      ? c.rows.map(r=>`<tr><td class="c">${r.cant||''}</td><td class="d">${cmEsc(r.concepto)||'<span class="ph">—</span>'}</td><td class="s">${moneyC(r.subtotal||0)}</td></tr>`).join('')
+      : `<tr><td class="c"></td><td class="d"><span class="ph">Agrega renglones con los botones de arriba…</span></td><td class="s">${moneyC(0)}</td></tr>`;
+  }
+  let foot=`<tr class="sub"><td colspan="2">Subtotal</td><td class="s">${moneyC(sub)}</td></tr>`;
+  if(c.iva){
+    foot+=`<tr class="iva"><td colspan="2">IVA 16%</td><td class="s">${moneyC(iva)}</td></tr>`;
+    foot+=`<tr class="tot"><td colspan="2">Total</td><td class="s">${moneyC(tot)}</td></tr>`;
+  }
+  $("cmPreview").innerHTML=`
+    <div class="cm-pv-title">PROPUESTA ECONÓMICA</div>
+    <table class="cm-pv-table">
+      <thead><tr><th class="c">CANT</th><th>DESCRIPCIÓN</th><th class="s">SUBTOTAL</th></tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot>${foot}</tfoot>
+    </table>`;
 }
 function renderCmRows(){
   const tb=$("cmBody");
@@ -1247,7 +1297,7 @@ $("cmModo").addEventListener('click',e=>{
   renderCmTot();
 });
 $("cmIva").addEventListener('change',e=>{ state.cotMan.iva=e.target.checked; renderCmTot(); });
-$("cmDesc").addEventListener('input',e=>{ state.cotMan.desc=e.target.value; });
+$("cmDesc").addEventListener('input',e=>{ state.cotMan.desc=e.target.value; renderCmPreview(); });
 $("cmPrecioRapido").addEventListener('input',e=>{ state.cotMan.precioRapido=parseFloat(e.target.value)||0; renderCmTot(); });
 $("cmAdd").addEventListener('click',()=>{ state.cotMan.rows.push({cant:1,concepto:'',subtotal:0}); renderCmRows(); renderCmTot(); });
 
