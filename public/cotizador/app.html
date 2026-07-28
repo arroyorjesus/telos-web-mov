@@ -267,6 +267,11 @@
   .cm-calcref button:hover{background:var(--blue-l);}
   .cm-preview-wrap{margin-top:18px;}
   .cm-pv-hint{font-size:11px;color:var(--muted);margin-bottom:8px;}
+  .png-btn{margin-left:auto;background:var(--card2);border:1px solid var(--line);color:var(--blue);border-radius:7px;
+    font-size:11px;font-weight:700;padding:4px 9px;cursor:pointer;font-family:inherit;letter-spacing:0;text-transform:none;
+    display:inline-flex;align-items:center;gap:4px;}
+  .png-btn:hover{border-color:var(--blue);background:#fff;}
+  .png-btn:disabled{opacity:.6;cursor:default;}
   /* Espacio blanco a la izquierda (para la imagen del costado, sin líneas) */
   .cm-preview{max-width:700px;background:#fff;padding:12px 12px 12px 64px;}
   .cm-pv-title{color:#2f6fb0;font-weight:800;font-size:15px;letter-spacing:.5px;text-align:center;padding:15px 0 13px;}
@@ -628,6 +633,7 @@
   </div>
 </div>
 
+<script src="html2canvas.min.js"></script>
 <script>
 // ====== Catálogo de insolación NASA (40 ciudades) ======
 const MESES=["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
@@ -1236,6 +1242,36 @@ function renderCotMan(){
   renderCmQuick(); renderCmRows(); renderCmTot();
 }
 
+// ====== Descargar secciones como imagen PNG ======
+function cmSlug(t){return (t||'seccion').normalize('NFD').replace(/[̀-ͯ]/g,'')
+  .replace(/[^a-zA-Z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,50)||'seccion';}
+async function downloadPng(el,name,btn){
+  if(typeof html2canvas!=='function'){ alert('No se pudo cargar el generador de imágenes (html2canvas).'); return; }
+  const orig=btn?btn.innerHTML:''; if(btn){btn.innerHTML='⏳';btn.disabled=true;}
+  try{
+    const canvas=await html2canvas(el,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,
+      ignoreElements:e=>e.classList&&e.classList.contains('png-btn')});
+    const a=document.createElement('a');
+    a.href=canvas.toDataURL('image/png');
+    a.download='TELOS-'+cmSlug(name)+'.png';
+    document.body.appendChild(a); a.click(); a.remove();
+  }catch(e){ alert('Error al generar la imagen: '+e.message); }
+  finally{ if(btn){btn.innerHTML=orig;btn.disabled=false;} }
+}
+function addPngButtons(){
+  document.querySelectorAll('.block > h3').forEach(h=>{
+    if(h.querySelector('.png-btn')) return;
+    const block=h.parentElement;
+    const b=document.createElement('button');
+    b.className='png-btn'; b.type='button'; b.innerHTML='📥 PNG';
+    b.addEventListener('click',()=>{
+      if(block.id==='cotManBlock') downloadPng($("cmPreview"),'Propuesta-economica',b);
+      else downloadPng(block,h.textContent,b);
+    });
+    h.appendChild(b);
+  });
+}
+
 // ====== Eventos ======
 $("segs").addEventListener('click',e=>{
   const seg=e.target.closest('.seg'); if(!seg)return;
@@ -1338,6 +1374,7 @@ $("tc2").value=state.tc; $("precioKwh2").value=state.precioKwh;
 (function(){var d=new Date(); state.cotFecha=d.toISOString().slice(0,10); $("cotFecha").value=state.cotFecha;})();
 buildCiudades(); buildConsumo(); renderComponentes(); recalc();
 renderCotMan();
+addPngButtons();
 
 // ====== CRM: Guardar / Reabrir cotización (integración telos-web-mov) ======
 let cotizId = null;  // si != null estamos editando una cotización existente
