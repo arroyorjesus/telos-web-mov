@@ -706,13 +706,25 @@ const K={sobredim:1.35, pr:0.85, areaPanel:3, inflacion:0.07, isr:0.30,
   ahorroMax:0.98};  // tope realista de ahorro (referencia TELOS)
 
 // ====== Estado ======
+// Texto base de referencia para la descripción del proyecto (editable)
+const CM_DESC_BASE = `SISTEMA FOTOVOLTAICO INTERCONECTADO A LA RED
+
+• 1 KIT DE PANELES POLICRISTALINOS 72 CELDAS
+• 1 KIT DE MICROINVERSORES
+• 1 SISTEMA DE CONTROL Y MONITOREO WEB/ONLINE
+• 1 SISTEMA DE MONTAJE CERTIFICADO POR FÁBRICA
+• 1 KIT DE MATERIAL ELÉCTRICO
+• 1 KIT DE MANO DE OBRA
+• 1 KIT DE DOCUMENTACIÓN PARA CFE
+• 1 KIT DE DIAGRAMAS Y CARPETA ENTREGABLE, PLANOS Y DOCUMENTOS DEL SISTEMA`;
+
 let state={segmento:"comercial", periodo:"mensual", consumo:[], precioKwh:4.14,
   ciudadIdx:11, panelW:715, cantidad:0, cantManual:false, usdWp:0.90, tc:17.50,
   modo:"rapido", componentes:[],
   panelModelo:"POLI-MONO BIFACIAL", panelMarca:"JA Solar / Yingli",
   invModelo:"20 / 60 / 80 kW", invMarca:"Huawei / Solis", invCant:"1 a 4",
   cotProyecto:"Eco-Empresa", cotCliente:"", cotAtencion:"", cotFecha:"", cotVigencia:"15",
-  cotMan:{modo:"rapido", desc:"", precioRapido:0, iva:true, moneda:"USD", tc:17.5, rows:[]}};
+  cotMan:{modo:"rapido", desc:CM_DESC_BASE, precioRapido:0, iva:true, moneda:"USD", tc:17.5, rows:[]}};
 let last={};  // resultados del último cálculo (para la cotización)
 
 // Rubros predefinidos para el cotizador manual (modo detallado)
