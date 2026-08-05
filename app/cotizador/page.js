@@ -21,6 +21,7 @@ export default function CotizadorPage({ searchParams }) {
         src={src}
         title="Cotizador solar TELOS"
         className="w-full h-full border-0"
+        allow="clipboard-write"
       />
     </div>
   )
