@@ -191,6 +191,7 @@
   .spec .sc:nth-child(odd){border-right:1px solid var(--line);}
   .spec .sk{color:var(--muted);font-weight:600;} .spec .sv{color:var(--white);font-weight:800;text-align:right;}
   .spec .sv.g{color:var(--green);}
+  .spec .sv.r{color:#d64545;}
   .spec-h{font-size:11px;font-weight:800;color:var(--blue-l);text-transform:uppercase;letter-spacing:.5px;
     grid-column:1/-1;background:var(--navy);padding:7px 12px;border-bottom:1px solid var(--line);}
 
@@ -204,6 +205,21 @@
   .inv-row .amt{font-size:9px;color:var(--muted);width:82px;flex-shrink:0;text-align:right;}
 
   /* ROI destacado (estilo cotización) */
+  /* Tabla estilo Excel: gasto total 30 años + ROI (Análisis de inversión) */
+  .excel-table{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:10px;}
+  .excel-head{background:#eef2f6;color:#1d2b3a;font-weight:800;font-size:12px;text-transform:uppercase;
+    letter-spacing:.4px;text-align:center;padding:9px;border-bottom:1px solid var(--line);}
+  .excel-row{display:grid;grid-template-columns:repeat(3,1fr);}
+  .excel-cell{padding:14px 8px;text-align:center;border-right:1px solid var(--line);}
+  .excel-cell:last-child{border-right:none;}
+  .excel-cell .l{font-size:11px;font-weight:700;color:#2f6fb0;text-transform:uppercase;letter-spacing:.3px;}
+  .excel-cell .v{font-size:19px;font-weight:800;margin-top:6px;}
+  .excel-cell .v.red{color:#d64545;} .excel-cell .v.green{color:var(--green);}
+  .excel-roi{text-align:center;font-size:27px;font-weight:900;color:var(--txt);padding:14px 10px 4px;}
+  .excel-note{text-align:center;font-size:10.5px;color:var(--muted);font-style:italic;padding:0 14px 14px;}
+  @media(max-width:560px){.excel-row{grid-template-columns:1fr;}
+    .excel-cell{border-right:none;border-bottom:1px solid var(--line);} .excel-cell:last-child{border-bottom:none;}}
+
   .roi-hero{background:linear-gradient(135deg,#eafaf0,#f0f7ff);border:1px solid #cdeed8;
     border-radius:12px;padding:16px;text-align:center;margin:12px 0;}
   .roi-hero .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;}
@@ -423,8 +439,8 @@
         <div><label>Vigencia (días)</label><input type="number" id="cotVigencia" value="15"></div>
       </div>
       <button class="btn-cot" id="btnCot">📄 Generar OnePager de ahorro</button>
-      <button class="btn-cot" id="btnGuardar" style="background:linear-gradient(135deg,#2f7fd6,#1f5fa8);margin-top:8px;">💾 Guardar cotización</button>
-      <div id="guardarMsg" style="text-align:center;font-size:12.5px;margin-top:8px;min-height:16px;color:#9fb3c8;"></div>
+      <button class="btn-cot gm-btn" style="background:linear-gradient(135deg,#2f7fd6,#1f5fa8);margin-top:8px;">💾 Guardar cotización</button>
+      <div class="gm-msg" style="text-align:center;font-size:12.5px;margin-top:8px;min-height:16px;color:#9fb3c8;"></div>
     </div>
 
     <!-- RESULTS -->
@@ -444,6 +460,10 @@
           <tbody id="reciboBody"></tbody>
           <tbody id="reciboTot"></tbody>
         </table>
+      </div>
+
+      <div class="block">
+        <h3>Costo por kWh: CFE vs Sistema Solar</h3>
         <div class="recibo-sum">
           <div class="rsum cfe"><div class="l">Costo medio kWh CFE</div><div class="v" id="rCostoCfe">—</div></div>
           <div class="rsum sfv"><div class="l">Costo medio kWh con SFV</div><div class="v" id="rCostoSfv">—</div></div>
@@ -492,42 +512,43 @@
           <div class="sc"><span class="sk">Cantidad</span><span class="sv" id="spInvCant">—</span></div>
           <div class="sc"><span class="sk">Ahorro promedio</span><span class="sv g" id="spAhorro">—</span></div>
           <div class="spec-h">Generación</div>
-          <div class="sc"><span class="sk">Consumo diario promedio (real)</span><span class="sv" id="spConsDia">—</span></div>
+          <div class="sc"><span class="sk">Consumo diario promedio (real)</span><span class="sv r" id="spConsDia">—</span></div>
           <div class="sc"><span class="sk">Producción diaria promedio**</span><span class="sv g" id="spProdDia">—</span></div>
-          <div class="sc"><span class="sk">Producción mensual promedio**</span><span class="sv g" id="spProdMes">—</span></div>
+          <div class="sc"><span class="sk" id="spProdMesLabel">Producción mensual promedio**</span><span class="sv g" id="spProdMes">—</span></div>
           <div class="sc"><span class="sk">Producción anual promedio**</span><span class="sv g" id="spProdAnual">—</span></div>
         </div>
         <div class="factors" style="text-align:left;">** Producción estimada (promedio) según irradiación solar NASA; el consumo es real del recibo.</div>
       </div>
 
-      <div class="block">
-        <h3>Análisis de inversión <span class="badge-seg" id="segBadge">Comercial</span></h3>
-        <div class="money-grid">
-          <div class="money red"><div class="l">Inversión (con IVA)</div><div class="v" id="mInv">—</div></div>
-          <div class="money green"><div class="l">Ahorro anual</div><div class="v" id="mAhorroAnual">—</div></div>
-          <div class="money blue"><div class="l">Área aproximada</div><div class="v" id="mArea">—</div></div>
+      <div id="projBlock">
+        <div class="block">
+          <h3>Ahorro anual <span class="badge-seg" id="segBadge">Comercial</span></h3>
+          <div class="money-grid" style="grid-template-columns:1fr;max-width:240px;margin:4px auto 0;">
+            <div class="money green"><div class="l">Ahorro anual</div><div class="v" id="mAhorroAnual">—</div></div>
+          </div>
         </div>
-        <div class="roi-hero">
-          <div class="l">Retorno de inversión (ROI)</div>
-          <div class="v" id="roiHero">—</div>
-          <div class="n">* Tomando en cuenta incentivos fiscales (ISR) e IVA amortizados.</div>
-        </div>
-        <div class="roi-row">
-          <div class="roi"><div class="v" id="roi1">—</div><div class="l">ROI simple (años)</div></div>
-          <div class="roi"><div class="v" id="roi2">—</div><div class="l">ROI con ISR <small>(−30%)</small></div></div>
-          <div class="roi"><div class="v" id="roi3">—</div><div class="l">ROI con ISR-IVA</div></div>
-        </div>
-      </div>
 
-      <div class="block" id="projBlock">
-        <h3>Proyección a 30 años (inflación eléctrica 7%)</h3>
-        <div class="money-grid">
-          <div class="money red"><div class="l">Pago sin paneles</div><div class="v" id="p30sin">—</div></div>
-          <div class="money green"><div class="l">Pago con paneles</div><div class="v" id="p30con">—</div></div>
-          <div class="money blue"><div class="l">Ahorro total 30 años</div><div class="v" id="p30ahorro">—</div></div>
+        <div class="block">
+          <h3>Gasto a 30 años y ROI</h3>
+          <div class="excel-table">
+            <div class="excel-head">Gasto total a 30 años</div>
+            <div class="excel-row">
+              <div class="excel-cell"><div class="l">Sin paneles</div><div class="v red" id="p30sin">—</div></div>
+              <div class="excel-cell"><div class="l">Con paneles</div><div class="v green" id="p30con">—</div></div>
+              <div class="excel-cell"><div class="l">Ahorro a 30 años</div><div class="v green" id="p30ahorro">—</div></div>
+            </div>
+            <div class="excel-head">Retorno de inversión (ROI)</div>
+            <div class="excel-roi" id="roiHero">—</div>
+            <div class="excel-note">*Tomando en cuenta incentivos fiscales y deducciones amortizadas.</div>
+          </div>
         </div>
-        <div class="legend"><span><i class="i-cons"></i>Pago a CFE sin paneles</span><span><i class="i-prod"></i>Pago a CFE con paneles</span></div>
-        <div class="inv-chart" id="projBars"></div>
+
+        <div class="block">
+          <h3>Proyección a 30 años (gráfica)</h3>
+          <div class="legend"><span><i class="i-cons"></i>Pago a CFE sin paneles</span><span><i class="i-prod"></i>Pago a CFE con paneles</span></div>
+          <div class="inv-chart" id="projBars"></div>
+          <div class="factors" style="text-align:left;">Proyección con inflación eléctrica anual estimada del 7%.</div>
+        </div>
       </div>
 
       <div class="block">
@@ -650,6 +671,11 @@
       <div class="cm-pv-hint">👁️ Vista propuesta — esto es lo que capturas (ancho carta con espacio para tus imágenes del costado):</div>
       <div class="cm-preview" id="cmPreview"></div>
     </div>
+  </div>
+
+  <div class="block" style="text-align:center;">
+    <button class="btn-cot gm-btn" style="background:linear-gradient(135deg,#2f7fd6,#1f5fa8);max-width:360px;margin:0 auto;">💾 Guardar cotización</button>
+    <div class="gm-msg" style="text-align:center;font-size:12.5px;margin-top:8px;min-height:16px;color:#9fb3c8;"></div>
   </div>
 </div>
 
@@ -913,7 +939,9 @@ function renderSpec(cant,tamanoKwp,area,prodAnual,promDiario,pctAhorro){
   $("spAhorro").textContent=fmt(pctAhorro*100,0)+"%";
   $("spConsDia").textContent=fmt(promDiario)+" kWh";
   $("spProdDia").textContent=fmt(prodAnual/365)+" kWh";
-  $("spProdMes").textContent=fmt(prodAnual/12)+" kWh";
+  const esBimestral=state.periodo==="bimestral";
+  $("spProdMesLabel").textContent=esBimestral?"Producción bimestral promedio**":"Producción mensual promedio**";
+  $("spProdMes").textContent=fmt(prodAnual/(esBimestral?6:12))+" kWh";
   $("spProdAnual").textContent=fmt(prodAnual)+" kWh";
 }
 
@@ -988,12 +1016,7 @@ function recalc(opts={}){
   $("kProd").textContent=fmt(prodAnual);
   $("kAhorro").innerHTML=fmt(pctAhorro*100,0)+'<small>%</small>';
 
-  $("mInv").textContent=money(invTotal);
   $("mAhorroAnual").textContent=money(ahorroAnual);
-  $("mArea").textContent=fmt(area)+" m²";
-  $("roi1").textContent=isFinite(roi1)?fmt(roi1,1)+" años":"—";
-  $("roi2").textContent=isFinite(roi2)?fmt(roi2,1)+" años":"—";
-  $("roi3").textContent=isFinite(roi3)?fmt(roi3,1)+" años":"—";
   $("roiHero").textContent=isFinite(roi3)?fmt(roi3,1)+" años*":"—";
 
   $("p30sin").textContent=money(sin);
@@ -1478,14 +1501,15 @@ function buildPayload(){
 }
 
 async function guardarCotizacion(){
-  const btn=$("btnGuardar"), msg=$("guardarMsg");
+  const btns=[...document.querySelectorAll('.gm-btn')], msgs=[...document.querySelectorAll('.gm-msg')];
+  const setMsg=(color,text)=>msgs.forEach(m=>{m.style.color=color; m.textContent=text;});
   if(!state.cotCliente && !state.cotProyecto){
-    msg.style.color='#e0a000';
-    msg.textContent='⚠️ Captura al menos Cliente o Proyecto antes de guardar.';
+    setMsg('#e0a000','⚠️ Captura al menos Cliente o Proyecto antes de guardar.');
     return;
   }
-  btn.disabled=true; const orig=btn.textContent; btn.textContent='Guardando…';
-  msg.style.color='#9fb3c8'; msg.textContent='';
+  const origs=btns.map(b=>b.textContent);
+  btns.forEach(b=>{b.disabled=true; b.textContent='Guardando…';});
+  setMsg('#9fb3c8','');
   try{
     const res=await fetch('/api/cotizaciones',{
       method:'POST',
@@ -1495,16 +1519,14 @@ async function guardarCotizacion(){
     const data=await res.json();
     if(!res.ok) throw new Error(data.error||'Error al guardar');
     cotizId=data.id;
-    msg.style.color='#3fb950';
-    msg.textContent='✅ Cotización guardada. Ya aparece en /cotizaciones.';
+    setMsg('#3fb950','✅ Cotización guardada. Ya aparece en /cotizaciones.');
   }catch(e){
-    msg.style.color='#e74c3c';
-    msg.textContent='❌ '+e.message;
+    setMsg('#e74c3c','❌ '+e.message);
   }finally{
-    btn.disabled=false; btn.textContent=orig;
+    btns.forEach((b,i)=>{b.disabled=false; b.textContent=origs[i];});
   }
 }
-$("btnGuardar").addEventListener('click',guardarCotizacion);
+document.querySelectorAll('.gm-btn').forEach(b=>b.addEventListener('click',guardarCotizacion));
 
 // Restaura el estado guardado y re-renderiza todos los controles del formulario.
 function applyState(saved){
@@ -1542,7 +1564,8 @@ function applyState(saved){
 }
 
 async function cargarCotizacion(id){
-  const msg=$("guardarMsg");
+  const msgs=[...document.querySelectorAll('.gm-msg')];
+  const setMsg=(color,text)=>msgs.forEach(m=>{m.style.color=color; m.textContent=text;});
   try{
     const res=await fetch('/api/cotizaciones/'+encodeURIComponent(id));
     const data=await res.json();
@@ -1551,12 +1574,10 @@ async function cargarCotizacion(id){
     if(c && c.payload){
       cotizId=c.id;
       applyState(c.payload);
-      msg.style.color='#9fb3c8';
-      msg.textContent='📂 Cotización cargada — los cambios se guardarán sobre la misma.';
+      setMsg('#9fb3c8','📂 Cotización cargada — los cambios se guardarán sobre la misma.');
     }
   }catch(e){
-    msg.style.color='#e74c3c';
-    msg.textContent='❌ No se pudo cargar la cotización: '+e.message;
+    setMsg('#e74c3c','❌ No se pudo cargar la cotización: '+e.message);
   }
 }
 
