@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { contactSchema, sanitizeContactData } from '@/lib/validation'
-import { rateLimit, getClientIp } from '@/lib/rateLimit'
+import { rateLimit, clientIp } from '@/lib/rateLimit'
 import { saveLead } from '@/lib/db'
 import { buildInternalEmail, buildConfirmationEmail, sendEmail } from '@/lib/email'
 import { hashString } from '@/lib/utils'
@@ -8,15 +8,15 @@ import { hashString } from '@/lib/utils'
 export async function POST(request) {
   try {
     // Rate limiting
-    const ip = getClientIp(request)
-    const rl = rateLimit(ip)
-    if (!rl.success) {
+    const ip = clientIp(request)
+    const rl = rateLimit(`contact:${ip}`, { max: 5, windowMs: 15 * 60 * 1000 })
+    if (!rl.allowed) {
       return NextResponse.json(
         { error: 'Demasiadas solicitudes. Intenta de nuevo en unos minutos.' },
         {
           status: 429,
           headers: {
-            'Retry-After': String(rl.retryAfter),
+            'Retry-After': String(Math.ceil((rl.retryAfterMs || 0) / 1000)),
             'X-RateLimit-Remaining': '0',
           },
         }
