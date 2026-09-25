@@ -1116,14 +1116,15 @@ function generarCotizacion(){
   .noprint .btn-pr{background:#3fb950;color:#fff;border:none;border-radius:9px;padding:10px 16px;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.2);}
   @media print{ *{-webkit-print-color-adjust:exact;print-color-adjust:exact;} body{background:#fff;margin:0;padding:0;zoom:0.86;} .page{margin:0 auto;box-shadow:none;} .noprint{display:none;} @page{size:letter portrait;margin:4mm;} }`;
 
-  const doc=`<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Cotización de ahorro — ${s.cotProyecto}</title><style>${css}</style><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"><\/script></head><body>
+  const docCliente=cmEsc(s.cotCliente), docProyecto=cmEsc(s.cotProyecto)||'Eco-Empresa', docAtencion=cmEsc(s.cotAtencion);
+  const doc=`<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Cotización de ahorro — ${docProyecto}</title><style>${css}</style><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"><\/script></head><body>
   <div class="noprint"><button class="btn-dl" onclick="dlPDF()">📥 Descargar PDF</button><button class="btn-pr" onclick="window.print()">🖨️ Imprimir</button></div>
   <div class="page">
     <div class="hdr"><img src="${logo}" alt="TELOS"><span class="ht">Cotización de Ahorro Solar</span></div>
     <div class="meta">
-      ${s.cotCliente?`<span><b>Cliente:</b> ${s.cotCliente}</span>`:''}
-      <span><b>Proyecto:</b> ${s.cotProyecto} (${segLabel})</span>
-      ${s.cotAtencion?`<span><b>Atención:</b> ${s.cotAtencion}</span>`:''}
+      ${docCliente?`<span><b>Cliente:</b> ${docCliente}</span>`:''}
+      <span><b>Proyecto:</b> ${docProyecto} (${segLabel})</span>
+      ${docAtencion?`<span><b>Atención:</b> ${docAtencion}</span>`:''}
       <span><b>Fecha:</b> ${fechaTxt}</span>
     </div>
     <div class="body">
@@ -1477,12 +1478,14 @@ renderCotMan();
 addPngButtons();
 
 // ====== CRM: Guardar / Reabrir cotización (integración telos-web-mov) ======
-let cotizId = null;  // si != null estamos editando una cotización existente
+// Cada clic en "Guardar cotización" crea un registro NUEVO, aunque el
+// nombre de cliente/proyecto sea igual a uno ya guardado. Así no se pierde
+// ninguna versión; la revisión de cuál es la correcta se hace después en
+// /cotizaciones.
 
 function buildPayload(){
   const ciu = last.ciudad ? `${last.ciudad.c}, ${last.ciudad.e}` : '';
   return {
-    id: cotizId || undefined,
     cliente: state.cotCliente || '',
     proyecto: state.cotProyecto || '',
     atencion: state.cotAtencion || '',
@@ -1518,8 +1521,7 @@ async function guardarCotizacion(){
     });
     const data=await res.json();
     if(!res.ok) throw new Error(data.error||'Error al guardar');
-    cotizId=data.id;
-    setMsg('#3fb950','✅ Cotización guardada. Ya aparece en /cotizaciones.');
+    setMsg('#3fb950','✅ Cotización guardada como nueva. Ya aparece en /cotizaciones.');
   }catch(e){
     setMsg('#e74c3c','❌ '+e.message);
   }finally{
@@ -1572,9 +1574,8 @@ async function cargarCotizacion(id){
     if(!res.ok) throw new Error(data.error||'No se pudo cargar');
     const c=data.cotizacion;
     if(c && c.payload){
-      cotizId=c.id;
       applyState(c.payload);
-      setMsg('#9fb3c8','📂 Cotización cargada — los cambios se guardarán sobre la misma.');
+      setMsg('#9fb3c8','📂 Cotización cargada — al guardar se creará una entrada nueva (no se sobreescribe).');
     }
   }catch(e){
     setMsg('#e74c3c','❌ No se pudo cargar la cotización: '+e.message);

@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto'
 import { NextResponse } from 'next/server'
 import { getSupabase, createAuditoria } from '@/lib/db'
 import { ALL_QUESTIONS, DOCUMENT_CATEGORIES } from '@/lib/diagnostico'
+import { clientIp, rateLimit } from '@/lib/rateLimit'
 
 export const runtime = 'nodejs'
 
@@ -15,6 +16,13 @@ function safeFileName(name) {
 }
 
 export async function POST(request) {
+  // Límite generoso: deja pasar varios envíos legítimos desde una misma red
+  // (oficina/hotel compartiendo IP) pero corta el flood automatizado.
+  const { allowed } = rateLimit(`diagnostico:${clientIp(request)}`, { max: 20, windowMs: 60 * 60 * 1000 })
+  if (!allowed) {
+    return NextResponse.json({ error: 'Demasiados envíos. Intenta de nuevo más tarde.' }, { status: 429 })
+  }
+
   let formData
   try {
     formData = await request.formData()

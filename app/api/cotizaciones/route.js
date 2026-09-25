@@ -48,6 +48,9 @@ export async function POST(request) {
   if (!body.payload) {
     return NextResponse.json({ error: 'Falta el payload de la cotización' }, { status: 422 })
   }
+  if (JSON.stringify(body.payload).length > 200_000) {
+    return NextResponse.json({ error: 'Cotización demasiado grande' }, { status: 413 })
+  }
 
   const row = pickSummary(body)
   if (body.id) row.id = body.id // update existente

@@ -2,10 +2,24 @@ import { NextResponse } from 'next/server'
 import { getColaboradorByEmail } from '@/lib/db'
 import { verifyPassword } from '@/lib/colaboradorPassword'
 import { AUDIT_COOKIE, createSessionToken } from '@/lib/auditoriasAuth'
+import { clientIp, rateLimit } from '@/lib/rateLimit'
+
+// Solo permite redirigir a rutas internas (evita open-redirect vía ?next=//evil.com).
+function safeNextPath(next, fallback) {
+  if (typeof next === 'string' && next.startsWith('/') && !next.startsWith('//') && !next.startsWith('/\\')) {
+    return next
+  }
+  return fallback
+}
 
 export const runtime = 'nodejs'
 
 export async function POST(request) {
+  const { allowed } = rateLimit(`audit-auth:${clientIp(request)}`, { max: 10, windowMs: 5 * 60 * 1000 })
+  if (!allowed) {
+    return NextResponse.json({ error: 'Demasiados intentos. Espera unos minutos.' }, { status: 429 })
+  }
+
   let body
   try {
     body = await request.json()
@@ -25,7 +39,7 @@ export async function POST(request) {
   }
 
   const token = await createSessionToken(colaborador.id)
-  const res = NextResponse.json({ ok: true, next: body.next || '/auditorias' })
+  const res = NextResponse.json({ ok: true, next: safeNextPath(body.next, '/auditorias') })
   res.cookies.set(AUDIT_COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',

@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server'
-import { COTIZ_COOKIE, getCotizadorPassword, deriveToken } from '@/lib/cotizadorAuth'
+import { COTIZ_COOKIE, deriveToken, expectedToken, safeNextPath, timingSafeEqualHex } from '@/lib/cotizadorAuth'
+import { clientIp, rateLimit } from '@/lib/rateLimit'
 
 export async function POST(request) {
+  const { allowed } = rateLimit(`cotiz-auth:${clientIp(request)}`, { max: 10, windowMs: 5 * 60 * 1000 })
+  if (!allowed) {
+    return NextResponse.json({ error: 'Demasiados intentos. Espera unos minutos.' }, { status: 429 })
+  }
+
   let password = ''
   let next = '/cotizador'
 
@@ -17,13 +23,13 @@ export async function POST(request) {
   }
 
   // Solo se permiten destinos internos.
-  if (!next.startsWith('/')) next = '/cotizador'
+  next = safeNextPath(next, '/cotizador')
 
-  if (password !== getCotizadorPassword()) {
+  const token = await deriveToken(password)
+  if (!timingSafeEqualHex(token, await expectedToken())) {
     return NextResponse.json({ error: 'Contraseña incorrecta' }, { status: 401 })
   }
 
-  const token = await deriveToken(password)
   const res = NextResponse.json({ ok: true, next })
   res.cookies.set(COTIZ_COOKIE, token, {
     httpOnly: true,
