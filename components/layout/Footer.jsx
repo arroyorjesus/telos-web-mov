@@ -166,6 +166,13 @@ export default function Footer() {
               Aviso de privacidad
             </Link>
             <span className="font-mono text-[0.65rem] text-white/20">·</span>
+            <Link
+              href="/terminos"
+              className="font-mono text-[0.65rem] text-white/25 hover:text-white/50 tracking-wide transition-colors duration-200"
+            >
+              Términos y condiciones
+            </Link>
+            <span className="font-mono text-[0.65rem] text-white/20">·</span>
             <span className="font-mono text-[0.65rem] text-white/25 tracking-wide">
               Operamos en toda la República Mexicana
             </span>
