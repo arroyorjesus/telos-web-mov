@@ -10,7 +10,7 @@ import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo'
 const SCHEMA_NOSOTROS = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  '@id': 'https://telos.com.mx/#business',
+  '@id': 'https://www.telos.com.mx/#business',
   name: 'TELOS Ingeniería Energética',
   foundingDate: '2017',
   numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 50, maxValue: 100 },
