@@ -1,7 +1,6 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import Link from 'next/link'
 
 const money = (n) =>
   n == null
@@ -69,12 +68,12 @@ export default function CotizacionesClient({ initial, error }) {
             {rows.length} de {initial.length} cotización{initial.length === 1 ? '' : 'es'}
           </p>
         </div>
-        <Link
+        <a
           href="/cotizador"
           className="px-4 py-2.5 rounded-xl bg-telos-green text-black font-bold text-sm hover:bg-telos-green-light transition-all"
         >
           + Nueva cotización
-        </Link>
+        </a>
       </div>
 
       {/* Filtros */}
@@ -159,12 +158,12 @@ export default function CotizacionesClient({ initial, error }) {
                   </td>
                   <td className="px-4 py-3 text-right text-telos-green whitespace-nowrap">{money(c.ahorro_anual)}</td>
                   <td className="px-4 py-3">
-                    <Link
+                    <a
                       href={`/cotizador?id=${c.id}`}
                       className="px-3 py-1.5 rounded-lg bg-telos-blue/15 border border-telos-blue/30 text-telos-blue text-xs font-bold hover:bg-telos-blue/25 transition-colors whitespace-nowrap"
                     >
                       Reabrir
-                    </Link>
+                    </a>
                   </td>
                 </tr>
               ))}
