@@ -7,6 +7,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import GlossaryPanel from '@/components/ui/GlossaryPanel'
 import RevealObserver from '@/components/ui/RevealObserver'
+import Analytics from '@/components/ui/Analytics'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -94,6 +95,7 @@ export default function RootLayout({ children }) {
         <main id="contenido-principal">{children}</main>
         <Footer />
         <GlossaryPanel />
+        <Analytics />
       </body>
     </html>
   )

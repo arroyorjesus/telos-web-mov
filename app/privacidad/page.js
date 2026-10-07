@@ -56,7 +56,7 @@ const SECTIONS = [
   {
     title: '6. Uso de cookies y tecnologías de rastreo',
     body: [
-      'Este sitio utiliza cookies y tecnologías similares para mejorar tu experiencia de navegación y obtener estadísticas de uso de forma agregada. Puedes deshabilitar las cookies desde la configuración de tu navegador; ten en cuenta que algunas funciones del sitio podrían verse afectadas.',
+      'Este sitio utiliza cookies de analítica (Google Analytics) para obtener estadísticas de uso de forma agregada, como las páginas visitadas y los clics en los medios de contacto. Estas cookies solo se activan si las aceptas en el aviso que aparece al entrar al sitio; si las rechazas, no se carga ninguna herramienta de analítica. Puedes cambiar tu decisión borrando los datos del sitio en tu navegador, o deshabilitar las cookies desde su configuración; ten en cuenta que algunas funciones del sitio podrían verse afectadas.',
     ],
   },
   {
@@ -80,7 +80,7 @@ export default function PrivacidadPage() {
           Aviso de Privacidad
         </h1>
         <p className="section-sub" style={{ color: 'rgba(255,255,255,0.55)', marginBottom: '2.5rem' }}>
-          Última actualización: 21 de mayo de 2026 · Conforme a la LFPDPPP.
+          Última actualización: 6 de octubre de 2026 · Conforme a la LFPDPPP.
         </p>
 
         <div className="flex flex-col gap-9">
