@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 export const metadata = {
   title: 'Cotizador solar',
   robots: { index: false, follow: false },
@@ -11,12 +9,14 @@ export default function CotizadorPage({ searchParams }) {
 
   return (
     <div className="fixed inset-0 z-[100] bg-white">
-      <Link
+      {/* <a> normal (no <Link>): navegación completa para que la lista siempre
+          venga fresca del servidor y no de la caché del router (30 s). */}
+      <a
         href="/cotizaciones"
         className="fixed top-3 right-3 z-[101] px-3.5 py-2 rounded-lg bg-black/80 text-white text-xs font-bold hover:bg-black transition-colors shadow-lg"
       >
         📋 Cotizaciones
-      </Link>
+      </a>
       <iframe
         src={src}
         title="Cotizador solar TELOS"
