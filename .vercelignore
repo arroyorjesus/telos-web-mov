@@ -1,0 +1,14 @@
+# Archivos que `vercel --prod` NO debe subir (Vercel reinstala dependencias y reconstruye)
+node_modules
+node_modules.nosync
+node_modules 2
+.next
+.next.nosync
+.git
+.claude
+.env
+.env.local
+.env*.local
+.cotizaciones-mock.json
+*.tsbuildinfo
+.DS_Store
