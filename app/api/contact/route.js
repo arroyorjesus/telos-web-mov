@@ -72,20 +72,20 @@ export async function POST(request) {
     }
 
     // Send emails (non-blocking on error)
-    const emailTo = process.env.EMAIL_TO || 'contacto@telos.com.mx'
+    const emailTo = process.env.EMAIL_TO || 'jesus.arroyo@telos.com.mx'
     try {
       const { subject: internalSubject, html: internalHtml } = buildInternalEmail({
         ...leadData,
         id: savedId,
       })
-      await sendEmail({ to: emailTo, subject: internalSubject, html: internalHtml })
+      await sendEmail({ to: emailTo, subject: internalSubject, html: internalHtml, replyTo: clean.email })
     } catch (emailErr) {
       console.error('[Email internal error]', emailErr?.message || emailErr)
     }
 
     try {
       const { subject: confirmSubject, html: confirmHtml } = buildConfirmationEmail(clean)
-      await sendEmail({ to: clean.email, subject: confirmSubject, html: confirmHtml })
+      await sendEmail({ to: clean.email, subject: confirmSubject, html: confirmHtml, replyTo: process.env.EMAIL_REPLY_TO || 'contacto@telos.com.mx' })
     } catch (emailErr) {
       console.error('[Email confirmation error]', emailErr?.message || emailErr)
     }
