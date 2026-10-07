@@ -65,11 +65,10 @@ export async function POST(request) {
     try {
       const { data, error } = await saveLead(leadData)
       if (!error && data) savedId = data.id
+      else if (error) console.error('[DB error]', error.message || error)
     } catch (dbErr) {
       // Log but don't fail the request
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('[DB error]', dbErr)
-      }
+      console.error('[DB error]', dbErr?.message || dbErr)
     }
 
     // Send emails (non-blocking on error)
@@ -81,25 +80,19 @@ export async function POST(request) {
       })
       await sendEmail({ to: emailTo, subject: internalSubject, html: internalHtml })
     } catch (emailErr) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('[Email internal error]', emailErr)
-      }
+      console.error('[Email internal error]', emailErr?.message || emailErr)
     }
 
     try {
       const { subject: confirmSubject, html: confirmHtml } = buildConfirmationEmail(clean)
       await sendEmail({ to: clean.email, subject: confirmSubject, html: confirmHtml })
     } catch (emailErr) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('[Email confirmation error]', emailErr)
-      }
+      console.error('[Email confirmation error]', emailErr?.message || emailErr)
     }
 
     return NextResponse.json({ success: true, id: savedId }, { status: 200 })
   } catch (err) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.error('[Contact API error]', err)
-    }
+    console.error('[Contact API error]', err?.message || err)
     return NextResponse.json(
       { error: 'Error interno. Por favor intenta de nuevo.' },
       { status: 500 }
