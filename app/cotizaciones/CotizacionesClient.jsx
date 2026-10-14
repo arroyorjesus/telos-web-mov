@@ -36,18 +36,21 @@ const SEG_LABEL = {
 }
 
 export default function CotizacionesClient({ initial, error }) {
+  const [items, setItems] = useState(initial)
+  const [deletingId, setDeletingId] = useState(null)
+  const [notice, setNotice] = useState(null) // { type: 'ok' | 'error', text }
   const [q, setQ] = useState('')
   const [seg, setSeg] = useState('')
   const [ciudad, setCiudad] = useState('')
 
   const ciudades = useMemo(
-    () => [...new Set(initial.map((c) => c.ciudad).filter(Boolean))].sort(),
-    [initial]
+    () => [...new Set(items.map((c) => c.ciudad).filter(Boolean))].sort(),
+    [items]
   )
 
   const rows = useMemo(() => {
     const term = q.trim().toLowerCase()
-    return initial.filter((c) => {
+    return items.filter((c) => {
       if (seg && c.segmento !== seg) return false
       if (ciudad && c.ciudad !== ciudad) return false
       if (term) {
@@ -56,7 +59,35 @@ export default function CotizacionesClient({ initial, error }) {
       }
       return true
     })
-  }, [initial, q, seg, ciudad])
+  }, [items, q, seg, ciudad])
+
+  async function eliminar(c) {
+    const nombre = [c.cliente, c.proyecto].filter(Boolean).join(' — ') || 'esta cotización'
+    const ok = window.confirm(
+      `¿Eliminar "${nombre}" (${fecha(c.created_at)})?\n\nEsta acción no se puede deshacer.`
+    )
+    if (!ok) return
+
+    setDeletingId(c.id)
+    setNotice(null)
+    try {
+      const res = await fetch(`/api/cotizaciones/${encodeURIComponent(c.id)}`, { method: 'DELETE' })
+      const data = await res.json().catch(() => ({}))
+      if (res.status === 404) {
+        // Ya no existe en el servidor: la quitamos de la lista igualmente.
+        setItems((prev) => prev.filter((x) => x.id !== c.id))
+        setNotice({ type: 'ok', text: 'Esa cotización ya no existía; se quitó de la lista.' })
+        return
+      }
+      if (!res.ok) throw new Error(data.error || 'No se pudo eliminar.')
+      setItems((prev) => prev.filter((x) => x.id !== c.id))
+      setNotice({ type: 'ok', text: `Cotización "${nombre}" eliminada.` })
+    } catch (e) {
+      setNotice({ type: 'error', text: e.message })
+    } finally {
+      setDeletingId(null)
+    }
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
@@ -65,7 +96,7 @@ export default function CotizacionesClient({ initial, error }) {
         <div>
           <h1 className="text-2xl font-bold text-white">Cotizaciones</h1>
           <p className="text-gray-muted text-sm">
-            {rows.length} de {initial.length} cotización{initial.length === 1 ? '' : 'es'}
+            {rows.length} de {items.length} cotización{items.length === 1 ? '' : 'es'}
           </p>
         </div>
         <a
@@ -108,6 +139,19 @@ export default function CotizacionesClient({ initial, error }) {
         </select>
       </div>
 
+      {notice && (
+        <div
+          role="status"
+          className={`mb-4 p-3 rounded-xl border text-sm ${
+            notice.type === 'ok'
+              ? 'bg-green-500/10 border-green-500/20 text-green-300'
+              : 'bg-red-500/10 border-red-500/20 text-red-300'
+          }`}
+        >
+          {notice.text}
+        </div>
+      )}
+
       {error && (
         <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-sm">
           {error}
@@ -117,7 +161,7 @@ export default function CotizacionesClient({ initial, error }) {
       {/* Tabla */}
       {rows.length === 0 ? (
         <div className="text-center py-20 text-gray-muted">
-          {initial.length === 0
+          {items.length === 0
             ? 'Aún no hay cotizaciones guardadas. Crea una desde el cotizador.'
             : 'Ninguna cotización coincide con los filtros.'}
         </div>
@@ -158,12 +202,22 @@ export default function CotizacionesClient({ initial, error }) {
                   </td>
                   <td className="px-4 py-3 text-right text-telos-green whitespace-nowrap">{money(c.ahorro_anual)}</td>
                   <td className="px-4 py-3">
-                    <a
-                      href={`/cotizador?id=${c.id}`}
-                      className="px-3 py-1.5 rounded-lg bg-telos-blue/15 border border-telos-blue/30 text-telos-blue text-xs font-bold hover:bg-telos-blue/25 transition-colors whitespace-nowrap"
-                    >
-                      Reabrir
-                    </a>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={`/cotizador?id=${c.id}`}
+                        className="px-3 py-1.5 rounded-lg bg-telos-blue/15 border border-telos-blue/30 text-telos-blue text-xs font-bold hover:bg-telos-blue/25 transition-colors whitespace-nowrap"
+                      >
+                        Reabrir
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => eliminar(c)}
+                        disabled={deletingId === c.id}
+                        className="px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-bold hover:bg-red-500/20 transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {deletingId === c.id ? 'Eliminando…' : 'Eliminar'}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
