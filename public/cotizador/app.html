@@ -1403,17 +1403,39 @@ $("usdWp").addEventListener('input',e=>{state.usdWp=parseFloat(e.target.value)||
 $("btnCot").addEventListener('click',generarCotizacion);
 $("tc").addEventListener('input',e=>{state.tc=parseFloat(e.target.value)||0;$("tc2").value=e.target.value;recalc();});
 $("tc2").addEventListener('input',e=>{state.tc=parseFloat(e.target.value)||0;$("tc").value=e.target.value;recalc();});
+// ====== TC del día (DOF) ======
+// El servidor (/api/tc) lee el TC del DOF; si no está disponible devuelve una
+// referencia internacional marcada como no oficial.
+let tcEditadoManual=false;   // si el usuario teclea el TC, no se lo pisamos solo
+["tc","tc2"].forEach(id=>$(id).addEventListener('input',()=>{tcEditadoManual=true;}));
+
+function aplicarTC(v){
+  v=Math.round(v*10000)/10000;               // el DOF publica 4 decimales
+  state.tc=v;
+  $("tc").value=v; $("tc2").value=v;         // se muestra exactamente lo que se calcula
+  if(state.cotMan) state.cotMan.tc=v;       // TC de referencia del cotizador manual
+  recalc();
+  if(typeof renderCotMan==='function') renderCotMan();
+}
+async function pedirTC(){
+  const r=await fetch('/api/tc',{cache:'no-store'});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.error||'No se pudo consultar');
+  return j;
+}
+const tcFechaTxt=iso=>{ try{ return new Date(iso+'T12:00:00').toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'}); }catch(e){ return iso; } };
+
 $("tcDofBtn").addEventListener('click',async()=>{
   const btn=$("tcDofBtn"), info=$("tcInfo");
   btn.disabled=true; btn.textContent='Consultando...';
   try{
-    const r=await fetch('https://api.frankfurter.app/latest?from=USD&to=MXN');
-    if(!r.ok) throw new Error('http');
-    const j=await r.json(); const v=j.rates.MXN;
-    state.tc=v; $("tc").value=v.toFixed(2); $("tc2").value=v.toFixed(2); recalc();
-    info.innerHTML='✅ TC de referencia: <b>'+v.toFixed(2)+'</b> ('+j.date+'). Para el TC <b>oficial DOF/Banxico</b> exacto lo conectamos al publicar en telos.com.mx.';
+    const j=await pedirTC();
+    aplicarTC(j.tc); tcEditadoManual=false;
+    info.innerHTML = j.oficial
+      ? '✅ TC <b>DOF</b>: <b>'+j.tc.toFixed(4)+'</b> · vigente al '+tcFechaTxt(j.fecha)+'.'
+      : '⚠️ No se pudo obtener el TC del DOF. Se usó una <b>referencia internacional</b> ('+j.tc.toFixed(2)+', '+tcFechaTxt(j.fecha)+'), que <b>no es el TC oficial</b>. Revísalo o captúralo manual.';
   }catch(err){
-    info.innerHTML='⚠️ No se pudo consultar en línea (sin conexión o bloqueado en archivo local). Captura el TC manual. El TC oficial DOF se conecta al publicar en telos.com.mx.';
+    info.innerHTML='⚠️ No se pudo consultar el TC en línea. Captura el TC manual.';
   }finally{ btn.disabled=false; btn.textContent='🔄 TC del día'; }
 });
 $("modeToggle").addEventListener('click',e=>{
@@ -1581,6 +1603,17 @@ async function cargarCotizacion(id){
     setMsg('#e74c3c','❌ No se pudo cargar la cotización: '+e.message);
   }
 }
+
+// Cotización NUEVA: ponemos solos el TC del DOF del día. (Una cotización
+// reabierta conserva el TC con el que se hizo; ahí se actualiza con el botón.)
+(function(){
+  if(new URLSearchParams(location.search).get('id')) return;
+  pedirTC().then(j=>{
+    if(!j.oficial || tcEditadoManual) return;
+    aplicarTC(j.tc);
+    $("tcInfo").innerHTML='🔄 TC actualizado automáticamente con el <b>DOF</b>: <b>'+j.tc.toFixed(4)+'</b> · vigente al '+tcFechaTxt(j.fecha)+'.';
+  }).catch(()=>{});
+})();
 
 // Si la URL trae ?id=, precargamos esa cotización.
 (function(){
