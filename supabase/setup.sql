@@ -56,3 +56,12 @@ ALTER TABLE cotizaciones ENABLE ROW LEVEL SECURITY;
 CREATE INDEX IF NOT EXISTS idx_cotizaciones_created ON cotizaciones (created_at DESC);
 
 -- ✅ Listo. Deberías ver "Success. No rows returned".
+
+
+-- ─── Tabla COTIZADOR_CONFIG (cuentas bancarias y datos del emisor de la cotización simple) ───
+CREATE TABLE IF NOT EXISTS cotizador_config (
+  clave       TEXT PRIMARY KEY,
+  valor       JSONB NOT NULL,
+  updated_at  TIMESTAMPTZ DEFAULT NOW()
+);
+ALTER TABLE cotizador_config ENABLE ROW LEVEL SECURITY;

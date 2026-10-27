@@ -33,6 +33,7 @@ const SEG_LABEL = {
   residencial: 'Residencial',
   comercial: 'Comercial',
   industrial: 'Industrial',
+  simple: 'Simple',
 }
 
 export default function CotizacionesClient({ initial, error }) {
@@ -99,12 +100,20 @@ export default function CotizacionesClient({ initial, error }) {
             {rows.length} de {items.length} cotización{items.length === 1 ? '' : 'es'}
           </p>
         </div>
-        <a
-          href="/cotizador"
-          className="px-4 py-2.5 rounded-xl bg-telos-green text-black font-bold text-sm hover:bg-telos-green-light transition-all"
-        >
-          + Nueva cotización
-        </a>
+        <div className="flex flex-wrap gap-2">
+          <a
+            href="/cotizaciones/simple"
+            className="px-4 py-2.5 rounded-xl bg-white/[0.07] border border-white/[0.15] text-white font-bold text-sm hover:bg-white/[0.12] transition-all"
+          >
+            + Cotización simple
+          </a>
+          <a
+            href="/cotizador"
+            className="px-4 py-2.5 rounded-xl bg-telos-green text-black font-bold text-sm hover:bg-telos-green-light transition-all"
+          >
+            + Nueva cotización
+          </a>
+        </div>
       </div>
 
       {/* Filtros */}
@@ -124,6 +133,7 @@ export default function CotizacionesClient({ initial, error }) {
           <option value="residencial">Residencial</option>
           <option value="comercial">Comercial</option>
           <option value="industrial">Industrial</option>
+          <option value="simple">Simple</option>
         </select>
         <select
           value={ciudad}
@@ -204,7 +214,7 @@ export default function CotizacionesClient({ initial, error }) {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       <a
-                        href={`/cotizador?id=${c.id}`}
+                        href={c.segmento === 'simple' ? `/cotizaciones/simple?id=${c.id}` : `/cotizador?id=${c.id}`}
                         className="px-3 py-1.5 rounded-lg bg-telos-blue/15 border border-telos-blue/30 text-telos-blue text-xs font-bold hover:bg-telos-blue/25 transition-colors whitespace-nowrap"
                       >
                         Reabrir

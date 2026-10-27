@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/node_modules.nosync
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -9,8 +10,10 @@
 # testing
 /coverage
 
-# next.js
+# next.js (.next es symlink a .next.nosync para que iCloud no lo sincronice)
+/.next
 /.next/
+/.next.nosync
 /out/
 
 # production
@@ -31,6 +34,8 @@ yarn-error.log*
 
 # cotizaciones mock store (dev sin Supabase)
 .cotizaciones-mock.json
+.auditorias-mock.json
+.cotizador-config-mock.json
 
 # vercel
 .vercel
