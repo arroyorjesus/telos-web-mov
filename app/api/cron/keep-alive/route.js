@@ -1,22 +1,32 @@
 import { NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/db'
 
-// Consulta trivial que Vercel Cron dispara periódicamente para evitar que
-// Supabase pause el proyecto por inactividad (plan free: pausa a los 7 días
-// sin actividad). No expone datos, solo confirma que la conexión responde.
+// Consulta que Vercel Cron dispara cada día para que Supabase (plan gratis) no
+// pause el proyecto por 7 días sin actividad. No expone datos.
 //
-// force-dynamic: sin esto, Next.js la trata como estática (sin params ni
-// fetch dinámico detectado) y cachea la primera respuesta para siempre.
+// - force-dynamic + fetch sin caché (ver lib/db.js): la consulta SIEMPRE llega a
+//   Supabase; antes se podía contestar "ok" sin tocar la base.
+// - Si falla responde 503 y lo deja en los logs, para que Vercel lo marque como
+//   cron fallido en vez de aparentar que todo está bien.
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
+  const checkedAt = new Date().toISOString()
   const db = getSupabase()
 
   if (!db) {
-    return NextResponse.json({ ok: false, reason: 'Supabase no configurado' })
+    console.error('[keep-alive] Supabase no configurado')
+    return NextResponse.json({ ok: false, reason: 'Supabase no configurado', checkedAt }, { status: 503 })
   }
 
-  const { error } = await db.from('cotizaciones').select('id').limit(1)
+  // head + count: consulta real a la tabla sin traer filas.
+  const { error } = await db.from('cotizaciones').select('id', { count: 'exact', head: true })
 
-  return NextResponse.json({ ok: !error, checkedAt: new Date().toISOString() })
+  if (error) {
+    console.error('[keep-alive] Supabase NO responde:', error.message || error)
+    return NextResponse.json({ ok: false, reason: error.message || 'error', checkedAt }, { status: 503 })
+  }
+
+  // No se devuelve ningún dato de la base: este endpoint es público.
+  return NextResponse.json({ ok: true, checkedAt })
 }
